@@ -32,10 +32,9 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MyLog", "Failure start logging...")
                     Log.d("MyLog", response.errorBody().toString())
                 }
-
-
             }catch (e: Exception){
-
+                Log.d("MyLog", "Failure...")
+                Log.d("MyLog", e.toString())
             }
         }
 

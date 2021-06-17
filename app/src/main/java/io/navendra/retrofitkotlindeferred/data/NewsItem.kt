@@ -1,21 +1,21 @@
 package io.navendra.retrofitkotlindeferred.data
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
-class NewsItem(
-    @Json(name = "@id") val id: String? = null,
-    @Json(name = "@type") val type: String? = null,
-    @Json(name = "author") val author: String? = null,
-    @Json(name = "authorName") val authorName: String? = null,
-    @Json(name = "body") val body: String? = null,
-    @Json(name = "channels") val channels: List<NewsItemChannel>? = null,
-    @Json(name = "createdAt") val createdAt: String? = null,
-    @Json(name = "deletedAt") val deletedAt: String? = null,
-    @Json(name = "expiredAt") val expiredAt: String? = null,
-    @Json(name = "externalId") val externalId: String? = null,
-    @Json(name = "externalUrl") val externalUrl: String? = null,
-    @Json(name = "featured") val featured: String? = null,
-    @Json(name = "featuredMedia") val featuredMedia: NewsItemFeaturedMedia? = null,
-    @Json(name = "headline") val headline: String? = null
+data class NewsItem(
+    @SerializedName("@id") val id: String? = null,
+    @SerializedName("@type") val type: String? = null,
+    @SerializedName("author") val author: String? = null,
+    @SerializedName("authorName") val authorName: String? = null,
+    @SerializedName("body") val body: String? = null,
+    @SerializedName("channels") val channels: List<NewsItemChannel>? = null,
+    @SerializedName("createdAt") val createdAt: String? = null,
+    @SerializedName("deletedAt") val deletedAt: String? = null,
+    @SerializedName("expiredAt") val expiredAt: String? = null,
+    @SerializedName("externalId") val externalId: String? = null,
+    @SerializedName("externalUrl") val externalUrl: String? = null,
+    @SerializedName("featured") val featured: Boolean? = null,
+    @SerializedName("featuredMedia") val featuredMedia: NewsItemFeaturedMedia? = null,
+    @SerializedName("headline") val headline: String? = null
     // TODO ещё дофига ключей
 )

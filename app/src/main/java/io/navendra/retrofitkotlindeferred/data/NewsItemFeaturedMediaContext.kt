@@ -1,7 +1,7 @@
 package io.navendra.retrofitkotlindeferred.data
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
-class NewsItemFeaturedMediaContext(
-    @Json(name = "thumbnail_resized_800") val featuredMediaContextThumbnailResized800: String? = null
+data class NewsItemFeaturedMediaContext(
+    @SerializedName("thumbnail_resized_800") val featuredMediaContextThumbnailResized800: String? = null
 )

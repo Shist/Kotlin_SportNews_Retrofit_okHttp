@@ -1,7 +1,7 @@
 package io.navendra.retrofitkotlindeferred.data
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
-class NewsContent(
-    @Json(name = "hydra:member") val items: List<NewsItem>? = null
+data class NewsContent(
+    @SerializedName("hydra:member") val items: List<NewsItem>? = null
 )

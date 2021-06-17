@@ -1,9 +1,9 @@
 package io.navendra.retrofitkotlindeferred.data
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
-class NewsItemChannel(
-    @Json(name = "@id") val channelId: String? = null,
-    @Json(name = "@type") val channelType: String? = null,
-    @Json(name = "name") val channelName: String? = null
+data class NewsItemChannel(
+    @SerializedName("@id") val channelId: String? = null,
+    @SerializedName("@type") val channelType: String? = null,
+    @SerializedName("name") val channelName: String? = null
 )
