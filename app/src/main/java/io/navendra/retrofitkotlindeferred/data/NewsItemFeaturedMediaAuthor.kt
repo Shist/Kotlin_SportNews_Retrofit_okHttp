@@ -1,11 +1,9 @@
 package io.navendra.retrofitkotlindeferred.data
 
-annotation class SerializedNameFeaturedMediaAuthorId(val featuredMediaAuthorId_: String)
-annotation class SerializedNameFeaturedMediaAuthorType(val featuredMediaAuthorType_: String)
-annotation class SerializedNameFeaturedMediaAuthorName(val featuredMediaAuthorName_: String)
+import com.squareup.moshi.Json
 
-data class NewsItemFeaturedMediaAuthor(
-    @SerializedNameFeaturedMediaAuthorId("@id") val featuredMediaAuthorId_: String? = null,
-    @SerializedNameFeaturedMediaAuthorType("@type") val featuredMediaAuthorType_: String? = null,
-    @SerializedNameFeaturedMediaAuthorName("name") val featuredMediaAuthorName_: String? = null
+class NewsItemFeaturedMediaAuthor(
+    @Json(name = "@id") val featuredMediaAuthorId: String? = null,
+    @Json(name = "@type") val featuredMediaAuthorType: String? = null,
+    @Json(name = "name") val featuredMediaAuthorName: String? = null
 )

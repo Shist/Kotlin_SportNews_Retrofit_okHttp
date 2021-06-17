@@ -1,35 +1,21 @@
 package io.navendra.retrofitkotlindeferred.data
 
-annotation class SerializedNameId(val id_: String)
-annotation class SerializedNameType(val type_: String)
-annotation class SerializedNameAuthor(val author_: String)
-annotation class SerializedNameAuthorName(val authorName_: String)
-annotation class SerializedNameBody(val body_: String)
-annotation class SerializedNameChannels(val channels_: String)
-annotation class SerializedNameCreatedAt(val createdAt_: String)
-annotation class SerializedNameDeletedAt(val deletedAt_: String)
-annotation class SerializedNameExpiredAt(val expiredAt_: String)
-annotation class SerializedNameExternalId(val externalId_: String)
-annotation class SerializedNameExternalUrl(val externalUrl_: String)
-annotation class SerializedNameFeatured(val featured_: String)
-annotation class SerializedNameFeaturedMedia(val featuredMedia_: String)
-annotation class SerializedNameHeadline(val headline_: String)
-// TODO ещё дофига ключей
+import com.squareup.moshi.Json
 
-data class NewsItem(
-    @SerializedNameId("@id") val id_: String? = null,
-    @SerializedNameType("@type") val type_: String? = null,
-    @SerializedNameAuthor("author") val author_: String? = null,
-    @SerializedNameAuthorName("authorName") val authorName_: String? = null,
-    @SerializedNameBody("body") val body_: String? = null,
-    @SerializedNameChannels("channels") val channels_: List<NewsItemChannel>? = null,
-    @SerializedNameCreatedAt("createdAt") val createdAt_: String? = null,
-    @SerializedNameDeletedAt("deletedAt") val deletedAt_: String? = null,
-    @SerializedNameExpiredAt("expiredAt") val expiredAt_: String? = null,
-    @SerializedNameExternalId("externalId") val externalId_: String? = null,
-    @SerializedNameExternalUrl("externalUrl") val externalUrl_: String? = null,
-    @SerializedNameFeatured("featured") val featured_: String? = null,
-    @SerializedNameFeaturedMedia("featuredMedia") val featuredMedia_: NewsItemFeaturedMedia? = null,
-    @SerializedNameHeadline("headline") val headline_: String? = null
+class NewsItem(
+    @Json(name = "@id") val id: String? = null,
+    @Json(name = "@type") val type: String? = null,
+    @Json(name = "author") val author: String? = null,
+    @Json(name = "authorName") val authorName: String? = null,
+    @Json(name = "body") val body: String? = null,
+    @Json(name = "channels") val channels: List<NewsItemChannel>? = null,
+    @Json(name = "createdAt") val createdAt: String? = null,
+    @Json(name = "deletedAt") val deletedAt: String? = null,
+    @Json(name = "expiredAt") val expiredAt: String? = null,
+    @Json(name = "externalId") val externalId: String? = null,
+    @Json(name = "externalUrl") val externalUrl: String? = null,
+    @Json(name = "featured") val featured: String? = null,
+    @Json(name = "featuredMedia") val featuredMedia: NewsItemFeaturedMedia? = null,
+    @Json(name = "headline") val headline: String? = null
     // TODO ещё дофига ключей
 )

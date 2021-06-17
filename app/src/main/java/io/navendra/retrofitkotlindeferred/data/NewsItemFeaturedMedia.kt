@@ -1,37 +1,22 @@
 package io.navendra.retrofitkotlindeferred.data
 
-annotation class SerializedNameFeaturedMediaId(val featuredMediaId_: String)
-annotation class SerializedNameFeaturedMediaType(val featuredMediaType_: String)
-annotation class SerializedNameFeaturedMediaTypeNum(val featuredMediaTypeNum_: String)
-annotation class SerializedNameFeaturedMediaProvider(val featuredMediaProvider_: String)
-annotation class SerializedNameFeaturedMediaUri(val featuredMediaUri_: String)
-annotation class SerializedNameFeaturedMediaAltText(val featuredMediaAltText_: String)
-annotation class SerializedNameFeaturedMediaCaption(val featuredMediaCaption_: String)
-annotation class SerializedNameFeaturedMediaCredit(val featuredMediaCredit_: String)
-annotation class SerializedNameFeaturedMediaSource(val featuredMediaSource_: String)
-annotation class SerializedNameFeaturedMediaExternalUrl(val featuredMediaExternalUrl_: String)
-annotation class SerializedNameFeaturedMediaContext(val featuredMediaContext_: String)
-annotation class SerializedNameFeaturedAuthor(val featuredMediaAuthor_: String)
-annotation class SerializedNameFeaturedExternalId(val featuredMediaExternalId_: String)
-annotation class SerializedNameFeaturedCreatedAt(val featuredMediaCreatedAt_: String)
-annotation class SerializedNameFeaturedUpdatedAt(val featuredMediaUpdatedAt_: String)
-annotation class SerializedNameFeaturedDailymotionTags(val featuredMediaDailymotionTags_: String)
+import com.squareup.moshi.Json
 
-data class NewsItemFeaturedMedia(
-    @SerializedNameFeaturedMediaId("@id") val featuredMediaId_: String? = null,
-    @SerializedNameFeaturedMediaType("@type") val featuredMediaType_: String? = null,
-    @SerializedNameFeaturedMediaTypeNum("type") val featuredMediaTypeNum_: String? = null,
-    @SerializedNameFeaturedMediaProvider("provider") val featuredMediaProvider_: String? = null,
-    @SerializedNameFeaturedMediaUri("uri") val featuredMediaUri_: String? = null,
-    @SerializedNameFeaturedMediaAltText("altText") val featuredMediaAltText_: String? = null,
-    @SerializedNameFeaturedMediaCaption("caption") val featuredMediaCaption_: String? = null,
-    @SerializedNameFeaturedMediaCredit("credit") val featuredMediaCredit_: String? = null,
-    @SerializedNameFeaturedMediaSource("source") val featuredMediaSource_: String? = null,
-    @SerializedNameFeaturedMediaExternalUrl("externalUrl") val featuredMediaExternalUrl_: String? = null,
-    @SerializedNameFeaturedMediaContext("context") val featuredMediaContext_: NewsItemFeaturedMediaContext? = null,
-    @SerializedNameFeaturedAuthor("author") val featuredMediaAuthor_: NewsItemFeaturedMediaAuthor? = null,
-    @SerializedNameFeaturedExternalId("externalId") val featuredMediaExternalId_: String? = null,
-    @SerializedNameFeaturedCreatedAt("createdAt") val featuredMediaCreatedAt_: String? = null,
-    @SerializedNameFeaturedUpdatedAt("updatedAt") val featuredMediaUpdatedAt_: String? = null,
-    @SerializedNameFeaturedDailymotionTags("dailymotionTags") val featuredMediaDailymotionTags_: List<String>? = null
+class NewsItemFeaturedMedia(
+    @Json(name = "@id") val featuredMediaId: String? = null,
+    @Json(name = "@type") val featuredMediaType: String? = null,
+    @Json(name = "type") val featuredMediaTypeNum: String? = null,
+    @Json(name = "provider") val featuredMediaProvider: String? = null,
+    @Json(name = "uri") val featuredMediaUri: String? = null,
+    @Json(name = "altText") val featuredMediaAltText: String? = null,
+    @Json(name = "caption") val featuredMediaCaption: String? = null,
+    @Json(name = "credit") val featuredMediaCredit: String? = null,
+    @Json(name = "source") val featuredMediaSource: String? = null,
+    @Json(name = "externalUrl") val featuredMediaExternalUrl: String? = null,
+    @Json(name = "context") val featuredMediaContext: NewsItemFeaturedMediaContext? = null,
+    @Json(name = "author") val featuredMediaAuthor: NewsItemFeaturedMediaAuthor? = null,
+    @Json(name = "externalId") val featuredMediaExternalId: String? = null,
+    @Json(name = "createdAt") val featuredMediaCreatedAt: String? = null,
+    @Json(name = "updatedAt") val featuredMediaUpdatedAt: String? = null,
+    @Json(name = "dailymotionTags") val featuredMediaDailymotionTags: List<String>? = null
 )
