@@ -24,23 +24,26 @@ class MainActivity : AppCompatActivity() {
 
         val service = SportNewsFactory.SPORT_NEWS_API
 
-        var response: NewsContent? = null
-
         // Getting News from News Content API
+
+
         GlobalScope.launch(Dispatchers.Main) {
             try {
-            val userRequest = service.getNews()
+                val userRequest = service.getNews()
 
-                response = userRequest
-                Log.d("MyLog", "response: ${response?.items?.size}")
-
+                val response = userRequest
+                Log.d("MyLog", "response: ${response.items?.size}")
+//                if(response.isSuccessful){
+//                    Log.d("MyLog", "Successful start logging...")
+//                    Log.d("MyLog", response.body().toString())
+//                }else{
+//                    Log.d("MyLog", "Failure start logging...")
+//                    Log.d("MyLog", response.errorBody().toString())
+//                }
             } catch (e: Throwable){
                 Log.d("MyLog", "Failure...", e)
             }
         }
-
-        // UI operations
-
 
     }
 
