@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.ui
+gitpackage io.navendra.retrofitkotlindeferred.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
