@@ -5,12 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.R
+import io.navendra.retrofitkotlindeferred.data.NewsContent
 import io.navendra.retrofitkotlindeferred.service.SportNewsFactory
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.lang.Exception
+
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,23 +24,25 @@ class MainActivity : AppCompatActivity() {
 
         val service = SportNewsFactory.SPORT_NEWS_API
 
+        var response: NewsContent? = null
+
         // Getting News from News Content API
         GlobalScope.launch(Dispatchers.Main) {
-            val userRequest = service.getNews()
             try {
-                val response = userRequest.await()
-                if(response.isSuccessful){
-                    Log.d("MyLog", "Successful start logging...")
-                    Log.d("MyLog", response.body().toString())
-                }else{
-                    Log.d("MyLog", "Failure start logging...")
-                    Log.d("MyLog", response.errorBody().toString())
-                }
-            }catch (e: Exception){
-                Log.d("MyLog", "Failure...")
-                Log.d("MyLog", e.toString())
+            val userRequest = service.getNews()
+
+                response = userRequest
+                Log.d("MyLog", "response: ${response?.items?.size}")
+
+            } catch (e: Throwable){
+                Log.d("MyLog", "Failure...", e)
             }
         }
 
+        // UI operations
+
+
     }
+
+
 }

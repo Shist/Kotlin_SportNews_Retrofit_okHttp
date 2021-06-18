@@ -3,19 +3,19 @@ package io.navendra.retrofitkotlindeferred.data
 import com.google.gson.annotations.SerializedName
 
 data class NewsItem(
-    @SerializedName("@id") val id: String? = null,
-    @SerializedName("@type") val type: String? = null,
-    @SerializedName("author") val author: String? = null,
-    @SerializedName("authorName") val authorName: String? = null,
-    @SerializedName("body") val body: String? = null,
-    @SerializedName("channels") val channels: List<NewsItemChannel>? = null,
-    @SerializedName("createdAt") val createdAt: String? = null,
-    @SerializedName("deletedAt") val deletedAt: String? = null,
-    @SerializedName("expiredAt") val expiredAt: String? = null,
-    @SerializedName("externalId") val externalId: String? = null,
-    @SerializedName("externalUrl") val externalUrl: String? = null,
-    @SerializedName("featured") val featured: Boolean? = null,
-    @SerializedName("featuredMedia") val featuredMedia: NewsItemFeaturedMedia? = null,
-    @SerializedName("headline") val headline: String? = null
-    // TODO ещё дофига ключей
+    //@SerializedName("@id") val id: String? = null,
+    //@SerializedName("@type") val type: String? = null,
+    //val author: NewsItemAuthor? = null,
+    //val authorName: String? = null,
+    //val body: String? = null,
+    //val channels: List<NewsItemChannel>? = null,
+    //val createdAt: String? = null,
+    //val deletedAt: String? = null,
+    //val expiredAt: String? = null,
+    //val externalId: String? = null,
+    //val externalUrl: String? = null,
+    //val featured: Boolean? = null,
+    val featuredMedia: NewsItemFeaturedMedia? = null,
+    //val headline: String? = null,
+    var shortHeadline: String? = null
 )

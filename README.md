@@ -200,7 +200,7 @@ Once you have Api key, do the following steps to hide it in VCS.
 
 ```kotlin
 //In local.properties
-tmdb_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxx"
+tmdb_api_key = "c56b48e946f708e6c1685c485c99cb3b"
 
 //In build.gradle (Module: app)
 buildTypes {
