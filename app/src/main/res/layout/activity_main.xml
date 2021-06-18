@@ -15,12 +15,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <fragment
-            android:id="@+id/listFragment"
-            android:name="SingleListFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@android:layout/list_content"></fragment>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

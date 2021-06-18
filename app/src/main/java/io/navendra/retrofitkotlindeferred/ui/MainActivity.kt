@@ -1,8 +1,8 @@
-gitpackage io.navendra.retrofitkotlindeferred.ui
+package io.navendra.retrofitkotlindeferred.ui
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.data.NewsContent

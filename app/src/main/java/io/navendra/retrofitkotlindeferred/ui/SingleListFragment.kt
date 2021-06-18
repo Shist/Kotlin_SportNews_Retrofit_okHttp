@@ -1,5 +1,5 @@
 package io.navendra.retrofitkotlindeferred.ui
 
-import android.support.v4.app.ListFragment
+import androidx.fragment.app.ListFragment
 
 class SingleListFragment : ListFragment()
