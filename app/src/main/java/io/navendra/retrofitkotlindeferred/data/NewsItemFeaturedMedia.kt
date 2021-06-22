@@ -2,21 +2,23 @@ package io.navendra.retrofitkotlindeferred.data
 
 import com.google.gson.annotations.SerializedName
 
+// Закомментированы те данные, которые нам пока что не нужны для ленты новостей...
+
 data class NewsItemFeaturedMedia(
-    //@SerializedName("@id") val featuredMediaId: String? = null,
-    //@SerializedName("@type") val featuredMediaType: String? = null,
-    //val type: String? = null,
-    //val provider: String? = null,
-    val uri: String? = null,
-    val altText: String? = null,
-    //val caption: String? = null,
-    //val credit: String? = null,
-    //val source: String? = null,
-    //val externalUrl: String? = null,
-    //val context: NewsItemFeaturedMediaContext? = null,
-    //val author: NewsItemAuthor? = null,
-    //val externalId: String? = null,
-    //val createdAt: String? = null,
-    //val updatedAt: String? = null,
-    //val dailymotionTags: List<String>? = null
+    //@SerializedName("@id") val featuredMediaId: String,
+    //@SerializedName("@type") val featuredMediaType: String,
+    //@SerializedName("type") val featuredMediaTypeNum: String,
+    //@SerializedName("provider") val featuredMediaProvider: String,
+    @SerializedName("uri") val featuredMediaUri: String,
+    @SerializedName("altText") val featuredMediaAltText: String,
+    //@SerializedName("caption") val featuredMediaCaption: String,
+    //@SerializedName("credit") val featuredMediaCredit: String,
+    //@SerializedName("source") val featuredMediaSource: String,
+    //@SerializedName("externalUrl") val featuredMediaExternalUrl: String,
+    //@SerializedName("context") val featuredMediaContext: NewsItemFeaturedMediaContext,
+    //@SerializedName("author") val featuredMediaAuthor: NewsItemAuthor,
+    //@SerializedName("externalId") val featuredMediaExternalId: String,
+    //@SerializedName("createdAt") val featuredMediaCreatedAt: String,
+    //@SerializedName("updatedAt") val featuredMediaUpdatedAt: String,
+    //@SerializedName("dailymotionTag") val featuredMediaDailymotionTags: List<String>
 )
