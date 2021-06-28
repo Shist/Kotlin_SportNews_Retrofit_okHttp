@@ -1,8 +1,9 @@
-package io.navendra.retrofitkotlindeferred.data
+package io.navendra.retrofitkotlindeferred.ui
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.navendra.retrofitkotlindeferred.data.NewsItem
 import io.navendra.retrofitkotlindeferred.service.SportNewsFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

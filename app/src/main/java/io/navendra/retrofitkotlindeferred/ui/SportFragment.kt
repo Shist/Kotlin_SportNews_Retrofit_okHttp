@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.data
+package io.navendra.retrofitkotlindeferred.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -29,6 +29,7 @@ class SportFragment : Fragment() {
         viewModel.news.observe(this.viewLifecycleOwner, Observer {})
     }
 
+    // лучше сделать через onATouch
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(SportViewModel::class.java)
