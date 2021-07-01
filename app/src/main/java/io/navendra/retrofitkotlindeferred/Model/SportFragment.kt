@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.data
+package io.navendra.retrofitkotlindeferred.Model
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

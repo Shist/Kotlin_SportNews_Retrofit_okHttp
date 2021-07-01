@@ -1,10 +1,10 @@
-package io.navendra.retrofitkotlindeferred.service
+package io.navendra.retrofitkotlindeferred.Retrofit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitFactory{
+object RetrofitClient{
 
     private val loggingInterceptor =  HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY

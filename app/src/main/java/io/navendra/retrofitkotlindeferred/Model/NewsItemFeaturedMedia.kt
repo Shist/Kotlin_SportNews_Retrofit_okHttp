@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.data
+package io.navendra.retrofitkotlindeferred.Model
 
 import com.google.gson.annotations.SerializedName
 
