@@ -48,6 +48,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    //RecycleView
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
+    //ViewModel
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+
     //Gson
     implementation 'com.google.code.gson:gson:2.8.7'
 
