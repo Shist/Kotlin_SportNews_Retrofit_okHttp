@@ -8,17 +8,18 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import io.navendra.retrofitkotlindeferred.ui.SportFragment
 import com.squareup.picasso.Picasso
+import io.navendra.retrofitkotlindeferred.Model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
 import kotlinx.android.synthetic.main.sport_fragment_layout.view.*
 
-class SportAdapter(private val context: Context, private val movieList: MutableList<SportFragment>):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
+class SportAdapter(private val context: Context, private val sportList: List<NewsItem>):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val image: ImageView = itemView.img
         val headline: TextView = itemView.headline
         val altText: TextView = itemView.altText
 
-        fun bind(listItem: SportFragment) {
+        fun bind(listItem: NewsItem) {
             image.setOnClickListener {
                 Toast.makeText(it.context, "нажал на ${itemView.img}", Toast.LENGTH_SHORT)
                     .show()
@@ -34,15 +35,15 @@ class SportAdapter(private val context: Context, private val movieList: MutableL
         return MyViewHolder(itemView)
     }
 
-    override fun getItemCount() = movieList.size
+    override fun getItemCount() = sportList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val listItem = movieList[position]
+        val listItem = sportList[position]
         holder.bind(listItem)
 
-        Picasso.get().load(movieList[position].imgUri).into(holder.image)
-        holder.headline.text = movieList[position].headline
-        holder.altText.text = movieList[position].altText
+        Picasso.get().load(sportList[position].featuredMedia.featuredMediaUri).into(holder.image)
+        holder.headline.text = sportList[position].shortHeadline
+        holder.altText.text = sportList[position].featuredMedia.featuredMediaAltText
     }
 
 }

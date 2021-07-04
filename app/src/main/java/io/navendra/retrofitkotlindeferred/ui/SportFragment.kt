@@ -1,26 +1,22 @@
 package io.navendra.retrofitkotlindeferred.ui
 
 import SportAdapter
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.navendra.retrofitkotlindeferred.Model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
 
 class SportFragment : Fragment() {
-
-    private var sportAdapter : SportAdapter? = null
-
-    var news = MutableLiveData<List<NewsItem>>()
-
-    var imgUri : String? = null
-    var headline : String? = null
-    var altText : String? = null
 
     companion object {
         fun newInstance() = SportFragment()
@@ -32,26 +28,28 @@ class SportFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.sport_fragment_layout, container, false)
+        return inflater.inflate(R.layout.fragment_sport, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.news.observe(this.viewLifecycleOwner, Observer {})
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SportViewModel::class.java)
         viewModel.loadData()
 
-        news = viewModel.news
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(context)
 
-        imgUri = viewModel.news.value?.get(0).toString()
-        headline = viewModel.news.value?.get(1).toString()
-        altText = viewModel.news.value?.get(2).toString()
+        viewModel.news.observe(this.viewLifecycleOwner, Observer { news ->
 
-        sportAdapter = SportAdapter()
+            recyclerView.adapter = SportAdapter(requireContext(), news)
+        })
+        viewModel.loadData()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        viewModel = ViewModelProvider(this).get(SportViewModel::class.java)
     }
 
 }
