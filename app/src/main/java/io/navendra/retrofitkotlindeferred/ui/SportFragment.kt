@@ -1,15 +1,26 @@
 package io.navendra.retrofitkotlindeferred.ui
 
+import SportAdapter
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import io.navendra.retrofitkotlindeferred.Model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
 
 class SportFragment : Fragment() {
+
+    private var sportAdapter : SportAdapter? = null
+
+    var news = MutableLiveData<List<NewsItem>>()
+
+    var imgUri : String? = null
+    var headline : String? = null
+    var altText : String? = null
 
     companion object {
         fun newInstance() = SportFragment()
@@ -29,11 +40,18 @@ class SportFragment : Fragment() {
         viewModel.news.observe(this.viewLifecycleOwner, Observer {})
     }
 
-    // лучше сделать через onATouch
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(SportViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.loadData()
+
+        news = viewModel.news
+
+        imgUri = viewModel.news.value?.get(0).toString()
+        headline = viewModel.news.value?.get(1).toString()
+        altText = viewModel.news.value?.get(2).toString()
+
+        sportAdapter = SportAdapter()
     }
 
 }

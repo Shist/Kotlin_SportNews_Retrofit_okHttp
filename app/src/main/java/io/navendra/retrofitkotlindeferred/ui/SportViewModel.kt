@@ -13,7 +13,6 @@ class SportViewModel : ViewModel() {
 
     val news = MutableLiveData<List<NewsItem>>()
 
-
     fun loadData(){
         val service = SportNewsClient.SPORT_NEWS_API
 
@@ -35,8 +34,8 @@ class SportViewModel : ViewModel() {
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.i("SportViewModel", "SportViewModel destroyed!")
+        override fun onCleared() {
+            super.onCleared()
+            Log.i("SportViewModel", "SportViewModel destroyed!")
+        }
     }
-}
