@@ -41,7 +41,7 @@ class SportAdapter(private val context: Context, private val sportList: List<New
         val listItem = sportList[position]
         holder.bind(listItem)
 
-        Picasso.get().load(sportList[position].featuredMedia.featuredMediaUri).into(holder.image)
+        Picasso.get().load(sportList[position].featuredMedia.featuredMediaContext.featuredMediaContext).into(holder.image)
         holder.headline.text = sportList[position].shortHeadline
         holder.altText.text = sportList[position].featuredMedia.featuredMediaAltText
     }
