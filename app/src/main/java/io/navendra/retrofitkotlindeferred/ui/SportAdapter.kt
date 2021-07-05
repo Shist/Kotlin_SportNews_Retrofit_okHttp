@@ -13,7 +13,7 @@ import io.navendra.retrofitkotlindeferred.R
 class SportAdapter(private val context: Context, private val sportList: List<NewsItem>):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        //TODO Либо FindView_by_ID, либо newBinding
+        //TODO Либо FindView_by_ID, либо ViewBinding
         val image: ImageView = itemView.img
         val headline: TextView = itemView.headline
         val altText: TextView = itemView.altText
