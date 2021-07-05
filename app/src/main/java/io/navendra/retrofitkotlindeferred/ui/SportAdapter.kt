@@ -24,8 +24,11 @@ class SportAdapter(private val context: Context, private val sportList: List<New
                 Toast.makeText(it.context, "нажал на ${itemView.img}", Toast.LENGTH_SHORT)
                     .show()
             }
-            itemView.setOnClickListener {
+            headline.setOnClickListener {
                 Toast.makeText(it.context, "нажал на ${itemView.headline.text}", Toast.LENGTH_SHORT).show()
+            }
+            altText.setOnClickListener {
+                Toast.makeText(it.context, "нажал на ${itemView.altText.text}", Toast.LENGTH_SHORT).show()
             }
         }
     }
