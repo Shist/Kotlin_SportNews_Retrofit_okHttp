@@ -1,6 +1,6 @@
-package io.navendra.retrofitkotlindeferred.Retrofit
+package io.navendra.retrofitkotlindeferred.retrofit
 
-import io.navendra.retrofitkotlindeferred.Model.NewsContent
+import io.navendra.retrofitkotlindeferred.model.NewsContent
 import retrofit2.http.GET
 
 interface SportNewsApi{

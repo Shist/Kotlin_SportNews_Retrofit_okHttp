@@ -6,15 +6,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import io.navendra.retrofitkotlindeferred.ui.SportFragment
 import com.squareup.picasso.Picasso
-import io.navendra.retrofitkotlindeferred.Model.NewsItem
+import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
-import kotlinx.android.synthetic.main.sport_fragment_layout.view.*
 
 class SportAdapter(private val context: Context, private val sportList: List<NewsItem>):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+        //TODO Либо FindView_by_ID, либо newBinding
         val image: ImageView = itemView.img
         val headline: TextView = itemView.headline
         val altText: TextView = itemView.altText

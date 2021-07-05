@@ -3,8 +3,8 @@ package io.navendra.retrofitkotlindeferred.ui
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.navendra.retrofitkotlindeferred.Model.NewsItem
-import io.navendra.retrofitkotlindeferred.Retrofit.SportNewsClient
+import io.navendra.retrofitkotlindeferred.model.NewsItem
+import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -16,6 +16,7 @@ class SportViewModel : ViewModel() {
     fun loadData(){
         val service = SportNewsClient.SPORT_NEWS_API
 
+        //TODO Избавиться от GlobalScope
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 val userRequest = service.getNews()

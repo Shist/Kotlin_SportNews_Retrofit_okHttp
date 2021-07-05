@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.Retrofit
+package io.navendra.retrofitkotlindeferred.retrofit
 
 object SportNewsClient{
 
