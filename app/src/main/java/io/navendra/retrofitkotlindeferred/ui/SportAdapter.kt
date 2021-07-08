@@ -14,20 +14,20 @@ class SportAdapter(private val context: Context, private val sportList: List<New
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         //TODO Либо FindView_by_ID, либо ViewBinding
-        val image: ImageView = itemView.img
-        val headline: TextView = itemView.headline
-        val altText: TextView = itemView.altText
+        val image: ImageView = itemView.findViewById(R.id.img)
+        val headline: TextView = itemView.findViewById(R.id.headline)
+        val altText: TextView = itemView.findViewById(R.id.altText)
 
         fun bind(listItem: NewsItem) {
             image.setOnClickListener {
-                Toast.makeText(it.context, "нажал на ${itemView.img}", Toast.LENGTH_SHORT)
+                Toast.makeText(it.context, "нажал на $image", Toast.LENGTH_SHORT)
                     .show()
             }
             headline.setOnClickListener {
-                Toast.makeText(it.context, "нажал на ${itemView.headline.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(it.context, "нажал на $headline", Toast.LENGTH_SHORT).show()
             }
             altText.setOnClickListener {
-                Toast.makeText(it.context, "нажал на ${itemView.altText.text}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(it.context, "нажал на $altText", Toast.LENGTH_SHORT).show()
             }
         }
     }
