@@ -6,7 +6,6 @@ import io.navendra.retrofitkotlindeferred.R
 
 class MainActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -15,5 +14,4 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    //добавить сюда фрагмент, в нём создать адаптер и заполнить его RecycleView
 }
