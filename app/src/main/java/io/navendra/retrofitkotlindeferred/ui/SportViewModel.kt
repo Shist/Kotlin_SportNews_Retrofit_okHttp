@@ -3,13 +3,12 @@ package io.navendra.retrofitkotlindeferred.ui
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import kotlinx.coroutines.*
 
 class SportViewModel : ViewModel() {
-
-    val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     val news = MutableLiveData<List<NewsItem>>()
 
@@ -17,7 +16,7 @@ class SportViewModel : ViewModel() {
         val service = SportNewsClient.SPORT_NEWS_API
 
         //TODO Избавиться от GlobalScope
-        scope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.Main) {
             try {
                 val userRequest = service.getNews()
                 news.value = userRequest.items
