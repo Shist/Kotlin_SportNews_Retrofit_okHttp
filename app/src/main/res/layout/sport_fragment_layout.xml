@@ -12,33 +12,35 @@
 
         <ImageView
             android:id="@+id/img"
-            android:contentDescription="@string/img"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:contentDescription="@string/img"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/altText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.5" />
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintDimensionRatio="1" />
 
         <TextView
             android:id="@+id/altText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center|top"
             android:text="@string/altText"
             android:textColor="@android:color/holo_purple"
             android:textSize="12sp"
             android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@id/headline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img"
-            app:layout_constraintTop_toTopOf="@id/img"
-            app:layout_constraintWidth_percent="0.5" />
+            app:layout_constraintTop_toTopOf="@id/img" />
 
         <TextView
             android:id="@+id/headline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center|top"
             android:text="@string/headline"
             android:textColor="@android:color/black"
             android:textSize="14sp"
@@ -46,8 +48,7 @@
             app:layout_constraintBottom_toBottomOf="@id/img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img"
-            app:layout_constraintTop_toBottomOf="@+id/altText"
-            app:layout_constraintWidth_percent="0.5" />
+            app:layout_constraintTop_toBottomOf="@+id/altText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
