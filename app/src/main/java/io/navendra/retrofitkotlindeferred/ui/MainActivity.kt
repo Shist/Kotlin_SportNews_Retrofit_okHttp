@@ -3,6 +3,7 @@ package io.navendra.retrofitkotlindeferred.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.navendra.retrofitkotlindeferred.R
+import io.navendra.retrofitkotlindeferred.model.NewsItem
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,6 +13,10 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, SportFragment())
             .commit()
+    }
+
+    fun openNewsDetails(news: SportFragment) {
+        supportFragmentManager.beginTransaction().add(R.id.fragment_container, news).commit()
     }
 
 }

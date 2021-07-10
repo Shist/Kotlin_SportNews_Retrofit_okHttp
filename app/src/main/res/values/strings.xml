@@ -3,4 +3,5 @@
     <string name="img">Image</string>
     <string name="headline">Headline</string>
     <string name="altText">Alternate Text</string>
+    <string name="pageText">Page Text</string>
 </resources>

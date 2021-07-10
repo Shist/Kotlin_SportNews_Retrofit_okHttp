@@ -9,7 +9,7 @@ data class NewsItem(
     //@SerializedName("@type") val type: String,
     //@SerializedName("author") val author: NewsItemAuthor,
     //@SerializedName("authorName") val authorName: String,
-    //@SerializedName("body") val body: String,
+    @SerializedName("body") val body: String,
     //@SerializedName("channels") val channels: List<NewsItemChannel>,
     //@SerializedName("createdAt") val createdAt: String,
     //@SerializedName("deletedAt") val deletedAt: String,

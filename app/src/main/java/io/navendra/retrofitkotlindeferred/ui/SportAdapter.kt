@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
+import io.navendra.retrofitkotlindeferred.ui.MainActivity
 
 class SportAdapter(private val context: Context, private val sportList: List<NewsItem>):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
@@ -19,7 +20,7 @@ class SportAdapter(private val context: Context, private val sportList: List<New
 
         fun bind(listItem: NewsItem) {
             image.setOnClickListener {
-                MyViewHolderPage(LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment, parent, false))
+                (context as MainActivity).openNewsDetails(listItem)
             }
             headline.setOnClickListener {
                 MyViewHolderPage(LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment, parent, false))
