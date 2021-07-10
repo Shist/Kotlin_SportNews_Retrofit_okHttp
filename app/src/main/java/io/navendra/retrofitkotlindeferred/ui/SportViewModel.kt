@@ -15,7 +15,6 @@ class SportViewModel : ViewModel() {
     fun loadData(){
         val service = SportNewsClient.SPORT_NEWS_API
 
-        //TODO Избавиться от GlobalScope
         viewModelScope.launch(Dispatchers.Main) {
             try {
                 val userRequest = service.getNews()

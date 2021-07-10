@@ -13,23 +13,26 @@ import io.navendra.retrofitkotlindeferred.R
 class SportAdapter(private val context: Context, private val sportList: List<NewsItem>):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        //TODO Либо FindView_by_ID, либо ViewBinding
+        //TODO Можно будет попробовать через ViewBinding
         val image: ImageView = itemView.findViewById(R.id.img)
         val headline: TextView = itemView.findViewById(R.id.headline)
         val altText: TextView = itemView.findViewById(R.id.altText)
 
         fun bind(listItem: NewsItem) {
             image.setOnClickListener {
-                Toast.makeText(it.context, "нажал на $image", Toast.LENGTH_SHORT)
-                    .show()
+                MyViewHolderPage(LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment_layout, parent, false))
             }
             headline.setOnClickListener {
-                Toast.makeText(it.context, "нажал на $headline", Toast.LENGTH_SHORT).show()
-            }
-            altText.setOnClickListener {
-                Toast.makeText(it.context, "нажал на $altText", Toast.LENGTH_SHORT).show()
+                MyViewHolderPage(LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment_layout, parent, false))
             }
         }
+    }
+
+    class MyViewHolderPage(itemView: View): RecyclerView.ViewHolder(itemView){
+        //TODO Можно будет попробовать через ViewBinding
+        val image: ImageView = itemView.findViewById(R.id.img)
+        val headline: TextView = itemView.findViewById(R.id.headline)
+        //val altText: TextView = itemView.findViewById(R.id.altText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

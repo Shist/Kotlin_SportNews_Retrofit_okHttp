@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.navendra.retrofitkotlindeferred.R
 
-class SportFragment : Fragment() {
+class SportPageFragment : Fragment() {
 
     companion object {
         fun newInstance() = SportFragment()
