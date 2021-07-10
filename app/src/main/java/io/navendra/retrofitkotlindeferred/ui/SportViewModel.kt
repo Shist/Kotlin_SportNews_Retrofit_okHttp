@@ -14,8 +14,6 @@ class SportViewModel : ViewModel() {
 
     fun loadData(){
 
-        val scope = CoroutineScope(Job() + Dispatchers.Main)
-
         val service = SportNewsClient.SPORT_NEWS_API
 
         viewModelScope.launch(Dispatchers.Main) {

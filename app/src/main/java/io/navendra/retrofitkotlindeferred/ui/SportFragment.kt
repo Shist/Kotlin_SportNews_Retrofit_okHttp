@@ -1,6 +1,5 @@
 package io.navendra.retrofitkotlindeferred.ui
 
-import SportAdapter
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

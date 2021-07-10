@@ -1,3 +1,5 @@
+package io.navendra.retrofitkotlindeferred.ui
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
-import io.navendra.retrofitkotlindeferred.ui.MainActivity
-import io.navendra.retrofitkotlindeferred.ui.SportFragment
 
 class SportAdapter(private val context: Context, private val sportList: List<NewsItem>):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
@@ -18,22 +18,17 @@ class SportAdapter(private val context: Context, private val sportList: List<New
         val image: ImageView = itemView.findViewById(R.id.img)
         val headline: TextView = itemView.findViewById(R.id.headline)
         val altText: TextView = itemView.findViewById(R.id.altText)
+        val pageText: TextView = itemView.findViewById(R.id.pageText)
 
         fun bind(listItem: NewsItem) {
+            // Не видит context, не можем вызвать функцию для FragmentManager
             image.setOnClickListener {
-                SportAdapter.onItemClick()
+                (context as MainActivity).openNewsDetails(listItem)
             }
             headline.setOnClickListener {
-                onItemClick()
+                (context as MainActivity).openNewsDetails(listItem)
             }
         }
-    }
-
-    class MyViewHolderPage(itemView: View): RecyclerView.ViewHolder(itemView){
-        //TODO Можно будет попробовать через ViewBinding
-        val image: ImageView = itemView.findViewById(R.id.img)
-        val headline: TextView = itemView.findViewById(R.id.headline)
-        //val altText: TextView = itemView.findViewById(R.id.altText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -47,16 +42,10 @@ class SportAdapter(private val context: Context, private val sportList: List<New
         val listItem = sportList[position]
         holder.bind(listItem)
 
-        fun onItemClick() {
-            (context as MainActivity).supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, SportFragment())
-                .commit()
-        }
-
         Picasso.get().load(sportList[position].featuredMedia.featuredMediaContext.featuredMediaContext).into(holder.image)
         holder.headline.text = sportList[position].shortHeadline
         holder.altText.text = sportList[position].featuredMedia.featuredMediaAltText
+        holder.pageText.text = sportList[position].body
     }
 
 }

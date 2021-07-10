@@ -15,7 +15,8 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun openNewsDetails(news: SportFragment) {
+    fun openNewsDetails(news: NewsItem) {
+        // Он просит дать SportFragment, но мы даём NewsItem
         supportFragmentManager.beginTransaction().add(R.id.fragment_container, news).commit()
     }
 
