@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
+import io.navendra.retrofitkotlindeferred.ui.SportFragment
 
 class SportAdapter(private val context: Context, private val sportList: List<NewsItem>):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
@@ -20,10 +21,10 @@ class SportAdapter(private val context: Context, private val sportList: List<New
 
         fun bind(listItem: NewsItem) {
             image.setOnClickListener {
-                (context as MainActivity).openNewsDetails(listItem)
+                SportAdapter.onItemClick()
             }
             headline.setOnClickListener {
-                MyViewHolderPage(LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment, parent, false))
+                onItemClick()
             }
         }
     }
@@ -45,6 +46,13 @@ class SportAdapter(private val context: Context, private val sportList: List<New
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val listItem = sportList[position]
         holder.bind(listItem)
+
+        fun onItemClick() {
+            (context as MainActivity).supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, SportFragment())
+                .commit()
+        }
 
         Picasso.get().load(sportList[position].featuredMedia.featuredMediaContext.featuredMediaContext).into(holder.image)
         holder.headline.text = sportList[position].shortHeadline

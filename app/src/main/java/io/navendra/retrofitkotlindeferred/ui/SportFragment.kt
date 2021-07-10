@@ -20,6 +20,7 @@ class SportFragment : Fragment() {
 
     private lateinit var viewModel: SportViewModel
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
