@@ -4,7 +4,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.model.NewsItem
@@ -20,10 +19,10 @@ class SportAdapter(private val context: Context, private val sportList: List<New
 
         fun bind(listItem: NewsItem) {
             image.setOnClickListener {
-                MyViewHolderPage(LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment_layout, parent, false))
+                MyViewHolderPage(LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment, parent, false))
             }
             headline.setOnClickListener {
-                MyViewHolderPage(LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment_layout, parent, false))
+                MyViewHolderPage(LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment, parent, false))
             }
         }
     }
@@ -36,7 +35,7 @@ class SportAdapter(private val context: Context, private val sportList: List<New
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment_layout, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.sport_fragment, parent, false)
         return MyViewHolder(itemView)
     }
 
