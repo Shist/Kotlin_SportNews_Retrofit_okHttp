@@ -36,9 +36,10 @@ class SportFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         viewModel.news.observe(this.viewLifecycleOwner, { news ->
-            //TODO Вызывать адаптер НЕ каждый раз при загрузке данных (Разве не один раз вызываем?)
+            //TODO Вызывать адаптер НЕ каждый раз при загрузке данных
             recyclerView.adapter = SportAdapter(requireContext(), news)
         })
+        // (*) Посмотреть ListAdapter
     }
 
     override fun onAttach(context: Context) {

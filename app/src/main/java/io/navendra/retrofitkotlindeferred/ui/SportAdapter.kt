@@ -19,16 +19,6 @@ class SportAdapter(private val context: Context, private val sportList: List<New
         val headline: TextView = itemView.findViewById(R.id.headline)
         val altText: TextView = itemView.findViewById(R.id.altText)
         val pageText: TextView = itemView.findViewById(R.id.pageText)
-
-        fun bind(listItem: NewsItem) {
-            // Не видит context, не можем вызвать функцию для FragmentManager
-            image.setOnClickListener {
-                (context as MainActivity).openNewsDetails(listItem)
-            }
-            headline.setOnClickListener {
-                (context as MainActivity).openNewsDetails(listItem)
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -40,7 +30,6 @@ class SportAdapter(private val context: Context, private val sportList: List<New
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val listItem = sportList[position]
-        holder.bind(listItem)
 
         Picasso.get().load(sportList[position].featuredMedia.featuredMediaContext.featuredMediaContext).into(holder.image)
         holder.headline.text = sportList[position].shortHeadline

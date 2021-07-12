@@ -15,9 +15,9 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun openNewsDetails(news: NewsItem) {
-        // Он просит дать SportFragment, но мы даём NewsItem
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container, news).commit()
+    fun openNewsDetails(page: SportPageFragment) {
+        // Он просит дать SportFragment, но мы даём NewsItem (нужно дать новый фрагмент - NewsDetailsFragment)
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, page).commit()
     }
 
 }
