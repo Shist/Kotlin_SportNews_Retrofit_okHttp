@@ -15,11 +15,19 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun openNewsDetails(news: NewsItem) {
-        supportFragmentManager.beginTransaction()
+    fun onItemClick(news: NewsItem) {
+        supportFragmentManager
+            .beginTransaction()
             .replace(R.id.fragment_container, SportPageFragment(news))
-            .addToBackStack(null)
+            .addToBackStack("Вернуться")
             .commit()
     }
+
+//    fun onItemClick() {
+//        (context as MainActivity).supportFragmentManager
+//            .beginTransaction()
+//            .replace(R.id.fragment_container, SportFragment())
+//            .commit()
+//    }
 
 }

@@ -1,5 +1,6 @@
 package io.navendra.retrofitkotlindeferred.ui
 
+import SportAdapter
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.navendra.retrofitkotlindeferred.R
+import io.navendra.retrofitkotlindeferred.ui.MainActivity
 
 class SportFragment : Fragment() {
 
@@ -39,6 +41,11 @@ class SportFragment : Fragment() {
             //TODO Вызывать адаптер НЕ каждый раз при загрузке данных
             recyclerView.adapter = SportAdapter(requireContext(), news)
         })
+
+        val adapter = SportAdapter { ViewGroup ->
+            val myActivity = requireActivity() as MainActivity
+            MyActivity.onItemClick(ViewGroup)
+        }
         // (*) Посмотреть ListAdapter
     }
 
