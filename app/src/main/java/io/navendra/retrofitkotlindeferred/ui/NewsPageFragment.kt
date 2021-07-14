@@ -12,17 +12,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.model.NewsItem
+import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMedia
+import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMediaContext
 
 class NewsPageFragment (news : NewsItem) : Fragment() {
 
-    private lateinit var viewModel: SportViewModel
+    companion object {
+        fun newInstance() = NewsPageFragment(NewsItem("", NewsItemFeaturedMedia("",
+            NewsItemFeaturedMediaContext("")
+        ), ""))
+    }
 
+    private lateinit var viewModel: SportViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.recycle_view, container, false)
+        return inflater.inflate(R.layout.news_list_item, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

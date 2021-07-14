@@ -25,7 +25,7 @@ class NewsListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.recycle_view, container, false)
+        return inflater.inflate(R.layout.news_list_item, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

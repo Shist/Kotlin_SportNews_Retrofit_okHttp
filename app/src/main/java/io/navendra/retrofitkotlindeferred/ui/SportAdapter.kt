@@ -22,7 +22,7 @@ class SportAdapter(private val sportList: List<NewsItem>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.news_list_fragment, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.news_item_fragment, parent, false)
         return MyViewHolder(itemView)
     }
 
