@@ -18,23 +18,12 @@
             android:gravity="center"
             android:text="@string/headline"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/pageImg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/pageImg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/img"
             app:layout_constraintBottom_toTopOf="@id/pageText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pageHeadline"
-            app:layout_constraintDimensionRatio="16:9" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/pageText"
@@ -43,12 +32,23 @@
             android:layout_marginStart="8dp"
             android:gravity="center"
             android:text="@string/pageText"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@id/pageImg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pageHeadline" />
+
+        <ImageView
+            android:id="@+id/pageImg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/img"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pageImg" />
+            app:layout_constraintTop_toBottomOf="@id/pageText"
+            app:layout_constraintDimensionRatio="16:9" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
