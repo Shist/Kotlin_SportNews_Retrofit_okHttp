@@ -1,16 +1,12 @@
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
-import io.navendra.retrofitkotlindeferred.ui.MainActivity
-import io.navendra.retrofitkotlindeferred.ui.SportFragment
 
 class SportAdapter(private val sportList: List<NewsItem>,
                    private val clickListener: (NewsItem)-> Unit):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {

@@ -2,22 +2,24 @@ package io.navendra.retrofitkotlindeferred.ui
 
 import SportAdapter
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.model.NewsItem
-import io.navendra.retrofitkotlindeferred.ui.MainActivity
+import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMedia
+import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMediaContext
 
-class SportFragment : Fragment() {
+class NewsPageFragment (private val news: NewsItem) : Fragment() {
 
     companion object {
-        fun newInstance() = SportFragment()
+        fun newInstance() = NewsPageFragment(NewsItem("", NewsItemFeaturedMedia("",
+            NewsItemFeaturedMediaContext("")), ""))
     }
 
     private lateinit var viewModel: SportViewModel

@@ -11,14 +11,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, SportFragment())
+            .replace(R.id.fragment_container, NewsListFragment())
             .commit()
     }
 
     fun onItemClick(news: NewsItem) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, SportPageFragment(news))
+            .replace(R.id.fragment_container, NewsPageFragment(news))
             .addToBackStack("Вернуться")
             .commit()
     }
