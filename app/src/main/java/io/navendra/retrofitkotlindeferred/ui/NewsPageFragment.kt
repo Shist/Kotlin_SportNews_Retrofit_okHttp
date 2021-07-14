@@ -12,15 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.model.NewsItem
-import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMedia
-import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMediaContext
 
-class NewsPageFragment (private val news: NewsItem) : Fragment() {
-
-    companion object {
-        fun newInstance() = NewsPageFragment(NewsItem("", NewsItemFeaturedMedia("",
-            NewsItemFeaturedMediaContext("")), ""))
-    }
+class NewsPageFragment (news : NewsItem) : Fragment() {
 
     private lateinit var viewModel: SportViewModel
 
@@ -48,8 +41,6 @@ class NewsPageFragment (private val news: NewsItem) : Fragment() {
             }
             recyclerView.adapter = adapter
         })
-
-
         // (*) Посмотреть ListAdapter
     }
 
@@ -58,5 +49,4 @@ class NewsPageFragment (private val news: NewsItem) : Fragment() {
 
         viewModel = ViewModelProvider(this).get(SportViewModel::class.java)
     }
-
 }
