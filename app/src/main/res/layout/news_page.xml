@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/headline"
+            android:id="@+id/pageHeadline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/img"
+            android:id="@+id/pageImg"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:contentDescription="@string/img"

@@ -17,12 +17,10 @@ class SportAdapter(private val sportList: List<NewsItem>,
         val headline: TextView = itemView.findViewById(R.id.headline)
         val altText: TextView = itemView.findViewById(R.id.altText)
 
-        // Вот это в другом фрагменте нужно
-        val pageText: TextView = itemView.findViewById(R.id.pageText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.news_item_fragment, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.news_item, parent, false)
         return MyViewHolder(itemView)
     }
 
@@ -39,8 +37,6 @@ class SportAdapter(private val sportList: List<NewsItem>,
         holder.headline.text = listItem.shortHeadline
         holder.altText.text = listItem.featuredMedia.featuredMediaAltText
 
-        // Вот это в другом фрагменте нужно
-        holder.pageText.text = listItem.body
     }
 
 }

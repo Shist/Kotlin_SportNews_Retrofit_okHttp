@@ -15,10 +15,10 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun onItemClick(news: NewsItem) {
+    fun onItemClick(item: NewsItem) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, NewsPageFragment(news))
+            .replace(R.id.fragment_container, NewsPageFragment(item))
             .addToBackStack("Вернуться")
             .commit()
     }

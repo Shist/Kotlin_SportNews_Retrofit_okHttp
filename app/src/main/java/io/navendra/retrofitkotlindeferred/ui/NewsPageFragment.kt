@@ -1,21 +1,21 @@
 package io.navendra.retrofitkotlindeferred.ui
 
-import SportAdapter
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMedia
 import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMediaContext
 
-class NewsPageFragment (news : NewsItem) : Fragment() {
+class NewsPageFragment (private val item : NewsItem) : Fragment() {
 
     companion object {
         fun newInstance() = NewsPageFragment(NewsItem("", NewsItemFeaturedMedia("",
@@ -29,7 +29,7 @@ class NewsPageFragment (news : NewsItem) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.news_items_list_fragment, container, false)
+        return inflater.inflate(R.layout.news_page, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,17 +37,14 @@ class NewsPageFragment (news : NewsItem) : Fragment() {
 
         viewModel.loadData()
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.newsPageConstraintLayout)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        val pageHeadline: TextView = view.findViewById(R.id.pageHeadline)
+        val pageImg: ImageView = view.findViewById(R.id.pageImg)
+        val pageText: TextView = view.findViewById(R.id.pageText)
 
-        viewModel.news.observe(this.viewLifecycleOwner, { news ->
-            //TODO Вызывать адаптер НЕ каждый раз при загрузке данных
-            val adapter = SportAdapter(news) {
-                val myActivity = requireActivity() as MainActivity
-                myActivity.onItemClick(it)
-            }
-            recyclerView.adapter = adapter
-        })
+        pageHeadline.text = item.shortHeadline
+        Picasso.get().load(item.featuredMedia.featuredMediaContext.featuredMediaContext).into(pageImg)
+        pageText.text = item.body
+
         // (*) Посмотреть ListAdapter
     }
 
