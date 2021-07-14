@@ -37,7 +37,7 @@ class NewsPageFragment (news : NewsItem) : Fragment() {
 
         viewModel.loadData()
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.newsPageConstraintLayout)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         viewModel.news.observe(this.viewLifecycleOwner, { news ->

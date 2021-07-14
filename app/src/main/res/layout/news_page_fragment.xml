@@ -6,7 +6,7 @@
     app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/newsPageConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
