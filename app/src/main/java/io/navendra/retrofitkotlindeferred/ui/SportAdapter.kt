@@ -12,7 +12,8 @@ import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
 import io.navendra.retrofitkotlindeferred.ui.SportFragment
 
-class SportAdapter(private val context: Context, private val sportList: List<NewsItem>):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
+class SportAdapter(private val context: Context, private val sportList: List<NewsItem>,
+                   private val clickListener: (NewsItem)-> Unit):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         //TODO Можно будет попробовать через ViewBinding
@@ -45,9 +46,7 @@ class SportAdapter(private val context: Context, private val sportList: List<New
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val listItem = sportList[position]
-        holder.bind(holder, position, sportList, {
-
-        })
+        holder.bind(holder, position, sportList, clickListener)
 
         Picasso.get().load(sportList[position].featuredMedia.featuredMediaContext.featuredMediaContext).into(holder.image)
         holder.headline.text = sportList[position].shortHeadline
