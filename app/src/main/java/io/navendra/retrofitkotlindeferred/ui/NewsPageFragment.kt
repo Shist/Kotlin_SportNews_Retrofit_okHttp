@@ -29,7 +29,7 @@ class NewsPageFragment (news : NewsItem) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.news_list_item, container, false)
+        return inflater.inflate(R.layout.news_items_list_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
