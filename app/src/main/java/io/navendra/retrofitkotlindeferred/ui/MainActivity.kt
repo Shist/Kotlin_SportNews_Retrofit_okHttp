@@ -23,13 +23,6 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-//    fun onItemClick() {
-//        (context as MainActivity).supportFragmentManager
-//            .beginTransaction()
-//            .replace(R.id.fragment_container, SportFragment())
-//            .commit()
-//    }
-
 }
 
 /*

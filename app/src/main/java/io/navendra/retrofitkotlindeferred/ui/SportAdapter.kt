@@ -12,7 +12,7 @@ import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
 import io.navendra.retrofitkotlindeferred.ui.SportFragment
 
-class SportAdapter(private val context: Context, private val sportList: List<NewsItem>,
+class SportAdapter(private val sportList: List<NewsItem>,
                    private val clickListener: (NewsItem)-> Unit):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -20,21 +20,9 @@ class SportAdapter(private val context: Context, private val sportList: List<New
         val image: ImageView = itemView.findViewById(R.id.img)
         val headline: TextView = itemView.findViewById(R.id.headline)
         val altText: TextView = itemView.findViewById(R.id.altText)
+
+        // Вот это в другом фрагменте нужно
         val pageText: TextView = itemView.findViewById(R.id.pageText)
-
-        fun bind(holder: MyViewHolder, position: Int, sportList: List<NewsItem>, clickListener: (NewsItem) -> Unit) {
-            val item = sportList[position]
-            holder.itemView.setOnClickListener{
-                clickListener(item)
-            }
-        }
-    }
-
-    class MyViewHolderPage(itemView: View): RecyclerView.ViewHolder(itemView){
-        //TODO Можно будет попробовать через ViewBinding
-        val image: ImageView = itemView.findViewById(R.id.img)
-        val headline: TextView = itemView.findViewById(R.id.headline)
-        //val altText: TextView = itemView.findViewById(R.id.altText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -46,12 +34,17 @@ class SportAdapter(private val context: Context, private val sportList: List<New
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val listItem = sportList[position]
-        holder.bind(holder, position, sportList, clickListener)
 
-        Picasso.get().load(sportList[position].featuredMedia.featuredMediaContext.featuredMediaContext).into(holder.image)
-        holder.headline.text = sportList[position].shortHeadline
-        holder.altText.text = sportList[position].featuredMedia.featuredMediaAltText
-        holder.pageText.text = sportList[position].body
+        holder.itemView.setOnClickListener{
+            clickListener(listItem)
+        }
+
+        Picasso.get().load(listItem.featuredMedia.featuredMediaContext.featuredMediaContext).into(holder.image)
+        holder.headline.text = listItem.shortHeadline
+        holder.altText.text = listItem.featuredMedia.featuredMediaAltText
+
+        // Вот это в другом фрагменте нужно
+        holder.pageText.text = listItem.body
     }
 
 }

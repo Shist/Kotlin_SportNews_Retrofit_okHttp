@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.navendra.retrofitkotlindeferred.R
+import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
 
 class SportFragment : Fragment() {
@@ -39,13 +40,14 @@ class SportFragment : Fragment() {
 
         viewModel.news.observe(this.viewLifecycleOwner, { news ->
             //TODO Вызывать адаптер НЕ каждый раз при загрузке данных
-            recyclerView.adapter = SportAdapter(requireContext(), news)
+            val adapter = SportAdapter(news) {
+                val myActivity = requireActivity() as MainActivity
+                myActivity.onItemClick(it)
+            }
+            recyclerView.adapter = adapter
         })
 
-        val adapter = SportAdapter { ViewGroup ->
-            val myActivity = requireActivity() as MainActivity
-            MyActivity.onItemClick(ViewGroup)
-        }
+
         // (*) Посмотреть ListAdapter
     }
 
