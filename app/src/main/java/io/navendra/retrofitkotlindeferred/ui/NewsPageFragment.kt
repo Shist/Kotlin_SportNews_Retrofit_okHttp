@@ -2,6 +2,7 @@ package io.navendra.retrofitkotlindeferred.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +44,8 @@ class NewsPageFragment (private val item : NewsItem) : Fragment() {
 
         pageHeadline.text = item.shortHeadline
         Picasso.get().load(item.featuredMedia.featuredMediaContext.featuredMediaContext).into(pageImg)
-        pageText.text = item.body
+        pageText.text = Html.fromHtml(item.body).toString()
+        
 
         // (*) Посмотреть ListAdapter
     }
