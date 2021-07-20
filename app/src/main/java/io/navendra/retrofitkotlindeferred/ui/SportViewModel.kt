@@ -10,7 +10,7 @@ import kotlinx.coroutines.*
 
 class SportViewModel : ViewModel() {
 
-    val news = MutableLiveData<List<NewsItem>>()
+    var news = MutableLiveData<List<NewsItem>>()
 
     fun loadData(){
 
@@ -34,8 +34,9 @@ class SportViewModel : ViewModel() {
         }
     }
 
-        override fun onCleared() {
+    override fun onCleared() {
             super.onCleared()
             Log.i("SportViewModel", "SportViewModel destroyed!")
-        }
+    }
+
     }

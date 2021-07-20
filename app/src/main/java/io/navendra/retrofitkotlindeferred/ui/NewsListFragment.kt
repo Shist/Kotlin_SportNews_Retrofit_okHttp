@@ -33,16 +33,21 @@ class NewsListFragment : Fragment() {
 
         viewModel.loadData()
 
+        //TODO Вызывать адаптер НЕ каждый раз при загрузке данных
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.news.observe(this.viewLifecycleOwner, { news ->
-            //TODO Вызывать адаптер НЕ каждый раз при загрузке данных
-            val adapter = SportAdapter(news) {
-                val myActivity = requireActivity() as MainActivity
-                myActivity.onItemClick(it)
-            }
-            recyclerView.adapter = adapter
+        // Создаём адаптер (один раз)
+        val adapter = SportAdapter {
+            val myActivity = requireActivity() as MainActivity
+            myActivity.onItemClick(it)
+        }
+        recyclerView.adapter = adapter
+
+        viewModel.news.observe(this.viewLifecycleOwner, {
+            adapter.setItems(this.viewModel.news)
+            adapter.notifyDataSetChanged()
         })
 
 

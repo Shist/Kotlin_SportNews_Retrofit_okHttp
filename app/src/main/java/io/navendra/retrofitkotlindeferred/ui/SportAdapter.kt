@@ -3,13 +3,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
 
-class SportAdapter(private val sportList: List<NewsItem>,
-                   private val clickListener: (NewsItem)-> Unit):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
+class SportAdapter(private val clickListener: (NewsItem)-> Unit):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
+
+    private var items : List<NewsItem>? = null
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         //TODO Можно будет попробовать через ViewBinding
@@ -24,10 +26,10 @@ class SportAdapter(private val sportList: List<NewsItem>,
         return MyViewHolder(itemView)
     }
 
-    override fun getItemCount() = sportList.size
+    override fun getItemCount() = items!!.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val listItem = sportList[position]
+        val listItem = items!![position]
 
         holder.itemView.setOnClickListener{
             clickListener(listItem)
@@ -37,6 +39,10 @@ class SportAdapter(private val sportList: List<NewsItem>,
         holder.headline.text = listItem.shortHeadline
         holder.altText.text = listItem.featuredMedia.featuredMediaAltText
 
+    }
+
+    fun setItems(newData: MutableLiveData<List<NewsItem>>) {
+        items = newData.value
     }
 
 }
