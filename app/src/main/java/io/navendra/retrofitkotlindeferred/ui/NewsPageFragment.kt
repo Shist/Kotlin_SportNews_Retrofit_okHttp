@@ -44,7 +44,7 @@ class NewsPageFragment (private val item : NewsItem) : Fragment() {
 
         pageHeadline.text = item.shortHeadline
         Picasso.get().load(item.featuredMedia.featuredMediaContext.featuredMediaContext).into(pageImg)
-        pageText.text = Html.fromHtml(item.body).toString()
+        pageText.text = Html.fromHtml(item.body, Html.FROM_HTML_MODE_LEGACY).toString()
         
 
         // (*) Посмотреть ListAdapter
