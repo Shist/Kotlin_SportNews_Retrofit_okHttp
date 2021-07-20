@@ -8,10 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
+import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMedia
+import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMediaContext
 
 class SportAdapter(private val clickListener: (NewsItem)-> Unit):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
-    private var items : List<NewsItem>? = null
+    private var items : List<NewsItem>? = List(0) {
+        NewsItem("", NewsItemFeaturedMedia("",
+            NewsItemFeaturedMediaContext("")), "")
+    }
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         //TODO Можно будет попробовать через ViewBinding
