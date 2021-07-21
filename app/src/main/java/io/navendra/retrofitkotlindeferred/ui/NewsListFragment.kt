@@ -21,6 +21,7 @@ class NewsListFragment : Fragment() {
 
     private lateinit var viewModel: SportViewModel
 
+    lateinit var swipeContainer: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +53,18 @@ class NewsListFragment : Fragment() {
         })
 
         // (*) Посмотреть ListAdapter
+
+        swipeContainer = view.findViewById(R.id.swipeContainer)
+        swipeContainer.setOnRefreshListener {
+            // TODO Сюда напишем логику, которая нам нужна для обновления страницы
+            adapter.setItems(this.viewModel.news)
+            adapter.notifyDataSetChanged()
+        }
+        swipeContainer.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light)
     }
 
     override fun onAttach(context: Context) {
