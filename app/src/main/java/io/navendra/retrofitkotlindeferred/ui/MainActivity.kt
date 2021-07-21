@@ -2,17 +2,31 @@ package io.navendra.retrofitkotlindeferred.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 
 class MainActivity : AppCompatActivity() {
+    lateinit var swipeContainer: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, NewsListFragment())
             .commit()
+
+        swipeContainer = findViewById(R.id.swipeContainer)
+        swipeContainer.setOnRefreshListener {
+
+        }
+        swipeContainer.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light);
     }
 
     fun onItemClick(item: NewsItem) {

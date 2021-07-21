@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.navendra.retrofitkotlindeferred.R
 
 class NewsListFragment : Fragment() {
@@ -49,7 +50,6 @@ class NewsListFragment : Fragment() {
             adapter.setItems(this.viewModel.news)
             adapter.notifyDataSetChanged()
         })
-
 
         // (*) Посмотреть ListAdapter
     }
