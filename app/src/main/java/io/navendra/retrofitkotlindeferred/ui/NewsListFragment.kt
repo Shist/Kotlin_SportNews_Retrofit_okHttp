@@ -48,7 +48,7 @@ class NewsListFragment : Fragment() {
         recyclerView.adapter = adapter
 
         viewModel.news.observe(this.viewLifecycleOwner, {
-            adapter.setItems(this.viewModel.news)
+            adapter.setItems(it)
             adapter.notifyDataSetChanged()
         })
 
@@ -57,8 +57,10 @@ class NewsListFragment : Fragment() {
         swipeContainer = view.findViewById(R.id.swipeContainer)
         swipeContainer.setOnRefreshListener {
             // TODO Сюда напишем логику, которая нам нужна для обновления страницы
-            adapter.setItems(this.viewModel.news)
-            adapter.notifyDataSetChanged()
+            viewModel.news.observe(this.viewLifecycleOwner, {
+                adapter.setItems(it)
+                adapter.notifyDataSetChanged()
+            })
         }
         swipeContainer.setColorSchemeResources(
             android.R.color.holo_blue_bright,
