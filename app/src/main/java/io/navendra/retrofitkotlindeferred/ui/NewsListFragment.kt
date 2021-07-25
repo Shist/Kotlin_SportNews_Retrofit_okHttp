@@ -62,6 +62,7 @@ class NewsListFragment : Fragment() {
                 adapter.setItems(it)
                 adapter.notifyDataSetChanged()
             })
+            swipeContainer.isRefreshing = false
         }
         swipeContainer.setColorSchemeResources(
             android.R.color.holo_blue_bright,
