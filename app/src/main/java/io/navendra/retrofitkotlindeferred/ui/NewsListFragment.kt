@@ -35,8 +35,6 @@ class NewsListFragment : Fragment() {
 
         viewModel.loadData()
 
-        //TODO Вызывать адаптер НЕ каждый раз при загрузке данных
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -56,7 +54,7 @@ class NewsListFragment : Fragment() {
 
         swipeContainer = view.findViewById(R.id.swipeContainer)
         swipeContainer.setOnRefreshListener {
-            // TODO Сюда напишем логику, которая нам нужна для обновления страницы
+            viewModel.loadData()
             viewModel.news.observe(this.viewLifecycleOwner, {
                 adapter.setItems(it)
                 adapter.notifyDataSetChanged()
