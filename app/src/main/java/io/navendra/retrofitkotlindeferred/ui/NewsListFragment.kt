@@ -15,9 +15,12 @@ import io.navendra.retrofitkotlindeferred.R
 
 class NewsListFragment : Fragment() {
 
+    //TODO Почитать про lifecycle фрагментов и как правильно их создавать
+    /*
     companion object {
         fun newInstance() = NewsListFragment()
     }
+    */
 
     private lateinit var viewModel: SportViewModel
 
