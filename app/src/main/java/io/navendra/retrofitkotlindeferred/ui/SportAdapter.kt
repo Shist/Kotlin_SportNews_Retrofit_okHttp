@@ -13,10 +13,7 @@ import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMediaContext
 
 class SportAdapter(private val clickListener: (NewsItem)-> Unit):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
-    private var items : List<NewsItem>? = List(0) {
-        NewsItem("", NewsItemFeaturedMedia("",
-            NewsItemFeaturedMediaContext("")), "")
-    }
+    private var items : List<NewsItem> = emptyList()
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         //TODO Можно будет попробовать через ViewBinding
@@ -31,10 +28,10 @@ class SportAdapter(private val clickListener: (NewsItem)-> Unit):RecyclerView.Ad
         return MyViewHolder(itemView)
     }
 
-    override fun getItemCount() = items!!.size
+    override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val listItem = items!![position]
+        val listItem = items[position]
 
         holder.itemView.setOnClickListener{
             clickListener(listItem)
@@ -46,8 +43,8 @@ class SportAdapter(private val clickListener: (NewsItem)-> Unit):RecyclerView.Ad
 
     }
 
-    fun setItems(newData: MutableLiveData<List<NewsItem>>) {
-        items = newData.value
+    fun setItems(newData: List<NewsItem>) {
+        items = newData
     }
 
 }
