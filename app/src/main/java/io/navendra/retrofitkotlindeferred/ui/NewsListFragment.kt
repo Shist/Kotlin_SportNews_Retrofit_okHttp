@@ -50,6 +50,7 @@ class NewsListFragment : Fragment() {
         viewModel.news.observe(this.viewLifecycleOwner, {
             adapter.setItems(it)
             adapter.notifyDataSetChanged()
+            swipeContainer.isRefreshing = false
         })
 
         // (*) Посмотреть ListAdapter
@@ -57,11 +58,6 @@ class NewsListFragment : Fragment() {
         swipeContainer = view.findViewById(R.id.swipeContainer)
         swipeContainer.setOnRefreshListener {
             viewModel.loadData()
-            viewModel.news.observe(this.viewLifecycleOwner, {
-                adapter.setItems(it)
-                adapter.notifyDataSetChanged()
-            })
-            swipeContainer.isRefreshing = false
         }
         swipeContainer.setColorSchemeResources(
             android.R.color.holo_blue_bright,
