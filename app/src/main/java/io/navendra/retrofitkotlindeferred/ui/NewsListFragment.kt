@@ -41,7 +41,6 @@ class NewsListFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        // Создаём адаптер (один раз)
         val adapter = SportAdapter {
             val myActivity = requireActivity() as MainActivity
             myActivity.onItemClick(it)
