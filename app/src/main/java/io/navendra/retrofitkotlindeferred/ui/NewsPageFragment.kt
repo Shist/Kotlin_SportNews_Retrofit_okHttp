@@ -13,8 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.model.NewsItem
-import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMedia
-import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMediaContext
 
 class NewsPageFragment (private val item : NewsItem) : Fragment() {
 
