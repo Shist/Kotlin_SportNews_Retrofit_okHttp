@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.R
+import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
+import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 
 class NewsPageFragment (private val item : NewsItem) : Fragment() {
@@ -27,11 +29,15 @@ class NewsPageFragment (private val item : NewsItem) : Fragment() {
 
     private lateinit var viewModel: SportViewModel
 
+    private var _binding: NewsPageBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.news_page, container, false)
+    ): View {
+        _binding = NewsPageBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,16 +45,20 @@ class NewsPageFragment (private val item : NewsItem) : Fragment() {
 
         viewModel.loadData()
 
-        val pageHeadline: TextView = view.findViewById(R.id.pageHeadline)
-        val pageImg: ImageView = view.findViewById(R.id.pageImg)
-        val pageText: TextView = view.findViewById(R.id.pageText)
+        val pageHeadline: TextView = binding.pageHeadline
+        val pageImg: ImageView = binding.pageImg
+        val pageText: TextView = binding.pageText
 
         pageHeadline.text = item.shortHeadline
         Picasso.get().load(item.featuredMedia.featuredMediaContext.featuredMediaContext).into(pageImg)
         pageText.text = Html.fromHtml(item.body, Html.FROM_HTML_MODE_LEGACY).toString()
 
-
         // (*) Посмотреть ListAdapter
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onAttach(context: Context) {
