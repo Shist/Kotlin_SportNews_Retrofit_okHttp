@@ -15,7 +15,7 @@ import io.navendra.retrofitkotlindeferred.R
 
 class NewsListFragment : Fragment() {
 
-    //TODO Почитать про lifecycle фрагментов и как правильно их создавать
+    // Эта штука нам может пригодится в будущем для более детальной настройки
     /*
     companion object {
         fun newInstance() = NewsListFragment()
