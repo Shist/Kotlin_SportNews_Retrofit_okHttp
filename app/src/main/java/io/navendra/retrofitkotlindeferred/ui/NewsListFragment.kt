@@ -13,13 +13,6 @@ import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 
 class NewsListFragment : Fragment() {
 
-    // Эта штука нам может пригодится в будущем для более детальной настройки
-    /*
-    companion object {
-        fun newInstance() = NewsListFragment()
-    }
-    */
-
     private lateinit var viewModel: SportViewModel
 
     lateinit var swipeContainer: SwipeRefreshLayout

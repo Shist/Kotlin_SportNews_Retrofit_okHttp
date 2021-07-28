@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     fun onItemClick(item: NewsItem) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, NewsPageFragment(item))
+            .replace(R.id.fragment_container, NewsPageFragment.newInstance(item))
             .addToBackStack("goBack")
             .commit()
     }

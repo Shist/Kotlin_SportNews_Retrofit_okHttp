@@ -14,13 +14,15 @@ import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 
-class NewsPageFragment (private val item : NewsItem) : Fragment() {
+class NewsPageFragment : Fragment() {
 
     companion object {
-        lateinit var data : NewsItem
+        fun newInstance(item : NewsItem) = NewsPageFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable("data", item)
+            }
+        }
     }
-
-    constructor() : this(data)
 
     private lateinit var viewModel: SportViewModel
 
@@ -31,7 +33,6 @@ class NewsPageFragment (private val item : NewsItem) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        data = item
         _binding = NewsPageBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -45,9 +46,11 @@ class NewsPageFragment (private val item : NewsItem) : Fragment() {
         val pageImg: ImageView = binding.pageImg
         val pageText: TextView = binding.pageText
 
-        pageHeadline.text = item.shortHeadline
-        Picasso.get().load(item.featuredMedia.featuredMediaContext.featuredMediaContext).into(pageImg)
-        pageText.text = Html.fromHtml(item.body, Html.FROM_HTML_MODE_LEGACY).toString()
+        val item = arguments?.getParcelable<NewsItem>("data")
+
+        pageHeadline.text = item?.shortHeadline
+        Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext).into(pageImg)
+        pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
 
         // (*) Посмотреть ListAdapter
     }
@@ -62,4 +65,5 @@ class NewsPageFragment (private val item : NewsItem) : Fragment() {
 
         viewModel = ViewModelProvider(this).get(SportViewModel::class.java)
     }
+
 }
