@@ -32,6 +32,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // for View Binding
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
