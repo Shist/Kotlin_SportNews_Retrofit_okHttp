@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, NewsPageFragment(item))
-            .addToBackStack("Вернуться")
+            .addToBackStack("goBack")
             .commit()
     }
 
