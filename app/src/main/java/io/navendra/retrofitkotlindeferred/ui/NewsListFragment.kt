@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.navendra.retrofitkotlindeferred.R
+import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 
 class NewsListFragment : Fragment() {
 
@@ -26,11 +27,15 @@ class NewsListFragment : Fragment() {
 
     lateinit var swipeContainer: SwipeRefreshLayout
 
+    private var _binding: NewsItemsListBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.news_items_list, container, false)
+    ): View {
+        _binding = NewsItemsListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,7 +43,8 @@ class NewsListFragment : Fragment() {
 
         viewModel.loadData()
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+
+        val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         val adapter = SportAdapter {
@@ -55,7 +61,7 @@ class NewsListFragment : Fragment() {
 
         // (*) Посмотреть ListAdapter
 
-        swipeContainer = view.findViewById(R.id.swipeContainer)
+        swipeContainer = binding.swipeContainer
         swipeContainer.setOnRefreshListener {
             viewModel.loadData()
         }
@@ -64,6 +70,11 @@ class NewsListFragment : Fragment() {
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,
             android.R.color.holo_red_light)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onAttach(context: Context) {
