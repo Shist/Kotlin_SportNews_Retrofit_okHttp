@@ -17,12 +17,16 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, NewsListFragment())
-            .commit()
+        if (savedInstanceState == null)
+        {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, NewsListFragment())
+                .commit()
+        }
     }
 
     fun onItemClick(item: NewsItem) {
+        // Передавать не item, а ID новости (во ViewModel найдём этот ID-шник)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, NewsPageFragment.newInstance(item))
