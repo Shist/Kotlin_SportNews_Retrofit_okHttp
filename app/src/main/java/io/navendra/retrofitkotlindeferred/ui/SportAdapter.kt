@@ -7,22 +7,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.R
+import io.navendra.retrofitkotlindeferred.databinding.NewsItemBinding
 
 class SportAdapter(private val clickListener: (NewsItem)-> Unit):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
 
     private var items : List<NewsItem> = emptyList()
 
-    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        //TODO Можно будет попробовать через ViewBinding
-        val image: ImageView = itemView.findViewById(R.id.img)
-        val headline: TextView = itemView.findViewById(R.id.headline)
-        val altText: TextView = itemView.findViewById(R.id.altText)
-
+    class MyViewHolder(itemBinding: NewsItemBinding): RecyclerView.ViewHolder(itemBinding.root){
+        val image: ImageView = itemBinding.img
+        val headline: TextView = itemBinding.headline
+        val altText: TextView = itemBinding.altText
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.news_item, parent, false)
-        return MyViewHolder(itemView)
+        val itemBinding = NewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MyViewHolder(itemBinding)
     }
 
     override fun getItemCount() = items.size
