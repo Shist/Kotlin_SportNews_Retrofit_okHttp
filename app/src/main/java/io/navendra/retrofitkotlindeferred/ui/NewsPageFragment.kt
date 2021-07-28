@@ -16,14 +16,11 @@ import io.navendra.retrofitkotlindeferred.model.NewsItem
 
 class NewsPageFragment (private val item : NewsItem) : Fragment() {
 
-    // Эта штука нам может пригодится в будущем для более детальной настройки
-    /*
     companion object {
-        fun newInstance() = NewsPageFragment(NewsItem("", NewsItemFeaturedMedia("",
-            NewsItemFeaturedMediaContext("")
-        ), ""))
+        lateinit var data : NewsItem
     }
-    */
+
+    constructor() : this(data)
 
     private lateinit var viewModel: SportViewModel
 
@@ -34,6 +31,7 @@ class NewsPageFragment (private val item : NewsItem) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        data = item
         _binding = NewsPageBinding.inflate(inflater, container, false)
         return binding.root
     }
