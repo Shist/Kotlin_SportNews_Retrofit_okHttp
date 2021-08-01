@@ -69,7 +69,7 @@ class NewsListFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        viewModel = ViewModelProvider(this).get(SportViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(SportViewModel::class.java)
     }
 
 }
