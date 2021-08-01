@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.ActivityMainBinding
-import io.navendra.retrofitkotlindeferred.model.NewsItem
 
 class MainActivity : AppCompatActivity() {
 
