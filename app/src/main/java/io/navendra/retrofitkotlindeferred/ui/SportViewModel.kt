@@ -34,9 +34,13 @@ class SportViewModel : ViewModel() {
         }
     }
 
+    fun getItemByID(itemID: String?): NewsItem? {
+        return news.value?.find { it.id == itemID }
+    }
+
     override fun onCleared() {
             super.onCleared()
             Log.i("SportViewModel", "SportViewModel destroyed!")
     }
 
-    }
+}

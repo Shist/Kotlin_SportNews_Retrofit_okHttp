@@ -3,6 +3,7 @@ package io.navendra.retrofitkotlindeferred.ui
 import android.content.Context
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,9 @@ import io.navendra.retrofitkotlindeferred.model.NewsItem
 class NewsPageFragment : Fragment() {
 
     companion object {
-        fun newInstance(item : NewsItem) = NewsPageFragment().apply {
+        fun newInstance(itemID: String) = NewsPageFragment().apply {
             arguments = Bundle().apply {
-                putParcelable("data", item)
+                putString("itemID", itemID)
             }
         }
     }
@@ -46,7 +47,9 @@ class NewsPageFragment : Fragment() {
         val pageImg: ImageView = binding.pageImg
         val pageText: TextView = binding.pageText
 
-        val item = arguments?.getParcelable<NewsItem>("data")
+        val itemID = arguments?.getString("itemID")
+
+        val item = viewModel.getItemByID(itemID)
 
         pageHeadline.text = item?.shortHeadline
         Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext).into(pageImg)

@@ -25,11 +25,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onItemClick(item: NewsItem) {
-        // Передавать не item, а ID новости (во ViewModel найдём этот ID-шник)
+    fun onItemClick(itemID: String) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, NewsPageFragment.newInstance(item))
+            .replace(R.id.fragment_container, NewsPageFragment.newInstance(itemID))
             .addToBackStack("goBack")
             .commit()
     }

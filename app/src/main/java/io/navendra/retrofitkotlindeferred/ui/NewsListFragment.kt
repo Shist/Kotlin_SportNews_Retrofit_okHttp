@@ -33,13 +33,12 @@ class NewsListFragment : Fragment() {
 
         viewModel.loadData()
 
-
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         val adapter = SportAdapter {
             val myActivity = requireActivity() as MainActivity
-            myActivity.onItemClick(it)
+            myActivity.onItemClick(it.id)
         }
         recyclerView.adapter = adapter
 
