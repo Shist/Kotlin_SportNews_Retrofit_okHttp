@@ -4,12 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemBinding
 
-class SportAdapter(private val clickListener: (NewsItem)-> Unit):RecyclerView.Adapter<SportAdapter.MyViewHolder>() {
+class SportAdapter(private val clickListener: (NewsItem)-> Unit) :
+    ListAdapter<NewsItem, SportAdapter.MyViewHolder>(SportNewsDiffCallback()) {
 
     private var items : List<NewsItem> = emptyList()
 
@@ -24,10 +27,8 @@ class SportAdapter(private val clickListener: (NewsItem)-> Unit):RecyclerView.Ad
         return MyViewHolder(itemBinding)
     }
 
-    override fun getItemCount() = items.size
-
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val listItem = items[position]
+        val listItem = getItem(position)
 
         holder.itemView.setOnClickListener{
             clickListener(listItem)
@@ -43,4 +44,14 @@ class SportAdapter(private val clickListener: (NewsItem)-> Unit):RecyclerView.Ad
         items = newData
     }
 
+}
+
+class SportNewsDiffCallback : DiffUtil.ItemCallback<NewsItem>() {
+    override fun areItemsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
+        return oldItem == newItem
+    }
 }

@@ -43,12 +43,9 @@ class NewsListFragment : Fragment() {
         recyclerView.adapter = adapter
 
         viewModel.news.observe(this.viewLifecycleOwner, {
-            adapter.setItems(it)
-            adapter.notifyDataSetChanged()
+            adapter.submitList(it)
             swipeContainer.isRefreshing = false
         })
-
-        // (*) Посмотреть ListAdapter
 
         swipeContainer = binding.swipeContainer
         swipeContainer.setOnRefreshListener {
