@@ -8,7 +8,7 @@ import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import kotlinx.coroutines.*
 
-class SportViewModel : ViewModel() {
+class NewsListViewModel : ViewModel() {
 
     var news = MutableLiveData<List<NewsItem>>()
 

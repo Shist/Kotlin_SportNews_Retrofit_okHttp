@@ -13,7 +13,7 @@ import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 
 class NewsListFragment : Fragment() {
 
-    private lateinit var viewModel: SportViewModel
+    private lateinit var viewModel: NewsListViewModel
 
     lateinit var swipeContainer: SwipeRefreshLayout
 
@@ -66,7 +66,7 @@ class NewsListFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        viewModel = ViewModelProvider(requireActivity()).get(SportViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(NewsListViewModel::class.java)
     }
 
 }

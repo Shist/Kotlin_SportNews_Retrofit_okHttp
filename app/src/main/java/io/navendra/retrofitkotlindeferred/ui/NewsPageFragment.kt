@@ -23,7 +23,7 @@ class NewsPageFragment : Fragment() {
         }
     }
 
-    private lateinit var viewModel: SportViewModel
+    private lateinit var viewModel: NewsListViewModel
 
     private var _binding: NewsPageBinding? = null
     private val binding get() = _binding!!
@@ -62,7 +62,7 @@ class NewsPageFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        viewModel = ViewModelProvider(requireActivity()).get(SportViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(NewsListViewModel::class.java)
     }
 
 }
