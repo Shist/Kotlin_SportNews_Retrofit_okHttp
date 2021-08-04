@@ -49,9 +49,5 @@ class NewsPageViewModel : ViewModel() {
 sealed class LatestNewsPageUiState {
     data class Success(val news_item: NewsItem?): LatestNewsPageUiState()
     object Loading : LatestNewsPageUiState()
-    data class Error(val exception: Throwable): LatestNewsPageUiState() {
-        fun showError(exception: Throwable) {
-            Log.d("MyLog", "Failure: ", exception)
-        }
-    }
+    data class Error(val exception: Throwable): LatestNewsPageUiState()
 }
