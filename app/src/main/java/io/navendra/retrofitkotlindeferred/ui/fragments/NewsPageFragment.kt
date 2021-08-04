@@ -9,10 +9,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
-import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
+import io.navendra.retrofitkotlindeferred.model.NewsItem
+import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsListUiState
+import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsPageUiState
+import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class NewsPageFragment : Fragment() {
 
@@ -24,7 +32,7 @@ class NewsPageFragment : Fragment() {
         }
     }
 
-    private lateinit var viewModel: NewsListViewModel
+    private lateinit var viewModel: NewsPageViewModel
 
     private var _binding: NewsPageBinding? = null
     private val binding get() = _binding!!
@@ -40,19 +48,35 @@ class NewsPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loadData()
+        val itemID = arguments?.getString("itemID")
+
+        viewModel.loadData(itemID!!)
 
         val pageHeadline: TextView = binding.pageHeadline
         val pageImg: ImageView = binding.pageImg
         val pageText: TextView = binding.pageText
 
-        val itemID = arguments?.getString("itemID")
+        var item: NewsItem? = null
 
-        val item = viewModel.getItemByID(itemID)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.newsPageFlow.collect { uiState ->
+                    when (uiState) {
+                        is LatestNewsPageUiState.Success -> {
+                            item = uiState.news_item
+                        }
+                        is LatestNewsPageUiState.Loading -> {
+                        }
+                        is LatestNewsPageUiState.Error -> uiState.showError(uiState.exception)
+                    }
+                }
+            }
 
-        pageHeadline.text = item?.shortHeadline
-        Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext).into(pageImg)
-        pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
+            pageHeadline.text = item?.shortHeadline
+            Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext)
+                .into(pageImg)
+            pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
+        }
     }
 
     override fun onDestroyView() {
@@ -63,7 +87,7 @@ class NewsPageFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        viewModel = ViewModelProvider(requireActivity()).get(NewsListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(NewsPageViewModel::class.java)
     }
 
 }

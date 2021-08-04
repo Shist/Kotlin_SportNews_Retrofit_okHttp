@@ -22,8 +22,7 @@ class NewsListViewModel : ViewModel() {
             try {
                 val userRequest = service.getNews()
                     _newsListFlow.value =
-                        LatestNewsListUiState.Success(userRequest.items) // Записываем, успешно или нет всё прошло
-
+                        LatestNewsListUiState.Success(userRequest.items)
                 if(userRequest.items.isNotEmpty()){
                     Log.d("MyLog", "Successful start logging...")
                     Log.d("MyLog", "response: ${userRequest.items.size} items")
@@ -37,10 +36,6 @@ class NewsListViewModel : ViewModel() {
             }
         }
     }
-
-    /*fun getItemByID(itemID: String?): NewsItem? {
-        return news.find { it.id == itemID }
-    }*/
 
     override fun onCleared() {
         super.onCleared()

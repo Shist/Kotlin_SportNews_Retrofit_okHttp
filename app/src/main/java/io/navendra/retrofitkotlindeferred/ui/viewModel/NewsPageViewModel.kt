@@ -8,39 +8,31 @@ import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-class NewsListPageModel : ViewModel() {
+class NewsPageViewModel : ViewModel() {
 
-    private val _newsPageFlow = MutableStateFlow(LatestNewsPageUiState.Success(emptyList()))
+    private val _newsPageFlow = MutableStateFlow(LatestNewsPageUiState.Success(null))
 
     val newsPageFlow: StateFlow<LatestNewsPageUiState> = _newsPageFlow
 
-    fun loadData(){
+    fun loadData(item_id: String){
 
         val service = SportNewsClient.SPORT_NEWS_API
 
         viewModelScope.launch(Dispatchers.Main) {
             try {
-                val userRequest = service.getNews()
+                val userRequest = service.getNewsPageByID(item_id)
                 _newsPageFlow.value =
-                    LatestNewsPageUiState.Success(userRequest.items) // Записываем, успешно или нет всё прошло
-
-                if(userRequest.items.isNotEmpty()){
-                    Log.d("MyLog", "Successful start logging...")
-                    Log.d("MyLog", "response: ${userRequest.items.size} items")
-                    for (i in userRequest.items.indices)
-                        Log.d("MyLog", userRequest.items[i].toString())
+                    LatestNewsPageUiState.Success(userRequest)
+                if(userRequest != null){
+                    Log.d("MyLog", "response item: $userRequest")
                 }else{
-                    Log.d("MyLog", "Failure while getting response...")
+                    Log.d("MyLog", "Failure while getting response item...")
                 }
             } catch (e: Throwable){
                 Log.d("MyLog", "Failure...", e)
             }
         }
     }
-
-    /*fun getItemByID(itemID: String?): NewsItem? {
-        return news.find { it.id == itemID }
-    }*/
 
     override fun onCleared() {
         super.onCleared()
@@ -50,7 +42,7 @@ class NewsListPageModel : ViewModel() {
 }
 
 sealed class LatestNewsPageUiState {
-    data class Success(val news: List<NewsItem>): LatestNewsPageUiState()
+    data class Success(val news_item: NewsItem?): LatestNewsPageUiState()
     object Loading : LatestNewsPageUiState()
     data class Error(val exception: Throwable): LatestNewsPageUiState() {
         fun showError(exception: Throwable) {

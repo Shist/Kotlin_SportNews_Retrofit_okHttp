@@ -13,7 +13,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
-import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsUiState
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import io.navendra.retrofitkotlindeferred.ui.adapter.SportAdapter
@@ -54,12 +53,13 @@ class NewsListFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.newsFlow.collect { uiState ->
+                viewModel.newsListFlow.collect { uiState ->
                     when (uiState) {
                         is LatestNewsListUiState.Success -> {
                             adapter.submitList(uiState.news)
                             swipeContainer?.isRefreshing = false
                         }
+                        is LatestNewsListUiState.Loading -> {}
                         is LatestNewsListUiState.Error -> uiState.showError(uiState.exception)
                     }
                 }
@@ -85,7 +85,7 @@ class NewsListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = ViewModelProvider(requireActivity()).get(NewsListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(NewsListViewModel::class.java)
     }
 
 }
