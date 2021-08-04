@@ -3,6 +3,7 @@ package io.navendra.retrofitkotlindeferred.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.model.NewsItem
@@ -33,6 +35,8 @@ class NewsPageFragment : Fragment() {
     }
 
     private lateinit var viewModel: NewsPageViewModel
+
+    private var swipeContainer: SwipeRefreshLayout? = null
 
     private var _binding: NewsPageBinding? = null
     private val binding get() = _binding!!
@@ -58,23 +62,37 @@ class NewsPageFragment : Fragment() {
 
         var item: NewsItem? = null
 
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsPageFlow.collect { uiState ->
                     when (uiState) {
                         is LatestNewsPageUiState.Success -> {
                             item = uiState.news_item
+
+                            pageHeadline.text = item?.shortHeadline
+                            Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext)
+                                .into(pageImg)
+                            pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
+
+                            swipeContainer = binding.swipeContainer
+                            swipeContainer?.setOnRefreshListener {
+                                viewModel.loadData(itemID!!)
+                                swipeContainer?.isRefreshing = false
+                            }
+                            swipeContainer?.setColorSchemeResources(
+                                android.R.color.holo_blue_bright,
+                                android.R.color.holo_green_light,
+                                android.R.color.holo_orange_light,
+                                android.R.color.holo_red_light
+                            )
                         }
                         is LatestNewsPageUiState.Loading -> {
+
                         }
                         is LatestNewsPageUiState.Error -> uiState.showError(uiState.exception)
                     }
                 }
-
-                pageHeadline.text = item?.shortHeadline
-                Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext)
-                    .into(pageImg)
-                pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
             }
         }
     }
