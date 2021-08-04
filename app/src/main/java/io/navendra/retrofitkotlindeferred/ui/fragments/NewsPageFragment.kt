@@ -77,7 +77,7 @@ class NewsPageFragment : Fragment() {
 
                             swipeContainer = binding.swipeContainer
                             swipeContainer?.setOnRefreshListener {
-                                viewModel.loadData(itemID!!)
+                                viewModel.loadData(itemID)
                                 swipeContainer?.isRefreshing = false
                             }
                             swipeContainer?.setColorSchemeResources(
