@@ -6,16 +6,21 @@ import androidx.lifecycle.viewModelScope
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 
 class NewsListViewModel : ViewModel() {
 
     var news: List<NewsItem> = emptyList()
 
-    lateinit var newsFlow: Flow<List<NewsItem>>
-    private val refreshIntervalMs: Long = 5000
+    lateinit var newsFlow: MutableStateFlow<List<NewsItem>>
+
+    // Backing property to avoid state updates from other classes
+    private val _uiState = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
+
+    // The UI collects from this StateFlow to get its state updates
+    val uiState: StateFlow<LatestNewsUiState> = _uiState
 
     fun loadData(){
 
@@ -24,13 +29,10 @@ class NewsListViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.Main) {
             try {
                 val userRequest = service.getNews()
-                newsFlow = flow {
-                    while(true) {
-                        emit(userRequest.items) // Emits the result of the request to the flow
-                        delay(refreshIntervalMs) // Suspends the coroutine for some time
-                    }
+                newsFlow.collect { data ->
+                    news = data // Достаем и сохраняем данные в news
+                    _uiState.value = LatestNewsUiState.Success(data)    // Записываем, успешно или нет всё прошло
                 }
-                newsFlow.collect { value -> news = value }
                 if(userRequest.items.isNotEmpty()){
                     Log.d("MyLog", "Successful start logging...")
                     Log.d("MyLog", "response: ${userRequest.items.size} items")
@@ -54,4 +56,10 @@ class NewsListViewModel : ViewModel() {
         Log.i("SportViewModel", "SportViewModel destroyed!")
     }
 
+}
+
+// Represents different states for the news screen
+sealed class LatestNewsUiState {
+    data class Success(val news: List<NewsItem>): LatestNewsUiState()
+    data class Error(val exception: Throwable): LatestNewsUiState()
 }

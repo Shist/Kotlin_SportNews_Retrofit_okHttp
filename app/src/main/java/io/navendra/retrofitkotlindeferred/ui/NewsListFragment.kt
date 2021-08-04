@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
+import kotlinx.coroutines.launch
 
 class NewsListFragment : Fragment() {
 
@@ -41,6 +44,18 @@ class NewsListFragment : Fragment() {
             myActivity.onItemClick(it.id)
         }
         recyclerView.adapter = adapter
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    // New value received
+                    when (uiState) {
+                        is LatestNewsUiState.Success -> showFavoriteNews(uiState.news)
+                        is LatestNewsUiState.Error -> showError(uiState.exception)
+                    }
+                }
+            }
+        }
 
         adapter.submitList(viewModel.news)
         swipeContainer?.isRefreshing = false
