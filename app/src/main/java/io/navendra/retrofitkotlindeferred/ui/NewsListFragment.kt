@@ -15,7 +15,7 @@ class NewsListFragment : Fragment() {
 
     private lateinit var viewModel: NewsListViewModel
 
-    lateinit var swipeContainer: SwipeRefreshLayout
+    private var swipeContainer: SwipeRefreshLayout? = null
 
     private var _binding: NewsItemsListBinding? = null
     private val binding get() = _binding!!
@@ -42,16 +42,14 @@ class NewsListFragment : Fragment() {
         }
         recyclerView.adapter = adapter
 
-        viewModel.news.observe(this.viewLifecycleOwner, {
-            adapter.submitList(it)
-            swipeContainer.isRefreshing = false
-        })
+        adapter.submitList(viewModel.news)
+        swipeContainer?.isRefreshing = false
 
         swipeContainer = binding.swipeContainer
-        swipeContainer.setOnRefreshListener {
+        swipeContainer?.setOnRefreshListener {
             viewModel.loadData()
         }
-        swipeContainer.setColorSchemeResources(
+        swipeContainer?.setColorSchemeResources(
             android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,
