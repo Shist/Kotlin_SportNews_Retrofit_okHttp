@@ -30,6 +30,7 @@ class NewsListViewModel : ViewModel() {
                         delay(refreshIntervalMs) // Suspends the coroutine for some time
                     }
                 }
+                newsFlow.collect { value -> news = value }
                 if(userRequest.items.isNotEmpty()){
                     Log.d("MyLog", "Successful start logging...")
                     Log.d("MyLog", "response: ${userRequest.items.size} items")
