@@ -24,8 +24,6 @@ class NewsListFragment : Fragment() {
 
     private lateinit var viewModel: NewsListViewModel
 
-    private var swipeContainer: SwipeRefreshLayout? = null
-
     private var _binding: NewsItemsListBinding? = null
     private val binding get() = _binding!!
 
@@ -58,12 +56,12 @@ class NewsListFragment : Fragment() {
                         is LatestNewsListUiState.Success -> {
                             adapter.submitList(uiState.news)
 
-                            swipeContainer = binding.swipeContainer
-                            swipeContainer?.setOnRefreshListener {
+                            val swipeContainer = binding.swipeContainer
+                            swipeContainer.setOnRefreshListener {
                                 viewModel.loadData()
-                                swipeContainer?.isRefreshing = false
+                                swipeContainer.isRefreshing = false
                             }
-                            swipeContainer?.setColorSchemeResources(
+                            swipeContainer.setColorSchemeResources(
                                 android.R.color.holo_blue_bright,
                                 android.R.color.holo_green_light,
                                 android.R.color.holo_orange_light,
