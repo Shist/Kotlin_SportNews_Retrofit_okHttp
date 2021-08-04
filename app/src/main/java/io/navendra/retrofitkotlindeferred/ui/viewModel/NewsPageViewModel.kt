@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.*
 
 class NewsPageViewModel : ViewModel() {
 
-    private val _newsPageFlow = MutableStateFlow(LatestNewsPageUiState.Success(null))
+    private val _newsPageFlow = MutableStateFlow<LatestNewsPageUiState>(LatestNewsPageUiState.Loading)
 
     val newsPageFlow: StateFlow<LatestNewsPageUiState> = _newsPageFlow
 

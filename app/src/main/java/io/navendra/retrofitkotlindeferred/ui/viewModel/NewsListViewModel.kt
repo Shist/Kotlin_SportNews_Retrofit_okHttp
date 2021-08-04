@@ -21,7 +21,7 @@ class NewsListViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.Main) {
             try {
                 val userRequest = service.getNews()
-                    _newsListFlow.value =
+                _newsListFlow.value =
                         LatestNewsListUiState.Success(userRequest.items)
                 if(userRequest.items.isNotEmpty()){
                     Log.d("MyLog", "Successful start logging...")
