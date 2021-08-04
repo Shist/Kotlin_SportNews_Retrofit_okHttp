@@ -8,11 +8,11 @@ import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-class NewsListViewModel : ViewModel() {
+class NewsListPageModel : ViewModel() {
 
-    private val _newsListFlow = MutableStateFlow(LatestNewsListUiState.Success(emptyList()))
+    private val _newsPageFlow = MutableStateFlow(LatestNewsPageUiState.Success(emptyList()))
 
-    val newsListFlow: StateFlow<LatestNewsListUiState> = _newsListFlow
+    val newsPageFlow: StateFlow<LatestNewsPageUiState> = _newsPageFlow
 
     fun loadData(){
 
@@ -21,8 +21,8 @@ class NewsListViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.Main) {
             try {
                 val userRequest = service.getNews()
-                    _newsListFlow.value =
-                        LatestNewsListUiState.Success(userRequest.items) // Записываем, успешно или нет всё прошло
+                _newsPageFlow.value =
+                    LatestNewsPageUiState.Success(userRequest.items) // Записываем, успешно или нет всё прошло
 
                 if(userRequest.items.isNotEmpty()){
                     Log.d("MyLog", "Successful start logging...")
@@ -49,10 +49,10 @@ class NewsListViewModel : ViewModel() {
 
 }
 
-sealed class LatestNewsListUiState {
-    data class Success(val news: List<NewsItem>): LatestNewsListUiState()
-    object Loading : LatestNewsListUiState()
-    data class Error(val exception: Throwable): LatestNewsListUiState() {
+sealed class LatestNewsPageUiState {
+    data class Success(val news: List<NewsItem>): LatestNewsPageUiState()
+    object Loading : LatestNewsPageUiState()
+    data class Error(val exception: Throwable): LatestNewsPageUiState() {
         fun showError(exception: Throwable) {
             Log.d("MyLog", "Failure: ", exception)
         }
