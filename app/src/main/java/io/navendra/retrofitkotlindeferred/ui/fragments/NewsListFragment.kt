@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.ui
+package io.navendra.retrofitkotlindeferred.ui.fragments
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +13,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
+import io.navendra.retrofitkotlindeferred.ui.LatestNewsUiState
+import io.navendra.retrofitkotlindeferred.ui.MainActivity
+import io.navendra.retrofitkotlindeferred.ui.NewsListViewModel
+import io.navendra.retrofitkotlindeferred.ui.SportAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -49,7 +53,7 @@ class NewsListFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { uiState ->
+                viewModel.newsFlow.collect { uiState ->
                     when (uiState) {
                         is LatestNewsUiState.Success -> {
                             adapter.submitList(viewModel.news)

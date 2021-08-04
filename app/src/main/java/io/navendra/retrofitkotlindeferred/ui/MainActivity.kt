@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.ActivityMainBinding
+import io.navendra.retrofitkotlindeferred.ui.fragments.NewsListFragment
+import io.navendra.retrofitkotlindeferred.ui.fragments.NewsPageFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -5,22 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
+import io.navendra.retrofitkotlindeferred.ui.newsFlow.NewsRemoteDataSource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 
-class NewsListViewModel : ViewModel() {
+class NewsListViewModel(private val newsFlowData: NewsRemoteDataSource) : ViewModel() {
 
     var news: List<NewsItem> = emptyList()
 
-    private lateinit var newsFlow: MutableStateFlow<List<NewsItem>>
+    private val _newsFlow = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
 
-    // Backing property to avoid state updates from other classes
-    private val _uiState = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
-
-    // The UI collects from this StateFlow to get its state updates
-    val uiState: StateFlow<LatestNewsUiState> = _uiState
+    val newsFlow: StateFlow<LatestNewsUiState> = _newsFlow
 
     fun loadData(){
 
@@ -29,9 +26,9 @@ class NewsListViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.Main) {
             try {
                 val userRequest = service.getNews()
-                newsFlow.collect { data ->
+                newsFlowData.latestNews.collect { data ->
                     news = data // Достаем и сохраняем данные в news
-                    _uiState.value = LatestNewsUiState.Success(data) // Записываем, успешно или нет всё прошло
+                    _newsFlow.value = LatestNewsUiState.Success(data) // Записываем, успешно или нет всё прошло
                 }
                 if(userRequest.items.isNotEmpty()){
                     Log.d("MyLog", "Successful start logging...")
@@ -58,7 +55,6 @@ class NewsListViewModel : ViewModel() {
 
 }
 
-// Represents different states for the news screen
 sealed class LatestNewsUiState {
     data class Success(val news: List<NewsItem>): LatestNewsUiState()
     data class Error(val exception: Throwable): LatestNewsUiState() {

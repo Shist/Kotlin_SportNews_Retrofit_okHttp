@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.ui
+package io.navendra.retrofitkotlindeferred.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
+import io.navendra.retrofitkotlindeferred.ui.NewsListViewModel
 
 class NewsPageFragment : Fragment() {
 
