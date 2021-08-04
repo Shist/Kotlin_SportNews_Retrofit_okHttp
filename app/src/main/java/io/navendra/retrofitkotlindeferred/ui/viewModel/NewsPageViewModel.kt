@@ -12,7 +12,7 @@ class NewsPageViewModel : ViewModel() {
 
     private val _newsPageFlow = MutableStateFlow<LatestNewsPageUiState>(LatestNewsPageUiState.Loading)
 
-    val newsPageFlow: StateFlow<LatestNewsPageUiState> = _newsPageFlow
+    val newsPageFlow: StateFlow<LatestNewsPageUiState> = _newsPageFlow.asStateFlow()
 
     fun loadData(item_id: String){
 
