@@ -5,13 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
-import io.navendra.retrofitkotlindeferred.ui.newsFlow.NewsRemoteDataSource
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 
-class NewsListViewModel(private val newsFlowData: NewsRemoteDataSource) : ViewModel() {
+class NewsListViewModel() : ViewModel() {
 
     var news: List<NewsItem> = emptyList()
 
@@ -26,7 +23,13 @@ class NewsListViewModel(private val newsFlowData: NewsRemoteDataSource) : ViewMo
         viewModelScope.launch(Dispatchers.Main) {
             try {
                 val userRequest = service.getNews()
-                newsFlowData.latestNews.collect { data ->
+                val latestNews: Flow<List<NewsItem>> = flow {
+                    while(true) {
+                        emit(userRequest.items) // Emits the result of the request to the flow
+                        delay(5000) // Suspends the coroutine for some time
+                    }
+                }
+                latestNews.collect { data ->
                     news = data // Достаем и сохраняем данные в news
                     _newsFlow.value =
                         LatestNewsUiState.Success(data) // Записываем, успешно или нет всё прошло
