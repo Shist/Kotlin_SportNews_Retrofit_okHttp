@@ -3,7 +3,6 @@ package io.navendra.retrofitkotlindeferred.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.model.NewsItem
-import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsListUiState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsPageUiState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import kotlinx.coroutines.flow.collect
