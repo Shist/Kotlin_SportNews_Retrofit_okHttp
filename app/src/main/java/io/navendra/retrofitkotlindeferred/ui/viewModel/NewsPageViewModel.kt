@@ -20,11 +20,12 @@ class NewsPageViewModel : ViewModel() {
 
         viewModelScope.launch(Dispatchers.Main) {
             try {
-                val userRequest = service.getNewsPageByID(item_id)
+                val userRequest = service.getNews()
+                val item = getNewsPageByID(userRequest.items, item_id)
                 _newsPageFlow.value =
-                    LatestNewsPageUiState.Success(userRequest)
-                if(userRequest != null){
-                    Log.d("MyLog", "response item: $userRequest")
+                    LatestNewsPageUiState.Success(item)
+                if(item != null){
+                    Log.d("MyLog", "response item: $item")
                 }else{
                     Log.d("MyLog", "Failure while getting response item...")
                 }
@@ -32,6 +33,10 @@ class NewsPageViewModel : ViewModel() {
                 Log.d("MyLog", "Failure...", e)
             }
         }
+    }
+
+    private fun getNewsPageByID(items: List<NewsItem>, item_id: String) : NewsItem? {
+        return items.find { it.id == item_id }
     }
 
     override fun onCleared() {

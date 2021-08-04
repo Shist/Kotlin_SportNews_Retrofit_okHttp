@@ -56,22 +56,25 @@ class NewsPageFragment : Fragment() {
         val pageImg: ImageView = binding.pageImg
         val pageText: TextView = binding.pageText
 
+        var item: NewsItem? = null
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsPageFlow.collect { uiState ->
                     when (uiState) {
                         is LatestNewsPageUiState.Success -> {
-                            val item = uiState.news_item
-                            pageHeadline.text = item?.shortHeadline
-                            Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext)
-                                .into(pageImg)
-                            pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
+                            item = uiState.news_item
                         }
                         is LatestNewsPageUiState.Loading -> {
                         }
                         is LatestNewsPageUiState.Error -> uiState.showError(uiState.exception)
                     }
                 }
+
+                pageHeadline.text = item?.shortHeadline
+                Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext)
+                    .into(pageImg)
+                pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
             }
         }
     }

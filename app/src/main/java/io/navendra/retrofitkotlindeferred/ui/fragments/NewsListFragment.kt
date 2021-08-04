@@ -58,17 +58,6 @@ class NewsListFragment : Fragment() {
                         is LatestNewsListUiState.Success -> {
                             adapter.submitList(uiState.news)
                             swipeContainer?.isRefreshing = false
-
-                            swipeContainer = binding.swipeContainer
-                            swipeContainer?.setOnRefreshListener {
-                                viewModel.loadData()
-                            }
-                            swipeContainer?.setColorSchemeResources(
-                                android.R.color.holo_blue_bright,
-                                android.R.color.holo_green_light,
-                                android.R.color.holo_orange_light,
-                                android.R.color.holo_red_light
-                            )
                         }
                         is LatestNewsListUiState.Loading -> {}
                         is LatestNewsListUiState.Error -> uiState.showError(uiState.exception)
@@ -76,6 +65,17 @@ class NewsListFragment : Fragment() {
                 }
             }
         }
+
+        swipeContainer = binding.swipeContainer
+        swipeContainer?.setOnRefreshListener {
+            viewModel.loadData()
+        }
+        swipeContainer?.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
     }
 
     override fun onDestroyView() {
