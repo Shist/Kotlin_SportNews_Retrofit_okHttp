@@ -18,7 +18,7 @@ class NewsPageViewModel : ViewModel() {
 
         val service = SportNewsClient.SPORT_NEWS_API
 
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch {
             try {
                 val userRequest = service.getNews()
                 val item = getNewsPageByID(userRequest.items, item_id)
