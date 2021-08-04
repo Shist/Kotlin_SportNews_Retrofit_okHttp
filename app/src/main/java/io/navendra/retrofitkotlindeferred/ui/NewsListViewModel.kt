@@ -14,7 +14,7 @@ class NewsListViewModel : ViewModel() {
 
     var news: List<NewsItem> = emptyList()
 
-    lateinit var newsFlow: MutableStateFlow<List<NewsItem>>
+    private lateinit var newsFlow: MutableStateFlow<List<NewsItem>>
 
     // Backing property to avoid state updates from other classes
     private val _uiState = MutableStateFlow(LatestNewsUiState.Success(emptyList()))
@@ -31,7 +31,7 @@ class NewsListViewModel : ViewModel() {
                 val userRequest = service.getNews()
                 newsFlow.collect { data ->
                     news = data // Достаем и сохраняем данные в news
-                    _uiState.value = LatestNewsUiState.Success(data)    // Записываем, успешно или нет всё прошло
+                    _uiState.value = LatestNewsUiState.Success(data) // Записываем, успешно или нет всё прошло
                 }
                 if(userRequest.items.isNotEmpty()){
                     Log.d("MyLog", "Successful start logging...")
@@ -61,5 +61,9 @@ class NewsListViewModel : ViewModel() {
 // Represents different states for the news screen
 sealed class LatestNewsUiState {
     data class Success(val news: List<NewsItem>): LatestNewsUiState()
-    data class Error(val exception: Throwable): LatestNewsUiState()
+    data class Error(val exception: Throwable): LatestNewsUiState() {
+        fun showError(exception: Throwable) {
+            Log.d("MyLog", "Failure: ", exception)
+        }
+    }
 }

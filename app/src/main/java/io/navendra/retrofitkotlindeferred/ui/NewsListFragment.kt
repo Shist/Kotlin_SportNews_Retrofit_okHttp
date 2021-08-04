@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class NewsListFragment : Fragment() {
@@ -48,27 +50,27 @@ class NewsListFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
-                    // New value received
                     when (uiState) {
-                        is LatestNewsUiState.Success -> showFavoriteNews(uiState.news)
-                        is LatestNewsUiState.Error -> showError(uiState.exception)
+                        is LatestNewsUiState.Success -> {
+                            adapter.submitList(viewModel.news)
+                            swipeContainer?.isRefreshing = false
+                        }
+                        is LatestNewsUiState.Error -> uiState.showError(uiState.exception)
                     }
                 }
             }
-        }
 
-        adapter.submitList(viewModel.news)
-        swipeContainer?.isRefreshing = false
-
-        swipeContainer = binding.swipeContainer
-        swipeContainer?.setOnRefreshListener {
-            viewModel.loadData()
+            swipeContainer = binding.swipeContainer
+            swipeContainer?.setOnRefreshListener {
+                viewModel.loadData()
+            }
+            swipeContainer?.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+            )
         }
-        swipeContainer?.setColorSchemeResources(
-            android.R.color.holo_blue_bright,
-            android.R.color.holo_green_light,
-            android.R.color.holo_orange_light,
-            android.R.color.holo_red_light)
     }
 
     override fun onDestroyView() {
