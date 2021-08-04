@@ -61,7 +61,7 @@ class NewsPageFragment : Fragment() {
                 viewModel.newsPageFlow.collect { uiState ->
                     when (uiState) {
                         is LatestNewsPageUiState.Success -> {
-                            var item = uiState.news_item
+                            val item = uiState.news_item
                             pageHeadline.text = item?.shortHeadline
                             Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext)
                                 .into(pageImg)

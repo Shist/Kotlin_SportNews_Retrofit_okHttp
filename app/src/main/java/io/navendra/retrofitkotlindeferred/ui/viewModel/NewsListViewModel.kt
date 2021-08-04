@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.*
 
 class NewsListViewModel : ViewModel() {
 
-    private val _newsListFlow = MutableStateFlow(LatestNewsListUiState.Success(emptyList()))
+    private val _newsListFlow = MutableStateFlow<LatestNewsListUiState>(LatestNewsListUiState.Loading)
 
     val newsListFlow: StateFlow<LatestNewsListUiState> = _newsListFlow
 
