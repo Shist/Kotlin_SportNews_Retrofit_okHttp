@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
-import io.navendra.retrofitkotlindeferred.ui.NewsListViewModel
+import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 
 class NewsPageFragment : Fragment() {
 

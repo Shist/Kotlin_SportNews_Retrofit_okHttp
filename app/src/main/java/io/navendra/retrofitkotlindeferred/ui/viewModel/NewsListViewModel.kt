@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.ui
+package io.navendra.retrofitkotlindeferred.ui.viewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -28,7 +28,8 @@ class NewsListViewModel(private val newsFlowData: NewsRemoteDataSource) : ViewMo
                 val userRequest = service.getNews()
                 newsFlowData.latestNews.collect { data ->
                     news = data // Достаем и сохраняем данные в news
-                    _newsFlow.value = LatestNewsUiState.Success(data) // Записываем, успешно или нет всё прошло
+                    _newsFlow.value =
+                        LatestNewsUiState.Success(data) // Записываем, успешно или нет всё прошло
                 }
                 if(userRequest.items.isNotEmpty()){
                     Log.d("MyLog", "Successful start logging...")

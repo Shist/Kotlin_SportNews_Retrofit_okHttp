@@ -3,6 +3,7 @@ package io.navendra.retrofitkotlindeferred.ui.fragments
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
-import io.navendra.retrofitkotlindeferred.ui.LatestNewsUiState
+import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsUiState
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
-import io.navendra.retrofitkotlindeferred.ui.NewsListViewModel
-import io.navendra.retrofitkotlindeferred.ui.SportAdapter
+import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
+import io.navendra.retrofitkotlindeferred.ui.adapter.SportAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -60,6 +61,7 @@ class NewsListFragment : Fragment() {
                             swipeContainer?.isRefreshing = false
                         }
                         is LatestNewsUiState.Error -> uiState.showError(uiState.exception)
+                        else -> Log.d("MyLog", "Failure while submitting data to adapter")
                     }
                 }
             }
