@@ -88,7 +88,6 @@ class NewsPageFragment : Fragment() {
                         is LatestNewsPageUiState.Loading -> {
 
                         }
-                        is LatestNewsPageUiState.Error -> uiState.showError(uiState.exception)
                     }
                 }
             }
