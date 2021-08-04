@@ -46,9 +46,6 @@ class NewsListViewModel : ViewModel() {
     }
 
     fun getItemByID(itemID: String?): NewsItem? {
-        viewModelScope.launch {
-            newsFlow.collect { value -> news = value }
-        }
         return news.find { it.id == itemID }
     }
 
