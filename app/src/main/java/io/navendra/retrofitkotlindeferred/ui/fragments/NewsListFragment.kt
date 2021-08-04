@@ -61,7 +61,6 @@ class NewsListFragment : Fragment() {
                             swipeContainer?.isRefreshing = false
                         }
                         is LatestNewsUiState.Error -> uiState.showError(uiState.exception)
-                        else -> Log.d("MyLog", "Failure while submitting data to adapter")
                     }
                 }
             }
