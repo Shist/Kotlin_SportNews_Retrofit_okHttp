@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
+import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsUiState
@@ -73,6 +74,7 @@ class NewsPageFragment : Fragment() {
                 viewModel.newsPageFlow.collect { uiState ->
                     when (uiState) {
                         is LatestNewsUiState.Success -> {
+                            binding.loadingPanel.visibility = View.GONE
                             item = uiState.data
 
                             pageHeadline.text = item?.shortHeadline
