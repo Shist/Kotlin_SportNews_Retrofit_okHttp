@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsPageUiState
+import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsUiState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -72,7 +73,7 @@ class NewsPageFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsPageFlow.collect { uiState ->
                     when (uiState) {
-                        is LatestNewsPageUiState.Success -> {
+                        is LatestNewsUiState.Success -> {
                             item = uiState.news_item
 
                             pageHeadline.text = item?.shortHeadline
@@ -85,7 +86,7 @@ class NewsPageFragment : Fragment() {
                                 swipeContainer?.isRefreshing = false
                             }
                         }
-                        is LatestNewsPageUiState.Loading -> {
+                        is LatestNewsUiState.Loading -> {
 
                         }
                     }

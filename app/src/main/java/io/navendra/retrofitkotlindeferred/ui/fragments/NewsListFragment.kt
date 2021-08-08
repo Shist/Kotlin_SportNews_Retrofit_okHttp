@@ -1,22 +1,21 @@
 package io.navendra.retrofitkotlindeferred.ui.fragments
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
-import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import io.navendra.retrofitkotlindeferred.ui.adapter.SportAdapter
-import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsListUiState
-import kotlinx.coroutines.flow.collect
+import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsUiState
+import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import kotlinx.coroutines.launch
 
 class NewsListFragment : Fragment() {
@@ -60,14 +59,14 @@ class NewsListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsListFlow.collect { uiState ->
                     when (uiState) {
-                        is LatestNewsListUiState.Success -> {
+                        is LatestNewsUiState.Success -> {
                             adapter.submitList(uiState.news)
                             swipeContainer.setOnRefreshListener {
                                 viewModel.loadData()
                                 swipeContainer.isRefreshing = false
                             }
                         }
-                        is LatestNewsListUiState.Loading -> {
+                        is LatestNewsUiState.Loading -> {
 
                         }
                     }

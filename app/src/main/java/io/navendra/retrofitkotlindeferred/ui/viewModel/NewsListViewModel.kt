@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.*
 
 class NewsListViewModel : ViewModel() {
 
-    private val _newsListFlow = MutableStateFlow<LatestNewsListUiState>(LatestNewsListUiState.Loading)
+    private val _newsListFlow = MutableStateFlow<LatestNewsUiState>(LatestNewsUiState.Loading)
 
-    val newsListFlow: StateFlow<LatestNewsListUiState> = _newsListFlow
+    val newsListFlow: StateFlow<LatestNewsUiState> = _newsListFlow
 
     fun loadData(){
 
@@ -22,7 +22,7 @@ class NewsListViewModel : ViewModel() {
             try {
                 val userRequest = service.getNews()
                 _newsListFlow.value =
-                        LatestNewsListUiState.Success(userRequest.items)
+                    LatestNewsUiState.Success(userRequest.items)
                 if(userRequest.items.isNotEmpty()){
                     Log.d("MyLog", "Successful start logging...")
                     Log.d("MyLog", "response: ${userRequest.items.size} items")
@@ -42,10 +42,4 @@ class NewsListViewModel : ViewModel() {
         Log.i("SportViewModel", "SportViewModel destroyed!")
     }
 
-}
-
-sealed class LatestNewsListUiState {
-    data class Success(val news: List<NewsItem>): LatestNewsListUiState()
-    object Loading : LatestNewsListUiState()
-    data class Error(val exception: Throwable): LatestNewsListUiState()
 }
