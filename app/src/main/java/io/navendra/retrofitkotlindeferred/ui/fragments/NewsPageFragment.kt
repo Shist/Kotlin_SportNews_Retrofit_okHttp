@@ -60,6 +60,13 @@ class NewsPageFragment : Fragment() {
 
         var item: NewsItem? = null
 
+        swipeContainer = binding.swipeContainer
+        swipeContainer?.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -73,17 +80,10 @@ class NewsPageFragment : Fragment() {
                                 .into(pageImg)
                             pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
 
-                            swipeContainer = binding.swipeContainer
                             swipeContainer?.setOnRefreshListener {
                                 viewModel.loadData(itemID)
                                 swipeContainer?.isRefreshing = false
                             }
-                            swipeContainer?.setColorSchemeResources(
-                                android.R.color.holo_blue_bright,
-                                android.R.color.holo_green_light,
-                                android.R.color.holo_orange_light,
-                                android.R.color.holo_red_light
-                            )
                         }
                         is LatestNewsPageUiState.Loading -> {
 

@@ -11,7 +11,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
@@ -49,24 +48,24 @@ class NewsListFragment : Fragment() {
         }
         recyclerView.adapter = adapter
 
+        val swipeContainer = binding.swipeContainer
+        swipeContainer.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsListFlow.collect { uiState ->
                     when (uiState) {
                         is LatestNewsListUiState.Success -> {
                             adapter.submitList(uiState.news)
-
-                            val swipeContainer = binding.swipeContainer
                             swipeContainer.setOnRefreshListener {
                                 viewModel.loadData()
                                 swipeContainer.isRefreshing = false
                             }
-                            swipeContainer.setColorSchemeResources(
-                                android.R.color.holo_blue_bright,
-                                android.R.color.holo_green_light,
-                                android.R.color.holo_orange_light,
-                                android.R.color.holo_red_light
-                            )
                         }
                         is LatestNewsListUiState.Loading -> {
 
