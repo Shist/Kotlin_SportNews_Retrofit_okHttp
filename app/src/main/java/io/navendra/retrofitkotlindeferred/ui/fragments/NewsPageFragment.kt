@@ -17,7 +17,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.model.NewsItem
-import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsPageUiState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsUiState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import kotlinx.coroutines.flow.collect
@@ -74,7 +73,7 @@ class NewsPageFragment : Fragment() {
                 viewModel.newsPageFlow.collect { uiState ->
                     when (uiState) {
                         is LatestNewsUiState.Success -> {
-                            item = uiState.news_item
+                            item = uiState.data
 
                             pageHeadline.text = item?.shortHeadline
                             Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext)

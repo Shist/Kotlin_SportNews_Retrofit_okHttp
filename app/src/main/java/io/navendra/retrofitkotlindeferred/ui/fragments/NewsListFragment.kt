@@ -16,6 +16,7 @@ import io.navendra.retrofitkotlindeferred.ui.MainActivity
 import io.navendra.retrofitkotlindeferred.ui.adapter.SportAdapter
 import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsUiState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class NewsListFragment : Fragment() {
@@ -57,10 +58,12 @@ class NewsListFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.newsListFlow.collect { uiState ->
+                viewModel.newsListFlow.collect {
+                    uiState ->
                     when (uiState) {
                         is LatestNewsUiState.Success -> {
-                            adapter.submitList(uiState.news)
+                            adapter.submitList(uiState.data)
+
                             swipeContainer.setOnRefreshListener {
                                 viewModel.loadData()
                                 swipeContainer.isRefreshing = false
@@ -69,7 +72,7 @@ class NewsListFragment : Fragment() {
                         is LatestNewsUiState.Loading -> {
 
                         }
-                    }
+                }
                 }
             }
         }

@@ -1,11 +1,9 @@
 package io.navendra.retrofitkotlindeferred.ui.viewModel
 
-sealed class LatestNewsUiState<T>(
-        val data: T? = null
-) {
-        data class Success<T>(val news: T) : LatestNewsUiState<T>(news)
-        class Loading<T>() : LatestNewsUiState<T>()
-        data class Error<T>(val exception: T? = null) : LatestNewsUiState<T>(exception)
+sealed class LatestNewsUiState<T> {
+        class Success<T>(val data: T?) : LatestNewsUiState<T>()
+        class Loading<T> : LatestNewsUiState<T>()
+        class Error<T>(val data: T?) : LatestNewsUiState<T>()
 }
 //sealed class LatestNewsListUiState {
 //    data class Success(val news: List<NewsItem>): LatestNewsListUiState()
