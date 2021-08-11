@@ -5,6 +5,7 @@ sealed class LatestNewsUiState<T> {
         class Loading<T> : LatestNewsUiState<T>()
         class Error<T>(val exception: Throwable?) : LatestNewsUiState<T>()
 }
+
 //sealed class LatestNewsListUiState {
 //    data class Success(val news: List<NewsItem>): LatestNewsListUiState()
 //    object Loading : LatestNewsListUiState()
