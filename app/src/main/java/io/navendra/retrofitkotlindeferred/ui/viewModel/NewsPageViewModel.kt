@@ -18,7 +18,7 @@ class NewsPageViewModel : ViewModel() {
         viewModelScope.launch {
             NewsRepository.loadNews()
             _newsPageFlow.value = LatestNewsUiState.Success(NewsRepository.
-            getNewsPageByID(NewsRepository.latestNews, item_id))
+            getNewsPageByID(item_id))
         }
     }
 

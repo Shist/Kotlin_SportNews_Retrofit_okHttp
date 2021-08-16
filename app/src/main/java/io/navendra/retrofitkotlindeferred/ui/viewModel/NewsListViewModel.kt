@@ -16,9 +16,8 @@ class NewsListViewModel : ViewModel() {
 
     fun loadData() {
         viewModelScope.launch(Dispatchers.Main) {
-            NewsRepository.loadNews()
             _newsListFlow.value =
-                LatestNewsUiState.Success(NewsRepository.latestNews)
+                LatestNewsUiState.Success(NewsRepository.loadNews())
         }
     }
 

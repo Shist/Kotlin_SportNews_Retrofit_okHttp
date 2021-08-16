@@ -7,11 +7,11 @@ import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 
 object NewsRepository {
 
-    var latestNews: List<NewsItem> = emptyList()
-
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
-    suspend fun loadNews() {
+    suspend fun loadNews(): List<NewsItem> {
+        var latestNews: List<NewsItem> = emptyList()
+
         try {
             latestNews = service.getNews().items
 
@@ -28,12 +28,16 @@ object NewsRepository {
             Log.d("MyLog", "Failure while loading news to NewsRepository...")
             Log.d("MyLog", "Reason: ", e)
         }
+
+        return latestNews
     }
 
-    fun getNewsPageByID(items: List<NewsItem>, item_id: String) : NewsItem? {
+    suspend fun getNewsPageByID(item_id: String) : NewsItem? {
         var item: NewsItem? = null
+
         try {
-            item = items.find { it.id == item_id }
+            val latestNews: List<NewsItem> = service.getNews().items
+            item = latestNews.find { it.id == item_id }
 
             if(item != null) {
                 Log.d("MyLog", "Loading item from list...")
@@ -46,6 +50,7 @@ object NewsRepository {
             Log.d("MyLog", "Failure while loading item from list...")
             Log.d("MyLog", "Reason: ", e)
         }
+
         return item
     }
 
