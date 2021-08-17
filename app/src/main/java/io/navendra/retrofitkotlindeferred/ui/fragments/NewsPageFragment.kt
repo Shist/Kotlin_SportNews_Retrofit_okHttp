@@ -26,9 +26,10 @@ import kotlinx.coroutines.launch
 class NewsPageFragment : Fragment() {
 
     companion object {
+        const val keyItemID = "itemID"
         fun newInstance(itemID: String) = NewsPageFragment().apply {
             arguments = Bundle().apply {
-                putString("itemID", itemID)
+                putString(keyItemID, itemID)
             }
         }
     }
@@ -51,7 +52,7 @@ class NewsPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemID = arguments?.getString("itemID")
+        val itemID = arguments?.getString(keyItemID)
 
         viewModel.loadData(itemID!!)
 
