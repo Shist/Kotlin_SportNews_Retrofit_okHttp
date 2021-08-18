@@ -1,7 +1,7 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
 import android.util.Log
-import io.navendra.retrofitkotlindeferred.model.newsItem.NewsItem
+import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 

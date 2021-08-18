@@ -6,10 +6,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMedia
 
 @Entity(tableName = "items")
-data class NewsItem(
+data class NewsItemsDB(
 
     @PrimaryKey
     @SerializedName("@id")
