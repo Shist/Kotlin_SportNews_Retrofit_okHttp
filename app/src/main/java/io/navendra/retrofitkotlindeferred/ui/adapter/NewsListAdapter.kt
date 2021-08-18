@@ -48,7 +48,7 @@ class SportAdapter(private val clickListener: (NewsItem)-> Unit) :
 
 class SportNewsDiffCallback : DiffUtil.ItemCallback<NewsItem>() {
     override fun areItemsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
-        return oldItem.itemId == newItem.itemId
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {

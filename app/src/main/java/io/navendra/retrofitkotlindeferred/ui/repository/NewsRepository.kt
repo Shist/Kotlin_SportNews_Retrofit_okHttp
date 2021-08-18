@@ -37,7 +37,7 @@ object NewsRepository {
 
         try {
             val latestNews: List<NewsItem> = service.getNews().items
-            item = latestNews.find { it.itemId == item_id }
+            item = latestNews.find { it.id == item_id }
 
             if(item != null) {
                 Log.d("MyLog", "Loading item from list...")
