@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMedia
 
-@Entity
+@Entity(tableName = "items")
 data class NewsItem(
 
     @PrimaryKey
