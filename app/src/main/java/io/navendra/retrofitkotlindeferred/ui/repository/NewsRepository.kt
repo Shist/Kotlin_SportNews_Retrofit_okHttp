@@ -1,16 +1,39 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
+import android.content.Context
 import android.util.Log
+import androidx.room.Room
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
+import io.navendra.retrofitkotlindeferred.roomDB.NewsDatabase
 
-object NewsRepository {
+class NewsRepository {
+
+    companion object {
+        private var instance: NewsDatabase? = null
+
+        fun getInstance(context: Context): NewsDatabase =
+            instance?: synchronized(this) {
+                instance?: buildDatabase(context).also { instance = it }
+            }
+
+        private fun buildDatabase(context: Context) =
+            Room.databaseBuilder(context.applicationContext,
+                NewsDatabase::class.java, "newsDB")
+                .build()
+
+    }
 
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
     suspend fun loadNews(): List<NewsItem> {
         var latestNews: List<NewsItem> = emptyList()
+
+
+        // 2 метода
+        // 1-ый: loadNews, который дезагружает данные и кладет в бд
+        // 2-ой: делаем getNewsFlow, который просто будет брать у DAO flow
 
         try {
             latestNews = service.getNews().items

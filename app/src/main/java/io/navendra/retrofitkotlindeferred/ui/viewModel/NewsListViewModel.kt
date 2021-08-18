@@ -14,10 +14,12 @@ class NewsListViewModel : ViewModel() {
 
     val newsListFlow: StateFlow<LatestNewsUiState<List<NewsItem>>> = _newsListFlow
 
+
+    // Загуглить Android ViewModel, в конструкторе получить applicationContext, передать его в Instance
     fun loadData() {
         viewModelScope.launch(Dispatchers.Main) {
             _newsListFlow.value =
-                LatestNewsUiState.Success(NewsRepository.loadNews())
+                LatestNewsUiState.Success(NewsRepository.getInstance())
         }
     }
 

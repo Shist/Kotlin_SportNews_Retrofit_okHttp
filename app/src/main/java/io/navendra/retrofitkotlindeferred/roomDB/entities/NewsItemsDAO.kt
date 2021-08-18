@@ -1,6 +1,7 @@
 package io.navendra.retrofitkotlindeferred.roomDB.entities
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NewsItemsDAO {
@@ -33,9 +34,9 @@ interface NewsItemsDAO {
     fun deleteAllItems(items: List<NewsItemsDB>)
 
     @Query("SELECT * FROM items")
-    fun getAllItems(): List<NewsItemsDB>
+    fun getAllItems(): Flow<List<NewsItemsDB>>
 
     @Query("SELECT * FROM items WHERE itemId = :neededId")
-    fun getItemById(neededId: String): NewsItemsDB
+    fun getItemById(neededId: String): Flow<NewsItemsDB?>
 
 }
