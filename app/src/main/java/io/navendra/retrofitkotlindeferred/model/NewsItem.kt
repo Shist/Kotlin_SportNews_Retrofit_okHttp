@@ -2,16 +2,35 @@ package io.navendra.retrofitkotlindeferred.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-// Закомментированы те данные, которые нам пока что не нужны для ленты новостей...
-
+@Entity
 data class NewsItem(
-    @SerializedName("@id") var id: String,
+
+    @PrimaryKey
+    @SerializedName("@id")
+    var itemId: String,
+
+    @ColumnInfo(name = "body")
+    @SerializedName("body")
+    val body: String,
+
+    @ColumnInfo(name = "featuredMedia")
+    @SerializedName("featuredMedia")
+    val featuredMedia: NewsItemFeaturedMedia,
+
+    @ColumnInfo(name = "shortHeadLine")
+    @SerializedName("shortHeadline")
+    var shortHeadline: String
+
+    // Закомментированы те данные, которые нам пока что не нужны для ленты новостей...
+
     //@SerializedName("@type") val type: String,
     //@SerializedName("author") val author: NewsItemAuthor,
     //@SerializedName("authorName") val authorName: String,
-    @SerializedName("body") val body: String,
     //@SerializedName("channels") val channels: List<NewsItemChannel>,
     //@SerializedName("createdAt") val createdAt: String,
     //@SerializedName("deletedAt") val deletedAt: String,
@@ -19,9 +38,8 @@ data class NewsItem(
     //@SerializedName("externalId") val externalId: String,
     //@SerializedName("externalUrl") val externalUrl: String,
     //@SerializedName("featured") val featured: Boolean,
-    @SerializedName("featuredMedia") val featuredMedia: NewsItemFeaturedMedia,
     //@SerializedName("headline")  val headline: String,
-    @SerializedName("shortHeadline") var shortHeadline: String
+
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -34,7 +52,7 @@ data class NewsItem(
     override fun describeContents() = 0
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
+        parcel.writeString(itemId)
         parcel.writeString(body)
         parcel.writeParcelable(featuredMedia, 0)
         parcel.writeString(shortHeadline)
