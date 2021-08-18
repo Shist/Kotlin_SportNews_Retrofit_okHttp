@@ -1,7 +1,6 @@
 package io.navendra.retrofitkotlindeferred.roomDB.entities
 
 import androidx.room.*
-import io.navendra.retrofitkotlindeferred.model.newsItem.NewsItemsDB
 
 @Dao
 interface NewsItemsDAO {
