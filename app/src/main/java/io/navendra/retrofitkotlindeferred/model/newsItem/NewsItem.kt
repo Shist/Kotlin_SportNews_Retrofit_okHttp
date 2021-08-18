@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.model
+package io.navendra.retrofitkotlindeferred.model.newsItem
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -6,6 +6,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMedia
 
 @Entity
 data class NewsItem(

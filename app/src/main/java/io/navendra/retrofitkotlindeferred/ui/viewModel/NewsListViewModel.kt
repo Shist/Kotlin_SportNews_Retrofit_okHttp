@@ -3,7 +3,7 @@ package io.navendra.retrofitkotlindeferred.ui.viewModel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.navendra.retrofitkotlindeferred.model.NewsItem
+import io.navendra.retrofitkotlindeferred.model.newsItem.NewsItem
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

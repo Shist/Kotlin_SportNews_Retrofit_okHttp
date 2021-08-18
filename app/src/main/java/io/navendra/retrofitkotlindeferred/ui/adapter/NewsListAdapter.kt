@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import io.navendra.retrofitkotlindeferred.model.NewsItem
+import io.navendra.retrofitkotlindeferred.model.newsItem.NewsItem
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemBinding
 
 class SportAdapter(private val clickListener: (NewsItem)-> Unit) :
@@ -48,7 +48,7 @@ class SportAdapter(private val clickListener: (NewsItem)-> Unit) :
 
 class SportNewsDiffCallback : DiffUtil.ItemCallback<NewsItem>() {
     override fun areItemsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.itemId == newItem.itemId
     }
 
     override fun areContentsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {

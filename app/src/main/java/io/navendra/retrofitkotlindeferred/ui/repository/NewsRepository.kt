@@ -1,7 +1,7 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
 import android.util.Log
-import io.navendra.retrofitkotlindeferred.model.NewsItem
+import io.navendra.retrofitkotlindeferred.model.newsItem.NewsItem
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 
@@ -37,7 +37,7 @@ object NewsRepository {
 
         try {
             val latestNews: List<NewsItem> = service.getNews().items
-            item = latestNews.find { it.id == item_id }
+            item = latestNews.find { it.itemId == item_id }
 
             if(item != null) {
                 Log.d("MyLog", "Loading item from list...")

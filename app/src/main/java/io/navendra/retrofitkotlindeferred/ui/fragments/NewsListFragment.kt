@@ -44,7 +44,7 @@ class NewsListFragment : Fragment() {
 
         val adapter = SportAdapter {
             val myActivity = requireActivity() as MainActivity
-            myActivity.onItemClick(it.id)
+            myActivity.onItemClick(it.itemId)
         }
         recyclerView.adapter = adapter
 
