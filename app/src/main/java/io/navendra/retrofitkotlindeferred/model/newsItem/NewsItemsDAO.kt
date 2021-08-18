@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.Update
 import androidx.room.Delete
 
-interface NewsItemDAO {
+interface NewsItemsDAO {
 
     @Insert
     fun insertOneItem(item: NewsItem)
