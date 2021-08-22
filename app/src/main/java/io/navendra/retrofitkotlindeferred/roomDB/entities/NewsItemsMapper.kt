@@ -18,9 +18,9 @@ class NewsItemsMapper {
     fun fromRoomDBtoJson(item: NewsItemsDB) : NewsItem
     {
         return NewsItem(item.itemId,
-        item.body,
-        NewsItemFeaturedMedia(item.altText, NewsItemFeaturedMediaContext(item.context)),
-        item.shortHeadline)
+            item.body,
+            NewsItemFeaturedMedia(item.altText, NewsItemFeaturedMediaContext(item.context)),
+            item.shortHeadline)
     }
 
 }
