@@ -1,14 +1,16 @@
 package io.navendra.retrofitkotlindeferred.ui.viewModel
 
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import io.navendra.retrofitkotlindeferred.model.NewsItem
+import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemsMapper
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-class NewsPageViewModel : ViewModel() {
+class NewsPageViewModel (application: Application) : AndroidViewModel(application) {
 
     private val _newsPageFlow = MutableStateFlow<LatestNewsUiState<NewsItem>>(LatestNewsUiState.Loading)
 
@@ -16,9 +18,11 @@ class NewsPageViewModel : ViewModel() {
 
     fun loadData(item_id: String) {
         viewModelScope.launch {
-            NewsRepository.loadNews()
-            _newsPageFlow.value = LatestNewsUiState.Success(NewsRepository.
-            getNewsPageByID(item_id))
+            NewsRepository.getInstance(getApplication<Application>().applicationContext).itemsDao().
+            getItemById(item_id).collect {
+                _newsPageFlow.value =
+                    LatestNewsUiState.Success(NewsItemsMapper.fromRoomDBtoJson(it!!))
+            }
         }
     }
 
