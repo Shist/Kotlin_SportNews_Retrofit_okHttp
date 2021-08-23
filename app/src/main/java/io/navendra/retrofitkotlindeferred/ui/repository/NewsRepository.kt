@@ -7,6 +7,7 @@ import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.NewsDatabase
+import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemsMapper
 
 class NewsRepository {
 
@@ -37,6 +38,7 @@ class NewsRepository {
 
         try {
             latestNews = service.getNews().items
+            instance!!.itemsDao().insertItemsList(NewsItemsMapper.listFromJsonToRoomDB(latestNews))
 
             if(latestNews.isNotEmpty()) {
                 Log.d("MyLog", "Loading news to NewsRepository...")

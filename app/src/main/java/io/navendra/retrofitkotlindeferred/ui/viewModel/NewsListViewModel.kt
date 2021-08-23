@@ -12,12 +12,14 @@ import kotlinx.coroutines.flow.*
 
 class NewsListViewModel (application: Application) : AndroidViewModel(application) {
 
+    // Уберём эти Flow, когда сделаем Flow из БД
     private val _newsListFlow = MutableStateFlow<LatestNewsUiState<List<NewsItem>>>(LatestNewsUiState.Loading)
 
     val newsListFlow: StateFlow<LatestNewsUiState<List<NewsItem>>> = _newsListFlow
 
     fun loadData() {
         viewModelScope.launch(Dispatchers.Main) {
+            // здесь будет loadData()
             NewsRepository.getInstance(getApplication<Application>().applicationContext).itemsDao().
             getAllItems().collect {
                 _newsListFlow.value =
