@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemBinding
+import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemDB
 
-class SportAdapter(private val clickListener: (NewsItem)-> Unit) :
-    ListAdapter<NewsItem, SportAdapter.MyViewHolder>(SportNewsDiffCallback()) {
+class SportAdapter(private val clickListener: (NewsItemDB)-> Unit) :
+    ListAdapter<NewsItemDB, SportAdapter.MyViewHolder>(SportNewsDiffCallback()) {
 
-    private var items : List<NewsItem> = emptyList()
+    private var items : List<NewsItemDB> = emptyList()
 
     class MyViewHolder(itemBinding: NewsItemBinding): RecyclerView.ViewHolder(itemBinding.root){
         val image: ImageView = itemBinding.img
@@ -34,23 +34,23 @@ class SportAdapter(private val clickListener: (NewsItem)-> Unit) :
             clickListener(listItem)
         }
 
-        Picasso.get().load(listItem.featuredMedia.featuredMediaContext.featuredMediaContext).into(holder.image)
+        Picasso.get().load(listItem.context).into(holder.image)
         holder.headline.text = listItem.shortHeadline
-        holder.altText.text = listItem.featuredMedia.featuredMediaAltText
+        holder.altText.text = listItem.altText
     }
 
-    fun setItems(newData: List<NewsItem>) {
+    fun setItems(newData: List<NewsItemDB>) {
         items = newData
     }
 
 }
 
-class SportNewsDiffCallback : DiffUtil.ItemCallback<NewsItem>() {
-    override fun areItemsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
-        return oldItem.id == newItem.id
+class SportNewsDiffCallback : DiffUtil.ItemCallback<NewsItemDB>() {
+    override fun areItemsTheSame(oldItem: NewsItemDB, newItem: NewsItemDB): Boolean {
+        return oldItem.itemId == newItem.itemId
     }
 
-    override fun areContentsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
+    override fun areContentsTheSame(oldItem: NewsItemDB, newItem: NewsItemDB): Boolean {
         return oldItem == newItem
     }
 }

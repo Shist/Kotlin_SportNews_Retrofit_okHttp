@@ -1,6 +1,5 @@
 package io.navendra.retrofitkotlindeferred.ui.fragments
 
-import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.text.Html
@@ -14,8 +13,7 @@ import androidx.lifecycle.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
-import io.navendra.retrofitkotlindeferred.model.NewsItem
-import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
+import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemDB
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import io.navendra.retrofitkotlindeferred.ui.viewModel.PageViewModelFactory
 import kotlinx.coroutines.flow.collect
@@ -58,7 +56,7 @@ class NewsPageFragment : Fragment() {
         val pageImg: ImageView = binding.pageImg
         val pageText: TextView = binding.pageText
 
-        var item: NewsItem? = null
+        var item: NewsItemDB? = null
 
         swipeContainer = binding.swipeContainer
         swipeContainer?.setColorSchemeResources(
@@ -75,7 +73,7 @@ class NewsPageFragment : Fragment() {
                     item = it
 
                     pageHeadline.text = item?.shortHeadline
-                    Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext)
+                    Picasso.get().load(item?.context)
                         .into(pageImg)
                     pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
 

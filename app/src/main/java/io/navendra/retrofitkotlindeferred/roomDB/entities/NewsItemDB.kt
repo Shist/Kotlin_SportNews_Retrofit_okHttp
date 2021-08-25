@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "items")
-data class NewsItemsDB(
+data class NewsItemDB(
 
     @PrimaryKey
     var itemId: String,
