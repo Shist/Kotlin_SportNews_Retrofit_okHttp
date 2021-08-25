@@ -39,10 +39,6 @@ class SportAdapter(private val clickListener: (NewsItemDB)-> Unit) :
         holder.altText.text = listItem.altText
     }
 
-    fun setItems(newData: List<NewsItemDB>) {
-        items = newData
-    }
-
 }
 
 class SportNewsDiffCallback : DiffUtil.ItemCallback<NewsItemDB>() {

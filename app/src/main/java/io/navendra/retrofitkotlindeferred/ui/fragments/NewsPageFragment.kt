@@ -56,7 +56,7 @@ class NewsPageFragment : Fragment() {
         val pageImg: ImageView = binding.pageImg
         val pageText: TextView = binding.pageText
 
-        var item: NewsItemDB? = null
+        var item: NewsItemDB?
 
         swipeContainer = binding.swipeContainer
         swipeContainer?.setColorSchemeResources(
