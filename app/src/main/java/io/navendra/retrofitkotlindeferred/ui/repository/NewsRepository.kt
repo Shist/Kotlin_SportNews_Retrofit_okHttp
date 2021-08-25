@@ -24,13 +24,9 @@ class NewsRepository(context: Context) {
         }
     }
 
-    var newsDatabase: NewsDatabase? = null
+    private val newsDatabase: NewsDatabase = buildDatabase(context)
 
-    init {
-        newsDatabase?: synchronized(this) {
-            newsDatabase?: buildDatabase(context).also { newsDatabase = it }
-        }
-    }
+
 
     private fun buildDatabase(context: Context) =
         Room.databaseBuilder(context.applicationContext,
@@ -67,12 +63,12 @@ class NewsRepository(context: Context) {
         return latestNews
     }
 
-    fun getItems(context: Context): Flow<List<NewsItemsDB>>? {
-        return getInstance(context).newsDatabase?.itemsDao()?.getAllItems()
+    fun getItems(): Flow<List<NewsItemsDB>> {
+        return newsDatabase?.itemsDao()?.getAllItems()
     }
 
-    fun getItemByID(context: Context, item_id: String): Flow<NewsItemsDB?>? {
-        return getInstance(context).newsDatabase?.itemsDao()?.getItemById(item_id)
+    fun getItemByID(item_id: String): Flow<NewsItemsDB?> {
+        return newsDatabase?.itemsDao()?.getItemById(item_id)
     }
 
 }

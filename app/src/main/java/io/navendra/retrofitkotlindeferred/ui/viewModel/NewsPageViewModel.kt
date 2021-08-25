@@ -7,14 +7,19 @@ import androidx.lifecycle.viewModelScope
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemsMapper
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.launch
 
-class NewsPageViewModel (application: Application, item_id: String) : AndroidViewModel(application) {
+class NewsPageViewModel(application: Application, item_id: String) : AndroidViewModel(application) {
+    private val repository: NewsRepository
+        get() = NewsRepository.getInstance(getApplication<Application>().applicationContext)
 
-    var newsPageFlow: Flow<NewsItem> = NewsItemsMapper.flowFromRoomDBtoJson( NewsRepository.
-        getInstance(getApplication<Application>().applicationContext).
-        getItemByID(getApplication<Application>().applicationContext, item_id) )
+    var newsPageFlow: Flow<NewsItem> = repository.getItemByID(item_id).mapNotNull {
+        it ?: return@mapNotNull null
+        NewsItemsMapper.fromRoomDBtoJson(it)
+    }
+
 
     init {
         loadData(item_id)
@@ -22,12 +27,7 @@ class NewsPageViewModel (application: Application, item_id: String) : AndroidVie
 
     fun loadData(item_id: String) {
         viewModelScope.launch {
-            val context = getApplication<Application>().applicationContext
-
-            NewsRepository.getInstance(context).loadNews()
-
-            newsPageFlow = NewsItemsMapper.flowFromRoomDBtoJson(NewsRepository.
-            getInstance(context).getItemByID(context, item_id))
+            repository.loadNews()
         }
     }
 

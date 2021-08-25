@@ -6,6 +6,7 @@ import io.navendra.retrofitkotlindeferred.model.NewsItemFeaturedMediaContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 object NewsItemsMapper {
 
@@ -33,11 +34,8 @@ object NewsItemsMapper {
     // Flow из одного айтема из Json в RoomDB
     fun flowFromJsonToRoomDB(itemFlow: Flow<NewsItem>) : Flow<NewsItemsDB>
     {
-        return flow {
-            itemFlow.collect {
-                emit(fromJsonToRoomDB(it))
-            }
-        }
+        return itemFlow.map {  fromJsonToRoomDB(it)}
+
     }
 
     // Flow из листа айтемов из Json в RoomDB

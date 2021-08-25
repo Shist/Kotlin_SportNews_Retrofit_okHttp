@@ -37,7 +37,6 @@ class SportAdapter(private val clickListener: (NewsItem)-> Unit) :
         Picasso.get().load(listItem.featuredMedia.featuredMediaContext.featuredMediaContext).into(holder.image)
         holder.headline.text = listItem.shortHeadline
         holder.altText.text = listItem.featuredMedia.featuredMediaAltText
-
     }
 
     fun setItems(newData: List<NewsItem>) {
