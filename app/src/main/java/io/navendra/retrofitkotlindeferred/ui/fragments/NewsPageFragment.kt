@@ -1,5 +1,6 @@
 package io.navendra.retrofitkotlindeferred.ui.fragments
 
+import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.text.Html
@@ -9,14 +10,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.model.NewsItem
+import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import io.navendra.retrofitkotlindeferred.ui.viewModel.PageViewModelFactory
 import kotlinx.coroutines.flow.collect
@@ -99,8 +98,8 @@ class NewsPageFragment : Fragment() {
 
         val itemID = arguments?.getString(keyItemID)
 
-        val pageViewModelFactory = PageViewModelFactory(itemID!!)
-        val viewModel = ViewModelProvider(this).get(NewsPageViewModel::class.java)
+        val pageViewModelFactory = PageViewModelFactory(activity?.application!!, itemID!!)
+        viewModel = ViewModelProvider(this, pageViewModelFactory).get(NewsPageViewModel::class.java)
     }
 
 }
