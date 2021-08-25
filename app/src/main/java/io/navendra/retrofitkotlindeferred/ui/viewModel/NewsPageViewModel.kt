@@ -17,21 +17,17 @@ class NewsPageViewModel (application: Application, item_id: String) : AndroidVie
         getItemByID(getApplication<Application>().applicationContext, item_id) )
 
     init {
-        viewModelScope.launch {
+        loadData(item_id)
+    }
 
+    fun loadData(item_id: String) {
+        viewModelScope.launch {
             val context = getApplication<Application>().applicationContext
 
             NewsRepository.getInstance(context).loadNews()
 
             newsPageFlow = NewsItemsMapper.flowFromRoomDBtoJson(NewsRepository.
             getInstance(context).getItemByID(context, item_id))
-
-        }
-    }
-
-    fun loadData(item_id: String) {
-        viewModelScope.launch {
-            NewsRepository.getInstance(getApplication<Application>().applicationContext).loadNews()
         }
     }
 

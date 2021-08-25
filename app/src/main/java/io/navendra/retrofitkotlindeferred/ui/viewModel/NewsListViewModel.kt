@@ -17,21 +17,17 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
         getItems(getApplication<Application>().applicationContext)!! )
 
     init {
-        viewModelScope.launch(Dispatchers.Main) {
+        loadData()
+    }
 
+    fun loadData() {
+        viewModelScope.launch(Dispatchers.Main) {
             val context = getApplication<Application>().applicationContext
 
             NewsRepository.getInstance(context).loadNews()
 
             newsListFlow = NewsItemsMapper.flowListFromRoomDBtoJson(NewsRepository.
             getInstance(context).getItems(context)!!)
-
-        }
-    }
-
-    fun loadData() {
-        viewModelScope.launch(Dispatchers.Main) {
-            NewsRepository.getInstance(getApplication<Application>().applicationContext).loadNews()
         }
     }
 

@@ -17,7 +17,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.model.NewsItem
-import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsUiState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import io.navendra.retrofitkotlindeferred.ui.viewModel.PageViewModelFactory
 import kotlinx.coroutines.flow.collect
@@ -72,25 +71,18 @@ class NewsPageFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.newsPageFlow.collect { uiState ->
-                    when (uiState) {
-                        is LatestNewsUiState.Success -> {
-                            binding.loadingPanel.visibility = View.GONE
-                            item = uiState.data
+                viewModel.newsPageFlow.collect {
+                    binding.loadingPanel.visibility = View.GONE
+                    item = it
 
-                            pageHeadline.text = item?.shortHeadline
-                            Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext)
-                                .into(pageImg)
-                            pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
+                    pageHeadline.text = item?.shortHeadline
+                    Picasso.get().load(item?.featuredMedia?.featuredMediaContext?.featuredMediaContext)
+                        .into(pageImg)
+                    pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
 
-                            swipeContainer?.setOnRefreshListener {
-                                viewModel.loadData(itemID)
-                                swipeContainer?.isRefreshing = false
-                            }
-                        }
-                        is LatestNewsUiState.Loading -> {
-
-                        }
+                    swipeContainer?.setOnRefreshListener {
+                        viewModel.loadData(itemID)
+                        swipeContainer?.isRefreshing = false
                     }
                 }
             }
