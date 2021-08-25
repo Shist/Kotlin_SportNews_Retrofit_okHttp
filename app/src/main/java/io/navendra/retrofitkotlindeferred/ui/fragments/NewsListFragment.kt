@@ -57,6 +57,9 @@ class NewsListFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsListFlow.collect {
                     adapter.submitList(it)
+
+                    binding.progressBar.visibility = View.GONE
+
                     swipeContainer.setOnRefreshListener {
                         viewModel.loadData()
                         swipeContainer.isRefreshing = false
