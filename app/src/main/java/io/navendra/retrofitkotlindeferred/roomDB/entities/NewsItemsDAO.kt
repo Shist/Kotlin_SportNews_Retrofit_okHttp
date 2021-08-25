@@ -7,31 +7,31 @@ import kotlinx.coroutines.flow.Flow
 interface NewsItemsDAO {
 
     @Insert
-    fun insertOneItem(item: NewsItemsDB)
+    suspend fun insertOneItem(item: NewsItemsDB)
 
     @Insert
-    fun insertSomeItems(vararg nextItem: NewsItemsDB)
+    suspend fun insertSomeItems(vararg nextItem: NewsItemsDB)
 
     @Insert
-    fun insertItemsList(items: List<NewsItemsDB>)
+    suspend fun insertItemsList(items: List<NewsItemsDB>)
 
     @Update
-    fun updateOneItem(item: NewsItemsDB)
+    suspend fun updateOneItem(item: NewsItemsDB)
 
     @Update
-    fun updateSomeItems(vararg nextItem: NewsItemsDB)
+    suspend fun updateSomeItems(vararg nextItem: NewsItemsDB)
 
     @Update
-    fun updateAllItems(items: List<NewsItemsDB>)
+    suspend fun updateAllItems(items: List<NewsItemsDB>)
 
     @Delete
-    fun deleteOneItem(item: NewsItemsDB)
+    suspend fun deleteOneItem(item: NewsItemsDB)
 
     @Delete
-    fun deleteSomeItems(vararg nextItem: NewsItemsDB)
+    suspend fun deleteSomeItems(vararg nextItem: NewsItemsDB)
 
     @Delete
-    fun deleteAllItems(items: List<NewsItemsDB>)
+    suspend fun deleteAllItems(items: List<NewsItemsDB>)
 
     @Query("SELECT * FROM items")
     fun getAllItems(): Flow<List<NewsItemsDB>>

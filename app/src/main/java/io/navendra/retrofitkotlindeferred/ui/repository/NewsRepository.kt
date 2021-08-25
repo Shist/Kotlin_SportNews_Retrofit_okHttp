@@ -8,6 +8,8 @@ import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.NewsDatabase
 import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemsMapper
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.coroutineContext
 
 class NewsRepository {
 
