@@ -12,10 +12,9 @@ import kotlinx.coroutines.flow.*
 
 class NewsListViewModel (application: Application) : AndroidViewModel(application) {
 
-    // Уберём эти Flow, когда сделаем Flow из БД
-    private val _newsListFlow = MutableStateFlow<LatestNewsUiState<List<NewsItem>>>(LatestNewsUiState.Loading)
-
-    val newsListFlow: StateFlow<LatestNewsUiState<List<NewsItem>>> = _newsListFlow
+    var newsListFlow: Flow<List<NewsItem>> = NewsItemsMapper.flowFromRoomDBtoJson( NewsRepository.getInstance(
+        getApplication<Application>().applicationContext).
+        getItems(getApplication<Application>().applicationContext)!! )
 
     init {
         viewModelScope.launch(Dispatchers.Main) {
@@ -24,11 +23,8 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
 
             NewsRepository.getInstance(context).loadNews()
 
-            NewsRepository.getInstance(context).newsDB?.
-            itemsDao()?.getAllItems()?.collect {
-                _newsListFlow.value =
-                    LatestNewsUiState.Success(NewsItemsMapper.listFromRoomDBtoJson(it))
-            }
+            newsListFlow = NewsItemsMapper.flowFromRoomDBtoJson(NewsRepository.
+            getInstance(context).getItems(context)!!)
 
         }
     }

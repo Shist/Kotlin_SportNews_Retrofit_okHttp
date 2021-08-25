@@ -7,34 +7,35 @@ import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.NewsDatabase
+import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemsDB
 import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemsMapper
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.coroutineContext
+import kotlinx.coroutines.flow.Flow
 
-class NewsRepository {
+class NewsRepository(context: Context) {
 
     companion object {
         private var newsRepository: NewsRepository? = null
-        private var newsDatabase: NewsDatabase? = null
 
         fun getInstance(context: Context): NewsRepository
         {
-            newsDatabase?: synchronized(this) {
-                newsDatabase?: buildDatabase(context).also { newsDatabase = it }
-            }
             return newsRepository ?: synchronized(this) {
-                newsRepository ?: NewsRepository().also { newsRepository = it }
+                newsRepository ?: NewsRepository(context).also { newsRepository = it }
             }
         }
-
-        private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                NewsDatabase::class.java, "newsDB")
-                .build()
-
     }
 
-    var newsDB: NewsDatabase? = newsDatabase
+    var newsDatabase: NewsDatabase? = null
+
+    init {
+        newsDatabase?: synchronized(this) {
+            newsDatabase?: buildDatabase(context).also { newsDatabase = it }
+        }
+    }
+
+    private fun buildDatabase(context: Context) =
+        Room.databaseBuilder(context.applicationContext,
+            NewsDatabase::class.java, "newsDB")
+            .build()
 
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
@@ -47,7 +48,7 @@ class NewsRepository {
 
         try {
             latestNews = service.getNews().items
-            newsDB!!.itemsDao().insertItemsList(NewsItemsMapper.listFromJsonToRoomDB(latestNews))
+            newsDatabase!!.itemsDao().insertItemsList(NewsItemsMapper.listFromJsonToRoomDB(latestNews))
 
             if(latestNews.isNotEmpty()) {
                 Log.d("MyLog", "Loading news to NewsRepository...")
@@ -86,6 +87,10 @@ class NewsRepository {
         }
 
         return item
+    }
+
+    fun getItems(context: Context): Flow<List<NewsItemsDB>>? {
+        return getInstance(context).newsDatabase?.itemsDao()?.getAllItems()
     }
 
 }

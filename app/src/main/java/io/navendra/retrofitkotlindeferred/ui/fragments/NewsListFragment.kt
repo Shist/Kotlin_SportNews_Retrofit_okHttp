@@ -57,20 +57,11 @@ class NewsListFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsListFlow.collect {
-                    uiState ->
-                    when (uiState) {
-                        is LatestNewsUiState.Success -> {
-                            adapter.submitList(uiState.data)
-
-                            swipeContainer.setOnRefreshListener {
-                                viewModel.loadData()
-                                swipeContainer.isRefreshing = false
-                            }
-                        }
-                        is LatestNewsUiState.Loading -> {
-
-                        }
-                }
+                    adapter.submitList(it)
+                    swipeContainer.setOnRefreshListener {
+                        viewModel.loadData()
+                        swipeContainer.isRefreshing = false
+                    }
                 }
             }
         }

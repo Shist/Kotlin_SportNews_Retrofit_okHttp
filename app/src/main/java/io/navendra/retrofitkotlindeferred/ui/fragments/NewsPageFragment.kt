@@ -19,6 +19,7 @@ import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.model.NewsItem
 import io.navendra.retrofitkotlindeferred.ui.viewModel.LatestNewsUiState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
+import io.navendra.retrofitkotlindeferred.ui.viewModel.PageViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -104,7 +105,10 @@ class NewsPageFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        viewModel = ViewModelProvider(this).get(NewsPageViewModel::class.java)
+        val itemID = arguments?.getString(keyItemID)
+
+        val pageViewModelFactory = PageViewModelFactory(itemID!!)
+        val viewModel = ViewModelProvider.of(context, pageViewModelFactory).get(NewsPageViewModel::class.java)
     }
 
 }
