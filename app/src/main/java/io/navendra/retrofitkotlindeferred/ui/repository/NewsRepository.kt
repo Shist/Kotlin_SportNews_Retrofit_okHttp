@@ -65,6 +65,7 @@ class NewsRepository(context: Context) {
 
             if (item != null) {
 
+                // На будущее: нужно будет сделать отдельную таблицу для айтема
                 newsDatabase.itemsDao().insertOneItem(item)
 
                 Log.d("MyLog", "Loading item from list...")
