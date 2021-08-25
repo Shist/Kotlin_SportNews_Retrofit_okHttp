@@ -17,7 +17,8 @@ object NewsItemsMapper {
 
     fun listFromJsonToRoomDB(items: List<NewsItem>) : List<NewsItemsDB>
     {
-        val itemsDB: MutableList<NewsItemsDB> = mutableListOf()
+        val itemsDB: MutableList<NewsItemsDB> = MutableList(items.size) {
+            NewsItemsDB("", "", "", "", "") }
         for(i in items.indices) {
             itemsDB[i] = fromJsonToRoomDB(items[i])
         }
@@ -34,7 +35,9 @@ object NewsItemsMapper {
 
     fun listFromRoomDBtoJson(itemsDB: List<NewsItemsDB>) : List<NewsItem>
     {
-        val items: MutableList<NewsItem> = mutableListOf()
+        val items: MutableList<NewsItem> = MutableList(itemsDB.size) {
+            NewsItem("", "", NewsItemFeaturedMedia("",
+                NewsItemFeaturedMediaContext("")), "") }
         for(i in itemsDB.indices) {
             items[i] = fromRoomDBtoJson(itemsDB[i])
         }

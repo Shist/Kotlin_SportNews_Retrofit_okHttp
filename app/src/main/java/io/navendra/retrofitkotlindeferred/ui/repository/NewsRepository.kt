@@ -13,7 +13,7 @@ class NewsRepository {
 
     companion object {
         private var newsRepository: NewsRepository? = null
-        var newsDatabase: NewsDatabase? = null
+        private var newsDatabase: NewsDatabase? = null
 
         fun getInstance(context: Context): NewsRepository
         {
@@ -32,6 +32,8 @@ class NewsRepository {
 
     }
 
+    var newsDB: NewsDatabase? = newsDatabase
+
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
     suspend fun loadNews(): List<NewsItem> {
@@ -43,7 +45,7 @@ class NewsRepository {
 
         try {
             latestNews = service.getNews().items
-            newsDatabase!!.itemsDao().insertItemsList(NewsItemsMapper.listFromJsonToRoomDB(latestNews))
+            newsDB!!.itemsDao().insertItemsList(NewsItemsMapper.listFromJsonToRoomDB(latestNews))
 
             if(latestNews.isNotEmpty()) {
                 Log.d("MyLog", "Loading news to NewsRepository...")
