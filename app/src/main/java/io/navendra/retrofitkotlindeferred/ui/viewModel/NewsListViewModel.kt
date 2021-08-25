@@ -17,14 +17,18 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
 
     val newsListFlow: StateFlow<LatestNewsUiState<List<NewsItem>>> = _newsListFlow
 
-    fun loadData() {
+    init {
         viewModelScope.launch(Dispatchers.Main) {
-            // здесь будет loadData()
-            NewsRepository.getInstance(getApplication<Application>().applicationContext).itemsDao().
-            getAllItems().collect {
+            NewsRepository.newsDatabase?.itemsDao()?.getAllItems()?.collect {
                 _newsListFlow.value =
                     LatestNewsUiState.Success(NewsItemsMapper.listFromRoomDBtoJson(it))
             }
+        }
+    }
+
+    fun loadData() {
+        viewModelScope.launch(Dispatchers.Main) {
+            NewsRepository.getInstance(getApplication<Application>().applicationContext).loadNews()
         }
     }
 

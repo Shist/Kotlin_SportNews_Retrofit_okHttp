@@ -18,8 +18,7 @@ class NewsPageViewModel (application: Application) : AndroidViewModel(applicatio
 
     fun loadData(item_id: String) {
         viewModelScope.launch {
-            NewsRepository.getInstance(getApplication<Application>().applicationContext).itemsDao().
-            getItemById(item_id).collect {
+            NewsRepository.newsDatabase!!.itemsDao().getItemById(item_id).collect {
                 _newsPageFlow.value =
                     LatestNewsUiState.Success(NewsItemsMapper.fromRoomDBtoJson(it!!))
             }

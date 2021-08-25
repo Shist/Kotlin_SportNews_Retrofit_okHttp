@@ -12,12 +12,18 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemsMapper
 class NewsRepository {
 
     companion object {
-        private var instance: NewsDatabase? = null
+        private var newsRepository: NewsRepository? = null
+        var newsDatabase: NewsDatabase? = null
 
-        fun getInstance(context: Context): NewsDatabase =
-            instance?: synchronized(this) {
-                instance?: buildDatabase(context).also { instance = it }
+        fun getInstance(context: Context): NewsRepository
+        {
+            newsDatabase?: synchronized(this) {
+                newsDatabase?: buildDatabase(context).also { newsDatabase = it }
             }
+            return newsRepository ?: synchronized(this) {
+                newsRepository ?: NewsRepository().also { newsRepository = it }
+            }
+        }
 
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
@@ -31,14 +37,13 @@ class NewsRepository {
     suspend fun loadNews(): List<NewsItem> {
         var latestNews: List<NewsItem> = emptyList()
 
-
         // 2 метода
         // 1-ый: loadNews, который дезагружает данные и кладет в бд
         // 2-ой: делаем getNewsFlow, который просто будет брать у DAO flow
 
         try {
             latestNews = service.getNews().items
-            instance!!.itemsDao().insertItemsList(NewsItemsMapper.listFromJsonToRoomDB(latestNews))
+            newsDatabase!!.itemsDao().insertItemsList(NewsItemsMapper.listFromJsonToRoomDB(latestNews))
 
             if(latestNews.isNotEmpty()) {
                 Log.d("MyLog", "Loading news to NewsRepository...")
