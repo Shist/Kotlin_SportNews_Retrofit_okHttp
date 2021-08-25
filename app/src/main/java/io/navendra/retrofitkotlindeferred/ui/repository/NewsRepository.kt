@@ -67,30 +67,12 @@ class NewsRepository(context: Context) {
         return latestNews
     }
 
-    suspend fun getNewsPageByID(item_id: String) : NewsItem? {
-        var item: NewsItem? = null
-
-        try {
-            val latestNews: List<NewsItem> = service.getNews().items
-            item = latestNews.find { it.id == item_id }
-
-            if(item != null) {
-                Log.d("MyLog", "Loading item from list...")
-                Log.d("MyLog", "Response item: $item")
-            } else {
-                Log.d("MyLog", "Failure while loading item from list...")
-                Log.d("MyLog", "Reason: we've got empty item")
-            }
-        } catch (e: Throwable) {
-            Log.d("MyLog", "Failure while loading item from list...")
-            Log.d("MyLog", "Reason: ", e)
-        }
-
-        return item
-    }
-
     fun getItems(context: Context): Flow<List<NewsItemsDB>>? {
         return getInstance(context).newsDatabase?.itemsDao()?.getAllItems()
+    }
+
+    fun getItemByID(context: Context, item_id: String): Flow<NewsItemsDB?>? {
+        return getInstance(context).newsDatabase?.itemsDao()?.getItemById(item_id)
     }
 
 }

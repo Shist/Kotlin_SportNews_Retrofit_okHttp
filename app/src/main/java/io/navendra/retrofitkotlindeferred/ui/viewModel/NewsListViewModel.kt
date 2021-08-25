@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.*
 
 class NewsListViewModel (application: Application) : AndroidViewModel(application) {
 
-    var newsListFlow: Flow<List<NewsItem>> = NewsItemsMapper.flowFromRoomDBtoJson( NewsRepository.getInstance(
-        getApplication<Application>().applicationContext).
+    var newsListFlow: Flow<List<NewsItem>> = NewsItemsMapper.flowListFromRoomDBtoJson( NewsRepository.
+        getInstance(getApplication<Application>().applicationContext).
         getItems(getApplication<Application>().applicationContext)!! )
 
     init {
@@ -23,7 +23,7 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
 
             NewsRepository.getInstance(context).loadNews()
 
-            newsListFlow = NewsItemsMapper.flowFromRoomDBtoJson(NewsRepository.
+            newsListFlow = NewsItemsMapper.flowListFromRoomDBtoJson(NewsRepository.
             getInstance(context).getItems(context)!!)
 
         }

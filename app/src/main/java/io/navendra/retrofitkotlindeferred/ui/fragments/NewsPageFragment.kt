@@ -108,7 +108,7 @@ class NewsPageFragment : Fragment() {
         val itemID = arguments?.getString(keyItemID)
 
         val pageViewModelFactory = PageViewModelFactory(itemID!!)
-        val viewModel = ViewModelProvider.of(context, pageViewModelFactory).get(NewsPageViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(NewsPageViewModel::class.java)
     }
 
 }

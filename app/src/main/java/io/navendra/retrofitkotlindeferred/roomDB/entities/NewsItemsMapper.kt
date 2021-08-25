@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.flow
 
 object NewsItemsMapper {
 
+    // Один айтем из Json в RoomDB
     private fun fromJsonToRoomDB(item: NewsItem) : NewsItemsDB
     {
         return NewsItemsDB(item.id,
@@ -18,6 +19,7 @@ object NewsItemsMapper {
             item.shortHeadline)
     }
 
+    // Лист айтемов из Json в RoomDB
     fun listFromJsonToRoomDB(items: List<NewsItem>) : List<NewsItemsDB>
     {
         val itemsDB: MutableList<NewsItemsDB> = MutableList(items.size) {
@@ -28,7 +30,18 @@ object NewsItemsMapper {
         return itemsDB.toList()
     }
 
-    fun flowFromJsonToRoomDB(itemsFlow: Flow<List<NewsItem>>) : Flow<List<NewsItemsDB>>
+    // Flow из одного айтема из Json в RoomDB
+    fun flowFromJsonToRoomDB(itemFlow: Flow<NewsItem>) : Flow<NewsItemsDB>
+    {
+        return flow {
+            itemFlow.collect {
+                emit(fromJsonToRoomDB(it))
+            }
+        }
+    }
+
+    // Flow из листа айтемов из Json в RoomDB
+    fun flowListFromJsonToRoomDB(itemsFlow: Flow<List<NewsItem>>) : Flow<List<NewsItemsDB>>
     {
         return flow {
             itemsFlow.collect {
@@ -42,6 +55,7 @@ object NewsItemsMapper {
         }
     }
 
+    // Один айтем из RoomDB в Json
     fun fromRoomDBtoJson(item: NewsItemsDB) : NewsItem
     {
         return NewsItem(item.itemId,
@@ -50,6 +64,7 @@ object NewsItemsMapper {
             item.shortHeadline)
     }
 
+    // Лист айтемов из RoomDB в Json
     fun listFromRoomDBtoJson(itemsDB: List<NewsItemsDB>) : List<NewsItem>
     {
         val items: MutableList<NewsItem> = MutableList(itemsDB.size) {
@@ -61,7 +76,18 @@ object NewsItemsMapper {
         return items.toList()
     }
 
-    fun flowFromRoomDBtoJson(itemsDbFlow: Flow<List<NewsItemsDB>>) : Flow<List<NewsItem>>
+    // Flow из одного айтема из RoomDB в Json
+    fun flowFromRoomDBtoJson(itemDbFlow: Flow<NewsItemsDB?>?) : Flow<NewsItem>
+    {
+        return flow {
+            itemDbFlow?.collect {
+                emit(fromRoomDBtoJson(it!!))
+            }
+        }
+    }
+
+    // Flow из листа айтемов из RoomDB в Json
+    fun flowListFromRoomDBtoJson(itemsDbFlow: Flow<List<NewsItemsDB>>) : Flow<List<NewsItem>>
     {
         return flow {
             itemsDbFlow.collect {
