@@ -19,7 +19,6 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
     fun loadData() {
         viewModelScope.launch(Dispatchers.Main) {
             repository.loadNews()
-            newsListFlow = repository.getItems()
         }
     }
 

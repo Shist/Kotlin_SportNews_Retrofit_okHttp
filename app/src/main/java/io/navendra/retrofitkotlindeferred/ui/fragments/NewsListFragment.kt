@@ -36,7 +36,18 @@ class NewsListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loadData()
+        val swipeContainer = binding.swipeContainer
+        swipeContainer.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
+
+        swipeContainer.setOnRefreshListener {
+            viewModel.loadData()
+            swipeContainer.isRefreshing = false
+        }
 
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -46,14 +57,6 @@ class NewsListFragment : Fragment() {
             myActivity.onItemClick(it.itemId)
         }
         recyclerView.adapter = adapter
-
-        val swipeContainer = binding.swipeContainer
-        swipeContainer.setColorSchemeResources(
-            android.R.color.holo_blue_bright,
-            android.R.color.holo_green_light,
-            android.R.color.holo_orange_light,
-            android.R.color.holo_red_light
-        )
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
