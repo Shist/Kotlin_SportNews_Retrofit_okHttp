@@ -46,7 +46,6 @@ class NewsListFragment : Fragment() {
 
         swipeContainer.setOnRefreshListener {
             viewModel.loadData()
-            swipeContainer.isRefreshing = false
         }
 
         val recyclerView = binding.recyclerView
@@ -60,6 +59,7 @@ class NewsListFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
+                swipeContainer.isRefreshing = false
                 viewModel.newsListFlow.collect {
                     adapter.submitList(it)
 
