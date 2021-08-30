@@ -18,11 +18,15 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
 
     var newsListFlow: Flow<List<NewsItemDB>> = repository.getItems()
 
+    private val _state: StateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
+    val state: StateFlow<LoadState> = _state
+
     var isLoaded: Boolean = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun loadData() {
         viewModelScope.launch(Dispatchers.Main) {
+            _state.value = LoadState.LOADING
             repository.loadNews()
         }
     }
