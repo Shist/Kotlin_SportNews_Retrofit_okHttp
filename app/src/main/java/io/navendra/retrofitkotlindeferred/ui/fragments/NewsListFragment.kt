@@ -46,8 +46,11 @@ class NewsListFragment : Fragment() {
             android.R.color.holo_red_light
         )
 
-        swipeContainer.post { swipeContainer.isRefreshing = true }
-        viewModel.loadData()
+        if (savedInstanceState == null && !viewModel.isLoaded) {
+            swipeContainer.post { swipeContainer.isRefreshing = true }
+            viewModel.loadData()
+            viewModel.isLoaded = true
+        }
 
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -65,8 +68,6 @@ class NewsListFragment : Fragment() {
 
                     delay(1500)
                     swipeContainer.post { swipeContainer.isRefreshing = false }
-
-                    binding.progressBar.visibility = View.GONE
 
                     swipeContainer.setOnRefreshListener {
                         viewModel.loadData()

@@ -68,7 +68,6 @@ class NewsPageFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsPageFlow.collect {
-                    binding.loadingPanel.visibility = View.GONE
                     item = it
 
                     pageHeadline.text = item?.shortHeadline

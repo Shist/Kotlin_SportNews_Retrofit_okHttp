@@ -13,7 +13,7 @@ data class NewsItem(
     //@SerializedName("authorName") val authorName: String,
     @SerializedName("body") val body: String,
     //@SerializedName("channels") val channels: List<NewsItemChannel>,
-    //@SerializedName("createdAt") val createdAt: String,
+    @SerializedName("createdAt") val createdAt: String,
     //@SerializedName("deletedAt") val deletedAt: String,
     //@SerializedName("expiredAt") val expiredAt: String,
     //@SerializedName("externalId") val externalId: String,
@@ -26,16 +26,17 @@ data class NewsItem(
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readParcelable(NewsItemFeaturedMedia::class.java.classLoader)!!,
         parcel.readString()!!
-    ) {
-    }
+    )
 
     override fun describeContents() = 0
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
         parcel.writeString(body)
+        parcel.writeString(createdAt)
         parcel.writeParcelable(featuredMedia, 0)
         parcel.writeString(shortHeadline)
     }
