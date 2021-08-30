@@ -33,7 +33,7 @@ interface NewsItemsDAO {
     @Delete
     suspend fun deleteAllItems(items: List<NewsItemDB>)
 
-    @Query("SELECT * FROM items")
+    @Query("SELECT * FROM items ORDER BY createdAt DESC, itemId")
     fun getAllItems(): Flow<List<NewsItemDB>>
 
     @Query("SELECT * FROM items WHERE itemId = :neededId")
