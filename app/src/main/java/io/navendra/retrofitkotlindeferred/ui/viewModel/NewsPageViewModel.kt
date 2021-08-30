@@ -1,14 +1,14 @@
 package io.navendra.retrofitkotlindeferred.ui.viewModel
 
 import android.app.Application
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemDB
-import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemsMapper
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 
 class NewsPageViewModel(application: Application, itemID: String) : AndroidViewModel(application) {
@@ -18,6 +18,7 @@ class NewsPageViewModel(application: Application, itemID: String) : AndroidViewM
 
     var newsPageFlow: Flow<NewsItemDB> = repository.getItemByID(itemID)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun loadData(itemID: String) {
         viewModelScope.launch {
             repository.loadNewsPageByID(itemID)
