@@ -16,6 +16,7 @@ import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
 import io.navendra.retrofitkotlindeferred.ui.adapter.SportAdapter
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -62,12 +63,8 @@ class NewsListFragment : Fragment() {
                 viewModel.newsListFlow.collect {
                     adapter.submitList(it)
 
-                    Handler().postDelayed(
-                        {
-                            swipeContainer.post { swipeContainer.isRefreshing = false }
-                        },
-                        1500
-                    )
+                    delay(1500)
+                    swipeContainer.post { swipeContainer.isRefreshing = false }
 
                     binding.progressBar.visibility = View.GONE
 
