@@ -2,6 +2,7 @@ package io.navendra.retrofitkotlindeferred.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,9 +45,8 @@ class NewsListFragment : Fragment() {
             android.R.color.holo_red_light
         )
 
-        swipeContainer.setOnRefreshListener {
-            viewModel.loadData()
-        }
+        swipeContainer.post { swipeContainer.isRefreshing = true }
+        viewModel.loadData()
 
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -59,9 +59,15 @@ class NewsListFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                swipeContainer.isRefreshing = false
                 viewModel.newsListFlow.collect {
                     adapter.submitList(it)
+
+                    Handler().postDelayed(
+                        {
+                            swipeContainer.post { swipeContainer.isRefreshing = false }
+                        },
+                        1500
+                    )
 
                     binding.progressBar.visibility = View.GONE
 
