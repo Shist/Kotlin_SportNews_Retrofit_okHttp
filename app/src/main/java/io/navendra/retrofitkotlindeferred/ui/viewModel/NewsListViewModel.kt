@@ -16,10 +16,6 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
 
     var newsListFlow: Flow<List<NewsItemDB>> = repository.getItems()
 
-    init {
-        loadData()
-    }
-
     fun loadData() {
         viewModelScope.launch(Dispatchers.Main) {
             repository.loadNews()

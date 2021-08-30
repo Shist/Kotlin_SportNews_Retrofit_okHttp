@@ -36,6 +36,8 @@ class NewsListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.loadData()
+
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
 
