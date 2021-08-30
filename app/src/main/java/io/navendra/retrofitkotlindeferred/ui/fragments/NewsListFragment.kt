@@ -3,6 +3,7 @@ package io.navendra.retrofitkotlindeferred.ui.fragments
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
 import io.navendra.retrofitkotlindeferred.ui.adapter.SportAdapter
+import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -48,10 +51,8 @@ class NewsListFragment : Fragment() {
             android.R.color.holo_red_light
         )
 
-        if (savedInstanceState == null && !viewModel.isLoaded) {
-            swipeContainer.post { swipeContainer.isRefreshing = true }
+        if (savedInstanceState == null && viewModel.state.value == LoadState.IDLE) {
             viewModel.loadData()
-            viewModel.isLoaded = true
         }
 
         val recyclerView = binding.recyclerView
@@ -65,15 +66,31 @@ class NewsListFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.newsListFlow.collect {
-                    adapter.submitList(it)
+                when (viewModel.state.value) {
+                    LoadState.LOADING -> {
+                        swipeContainer.post { swipeContainer.isRefreshing = true }
+                        Log.d("MyLog", "Got LOADING")
+                    }
+                    LoadState.SUCCESS -> {
+                        viewModel.newsListFlow.collect {
+                            adapter.submitList(it)
 
-                    delay(1500)
-                    swipeContainer.post { swipeContainer.isRefreshing = false }
+                            swipeContainer.setOnRefreshListener {
+                                viewModel.loadData()
+                                swipeContainer.isRefreshing = false
+                            }
+                        }
 
-                    swipeContainer.setOnRefreshListener {
-                        viewModel.loadData()
-                        swipeContainer.isRefreshing = false
+                        swipeContainer.post { swipeContainer.isRefreshing = false }
+                        Log.d("MyLog", "Got SUCCESS")
+                    }
+                    LoadState.ERROR -> {
+                        swipeContainer.post { swipeContainer.isRefreshing = false }
+                        //some error handler here...
+                        Log.d("MyLog", "Got ERROR")
+                    }
+                    LoadState.IDLE -> {
+                        Log.d("MyLog", "Something get wrong: IDLE state after LoadData() . . .")
                     }
                 }
             }
