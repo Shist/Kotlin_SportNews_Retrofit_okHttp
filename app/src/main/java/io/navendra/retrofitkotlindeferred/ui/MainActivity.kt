@@ -40,3 +40,4 @@ class MainActivity : AppCompatActivity() {
 // 1) Если не получилось загрузить, выводим snackbar с ошибкой, убираем swipeRefreshLayout
 // 2)* Посмотреть миграции базы данных
 // 3)* Создать отдельную таблицу для одного item и загружать оттуда
+// 4) WorkManager - как сделать с ним DailyUpdates
