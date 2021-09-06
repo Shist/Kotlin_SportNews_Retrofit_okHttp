@@ -17,19 +17,19 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
     private val repository: NewsRepository
         get() = NewsRepository.getInstance(getApplication<Application>().applicationContext)
 
-    var newsListFlow: Flow<List<NewsItemDB>> = repository.getItems()
+    val newsListFlow: Flow<List<NewsItemDB>> = repository.getItems()
 
-    var state: StateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
+    val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun loadData() {
         viewModelScope.launch(Dispatchers.Main) {
-            state = MutableStateFlow(LoadState.LOADING)
+            state.value = LoadState.LOADING
             try {
                 repository.loadNews()
-                state = MutableStateFlow(LoadState.SUCCESS)
+                state.value = LoadState.SUCCESS
             } catch (e: Throwable) {
-                state = MutableStateFlow(LoadState.ERROR)
+                state.value = LoadState.ERROR
                 Log.d("MyLog", "Error while loading data: $e")
             }
         }

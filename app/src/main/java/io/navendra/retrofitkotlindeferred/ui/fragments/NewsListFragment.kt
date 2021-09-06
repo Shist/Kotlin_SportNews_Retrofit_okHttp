@@ -51,10 +51,6 @@ class NewsListFragment : Fragment() {
             android.R.color.holo_red_light
         )
 
-        if (savedInstanceState == null && viewModel.state.value == LoadState.IDLE) {
-            viewModel.loadData()
-        }
-
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -64,36 +60,45 @@ class NewsListFragment : Fragment() {
         }
         recyclerView.adapter = adapter
 
+        swipeContainer.setOnRefreshListener {
+            viewModel.loadData()
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                when (viewModel.state.value) {
-                    LoadState.LOADING -> {
-                        swipeContainer.post { swipeContainer.isRefreshing = true }
-                        Log.d("MyLog", "Got LOADING")
-                    }
-                    LoadState.SUCCESS -> {
-                        viewModel.newsListFlow.collect {
-                            adapter.submitList(it)
+                viewModel.newsListFlow.collect {
+                    adapter.submitList(it)
+                }
+            }
+        }
 
-                            swipeContainer.setOnRefreshListener {
-                                viewModel.loadData()
-                                swipeContainer.isRefreshing = false
-                            }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect {
+                    when (it) {
+                        LoadState.LOADING -> {
+                            swipeContainer.isRefreshing = true
+                            Log.d("MyLog", "Got LOADING")
                         }
-
-                        swipeContainer.post { swipeContainer.isRefreshing = false }
-                        Log.d("MyLog", "Got SUCCESS")
-                    }
-                    LoadState.ERROR -> {
-                        swipeContainer.post { swipeContainer.isRefreshing = false }
-                        //some error handler here...
-                        Log.d("MyLog", "Got ERROR")
-                    }
-                    LoadState.IDLE -> {
-                        Log.d("MyLog", "Something get wrong: IDLE state after LoadData() . . .")
+                        LoadState.SUCCESS -> {
+                            swipeContainer.isRefreshing = false
+                            Log.d("MyLog", "Got SUCCESS")
+                        }
+                        LoadState.ERROR -> {
+                            swipeContainer.isRefreshing = false
+                            //some error handler here...
+                            Log.d("MyLog", "Got ERROR")
+                        }
+                        LoadState.IDLE -> {
+                            Log.d("MyLog", "Something get wrong: IDLE state after LoadData() . . .")
+                        }
                     }
                 }
             }
+        }
+
+        if (savedInstanceState == null && viewModel.state.value == LoadState.IDLE) {
+            viewModel.loadData()
         }
     }
 
