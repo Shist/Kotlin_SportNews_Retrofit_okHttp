@@ -35,28 +35,11 @@ class NewsRepository(context: Context) {
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun loadNews(): List<NewsItemDB> {
+    suspend fun loadNews() {
         var latestNews: List<NewsItemDB> = emptyList()
 
-        try {
-            latestNews = service.getNews().items.map { NewsItemsMapper.fromJsonToRoomDB(it) }
-            newsDatabase.itemsDao().insertItemsList(latestNews)
-
-//            if(latestNews.isNotEmpty()) {
-//                Log.d("MyLog", "Loading news to NewsRepository...")
-//                Log.d("MyLog", "Response: ${latestNews.size} items...")
-//                for (i in latestNews.indices)
-//                    Log.d("MyLog", latestNews[i].toString())
-//            }else {
-//                Log.d("MyLog", "Failure while loading news to NewsRepository...")
-//                Log.d("MyLog", "Reason: we've got empty list...")
-//            }
-        } catch (e: Throwable) {
-            Log.d("MyLog", "Failure while loading news to NewsRepository...")
-            Log.d("MyLog", "Reason: ", e)
-        }
-
-        return latestNews
+        latestNews = service.getNews().items.map { NewsItemsMapper.fromJsonToRoomDB(it) }
+        newsDatabase.itemsDao().insertItemsList(latestNews)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

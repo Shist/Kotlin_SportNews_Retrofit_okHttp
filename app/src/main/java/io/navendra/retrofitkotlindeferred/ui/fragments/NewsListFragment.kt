@@ -14,13 +14,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
 import io.navendra.retrofitkotlindeferred.ui.adapter.SportAdapter
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -86,6 +86,13 @@ class NewsListFragment : Fragment() {
                         }
                         LoadState.ERROR -> {
                             swipeContainer.isRefreshing = false
+                            val snackbar = Snackbar.make(
+                                binding.swipeContainer,
+                                R.string.errorText,
+                                Snackbar.LENGTH_LONG
+                            )
+                            snackbar.setAction(R.string.reload, SnackbarAction(viewModel))
+                            snackbar.show()
                             //some error handler here...
                             Log.d("MyLog", "Got ERROR")
                         }

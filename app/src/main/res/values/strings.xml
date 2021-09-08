@@ -4,4 +4,6 @@
     <string name="headline">Headline</string>
     <string name="altText">Alternate Text</string>
     <string name="pageText">Page Text</string>
+    <string name="errorText">Failed to load new data</string>
+    <string name="reload">Reload</string>
 </resources>
