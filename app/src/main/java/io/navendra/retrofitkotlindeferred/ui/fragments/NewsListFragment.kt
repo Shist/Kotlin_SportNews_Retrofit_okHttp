@@ -2,15 +2,11 @@ package io.navendra.retrofitkotlindeferred.ui.fragments
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +20,6 @@ import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
 import io.navendra.retrofitkotlindeferred.ui.adapter.SportAdapter
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -44,7 +39,6 @@ class NewsListFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,7 +72,7 @@ class NewsListFragment : Fragment() {
                     if (it.isEmpty()) {
                         binding.swipeContainer.apply {
                             Picasso.get().load(R.drawable.no_data_yet).into(noDataImage)
-                            noDataText.text = resources.getString(R.string.noDataYet);
+                            noDataText.text = resources.getString(R.string.noDataYet)
                         }
                     }
                     else {

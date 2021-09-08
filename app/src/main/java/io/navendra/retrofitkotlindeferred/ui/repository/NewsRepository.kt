@@ -1,9 +1,7 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
 import android.content.Context
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.room.Room
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
@@ -34,15 +32,12 @@ class NewsRepository(context: Context) {
 
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
-    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun loadNews() {
-        var latestNews: List<NewsItemDB> = emptyList()
-
-        latestNews = service.getNews().items.map { NewsItemsMapper.fromJsonToRoomDB(it) }
+        val latestNews: List<NewsItemDB> =
+            service.getNews().items.map { NewsItemsMapper.fromJsonToRoomDB(it) }
         newsDatabase.itemsDao().insertItemsList(latestNews)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun loadNewsPageByID(itemID: String) : NewsItemDB? {
         var item: NewsItemDB? = null
 
