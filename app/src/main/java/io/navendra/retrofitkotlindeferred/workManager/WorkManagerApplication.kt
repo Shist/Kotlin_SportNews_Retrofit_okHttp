@@ -11,8 +11,8 @@ class WorkManagerApplication : Application() {
         super.onCreate()
 
         val saveRequest =
-            PeriodicWorkRequestBuilder<UploadWorker>(15,
-                java.util.concurrent.TimeUnit.MINUTES)
+            PeriodicWorkRequestBuilder<UploadWorker>(24,
+                java.util.concurrent.TimeUnit.HOURS)
                 .build()
 
         Log.d("MyLog", "WorkManager: Successfully loaded data...")
