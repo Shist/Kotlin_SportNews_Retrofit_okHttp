@@ -96,17 +96,29 @@ class NewsListFragment : Fragment() {
                             swipeContainer.isRefreshing = false
                             Log.d("MyLog", "Got SUCCESS")
                         }
-                        LoadState.ERROR -> {
+                        LoadState.INTERNET_ERROR -> {
                             swipeContainer.isRefreshing = false
-                            if (adapter.itemCount == 0)
-                            { // Если данных вообще нету (даже в базе)
-                                createSnackbar(Snackbar.LENGTH_INDEFINITE)
+                            if (adapter.itemCount == 0) { // Если данных вообще нету (даже в базе)
+                                createSnackbar(Snackbar.LENGTH_INDEFINITE,
+                                    resources.getString(R.string.errorNetwork))
                             }
-                            else
-                            { // Если новые данные не пришли, но есть старые данные в базе
-                                createSnackbar(Snackbar.LENGTH_LONG)
+                            else { // Если новые данные не пришли, но есть старые данные в базе
+                                createSnackbar(Snackbar.LENGTH_LONG,
+                                    resources.getString(R.string.errorNetwork))
                             }
-                            Log.d("MyLog", "Got ERROR")
+                            Log.d("MyLog", "Got UNKNOWN_ERROR")
+                        }
+                        LoadState.UNKNOWN_ERROR -> {
+                            swipeContainer.isRefreshing = false
+                            if (adapter.itemCount == 0) { // Если данных вообще нету (даже в базе)
+                                createSnackbar(Snackbar.LENGTH_INDEFINITE,
+                                    resources.getString(R.string.errorUnknown))
+                            }
+                            else { // Если новые данные не пришли, но есть старые данные в базе
+                                createSnackbar(Snackbar.LENGTH_LONG,
+                                    resources.getString(R.string.errorUnknown))
+                            }
+                            Log.d("MyLog", "Got UNKNOWN_ERROR")
                         }
                         LoadState.IDLE -> {
                             Log.d("MyLog", "Something get wrong: IDLE state after LoadData() . . .")
@@ -131,10 +143,10 @@ class NewsListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(NewsListViewModel::class.java)
     }
 
-    private fun createSnackbar(snackbarTimeLength : Int) {
+    private fun createSnackbar(snackbarTimeLength : Int, messageError : String) {
         val snackbar = Snackbar.make(
             binding.swipeContainer,
-            R.string.errorText,
+            messageError,
             snackbarTimeLength
         )
         snackbar.setActionTextColor(Color.parseColor("#00a390"))

@@ -1,6 +1,8 @@
 package io.navendra.retrofitkotlindeferred.ui.viewModel
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,6 +21,13 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
 
+    private fun isConnectedToInternet() : Boolean {
+        val context = getApplication<Application>().applicationContext
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return  networkInfo!=null && networkInfo.isConnected
+    }
+
     fun loadData() {
         viewModelScope.launch(Dispatchers.Main) {
             state.value = LoadState.LOADING
@@ -26,8 +35,16 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
                 repository.loadNews()
                 state.value = LoadState.SUCCESS
             } catch (e: Throwable) {
-                state.value = LoadState.ERROR
-                Log.d("MyLog", "Error while loading data: $e")
+
+                if (isConnectedToInternet()) {
+                    state.value = LoadState.UNKNOWN_ERROR
+                    Log.d("MyLog", "Unknown error while loading data: $e")
+                }
+                else {
+                    state.value = LoadState.INTERNET_ERROR
+                    Log.d("MyLog", "Internet connection error while loading data: $e")
+                }
+
             }
         }
     }
