@@ -43,7 +43,8 @@
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pageHeadline" />
+                app:layout_constraintTop_toBottomOf="@id/pageHeadline"
+                android:contentDescription="@string/pageImgDesc" />
 
             <TextView
                 android:id="@+id/pageText"
