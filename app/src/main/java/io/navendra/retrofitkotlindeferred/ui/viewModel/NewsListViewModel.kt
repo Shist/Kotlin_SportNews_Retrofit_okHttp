@@ -1,9 +1,7 @@
 package io.navendra.retrofitkotlindeferred.ui.viewModel
 
 import android.app.Application
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemDB
@@ -21,7 +19,6 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun loadData() {
         viewModelScope.launch(Dispatchers.Main) {
             state.value = LoadState.LOADING
