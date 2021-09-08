@@ -102,15 +102,17 @@ class NewsListFragment : Fragment() {
                             swipeContainer.isRefreshing = false
                             Log.d("MyLog", "Got SUCCESS")
                         }
-                        LoadState.ERROR_WITH_DATA -> {
+                        LoadState.ERROR -> {
                             swipeContainer.isRefreshing = false
-                            createSnackbar(Snackbar.LENGTH_LONG)
-                            Log.d("MyLog", "Got ERROR WITH DATA")
-                        }
-                        LoadState.ERROR_NO_DATA -> {
-                            swipeContainer.isRefreshing = false
-                            createSnackbar(Snackbar.LENGTH_INDEFINITE)
-                            Log.d("MyLog", "Got ERROR WITHOUT ANY DATA")
+                            if (adapter.itemCount == 0)
+                            { // Если данных вообще нету (даже в базе)
+                                createSnackbar(Snackbar.LENGTH_INDEFINITE)
+                            }
+                            else
+                            { // Если новые данные не пришли, но есть старые данные в базе
+                                createSnackbar(Snackbar.LENGTH_LONG)
+                            }
+                            Log.d("MyLog", "Got ERROR")
                         }
                         LoadState.IDLE -> {
                             Log.d("MyLog", "Something get wrong: IDLE state after LoadData() . . .")

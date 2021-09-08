@@ -29,15 +29,7 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
                 repository.loadNews()
                 state.value = LoadState.SUCCESS
             } catch (e: Throwable) {
-                var listItems = repository.
-                if (listItems.isEmpty())
-                { // Когда вообще нету данных (даже в базе)
-                    state.value = LoadState.ERROR_NO_DATA
-                }
-                else
-                { // Когда новые данные не загрузились, но в базе есть старые
-                    state.value = LoadState.ERROR_WITH_DATA
-                }
+                state.value = LoadState.ERROR
                 Log.d("MyLog", "Error while loading data: $e")
             }
         }
