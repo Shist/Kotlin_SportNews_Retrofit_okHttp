@@ -6,4 +6,6 @@
     <string name="pageText">Page Text</string>
     <string name="errorText">Failed to load new data</string>
     <string name="reload">Reload</string>
+    <string name="noDataYet">No data yet</string>
+    <string name="noDataYetDesc">Image for case when we have no news</string>
 </resources>

@@ -1,6 +1,8 @@
 package io.navendra.retrofitkotlindeferred.ui.fragments
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -15,11 +18,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 import io.navendra.retrofitkotlindeferred.ui.MainActivity
 import io.navendra.retrofitkotlindeferred.ui.adapter.SportAdapter
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
+import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -42,6 +47,9 @@ class NewsListFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val noDataImage = binding.noDataImage
+        val noDataText = binding.noDataText
 
         val swipeContainer = binding.swipeContainer
         swipeContainer.setColorSchemeResources(
@@ -67,7 +75,17 @@ class NewsListFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsListFlow.collect {
-                    adapter.submitList(it)
+                    if (it.isEmpty()) {
+                        binding.swipeContainer.apply {
+                            Picasso.get().load(R.drawable.no_data_yet).into(noDataImage)
+                            noDataText.text = resources.getString(R.string.noDataYet);
+                        }
+                    }
+                    else {
+                        noDataImage.setImageResource(0)
+                        noDataText.text = null
+                        adapter.submitList(it)
+                    }
                 }
             }
         }
@@ -84,17 +102,15 @@ class NewsListFragment : Fragment() {
                             swipeContainer.isRefreshing = false
                             Log.d("MyLog", "Got SUCCESS")
                         }
-                        LoadState.ERROR -> {
+                        LoadState.ERROR_WITH_DATA -> {
                             swipeContainer.isRefreshing = false
-                            val snackbar = Snackbar.make(
-                                binding.swipeContainer,
-                                R.string.errorText,
-                                Snackbar.LENGTH_LONG
-                            )
-                            snackbar.setAction(R.string.reload, SnackbarAction(viewModel))
-                            snackbar.show()
-                            //some error handler here...
-                            Log.d("MyLog", "Got ERROR")
+                            createSnackbar(Snackbar.LENGTH_LONG)
+                            Log.d("MyLog", "Got ERROR WITH DATA")
+                        }
+                        LoadState.ERROR_NO_DATA -> {
+                            swipeContainer.isRefreshing = false
+                            createSnackbar(Snackbar.LENGTH_INDEFINITE)
+                            Log.d("MyLog", "Got ERROR WITHOUT ANY DATA")
                         }
                         LoadState.IDLE -> {
                             Log.d("MyLog", "Something get wrong: IDLE state after LoadData() . . .")
@@ -117,6 +133,17 @@ class NewsListFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModel = ViewModelProvider(this).get(NewsListViewModel::class.java)
+    }
+
+    private fun createSnackbar(snackbarTimeLength : Int) {
+        val snackbar = Snackbar.make(
+            binding.swipeContainer,
+            R.string.errorText,
+            snackbarTimeLength
+        )
+        snackbar.setActionTextColor(Color.parseColor("#00a390"))
+        snackbar.setAction(R.string.reload, SnackbarAction(viewModel))
+        snackbar.show()
     }
 
 }
