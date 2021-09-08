@@ -33,9 +33,8 @@ class NewsRepository(context: Context) {
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
     suspend fun loadNews() {
-        var latestNews: List<NewsItemDB> = emptyList()
-
-        latestNews = service.getNews().items.map { NewsItemsMapper.fromJsonToRoomDB(it) }
+        val latestNews: List<NewsItemDB> =
+            service.getNews().items.map { NewsItemsMapper.fromJsonToRoomDB(it) }
         newsDatabase.itemsDao().insertItemsList(latestNews)
     }
 
