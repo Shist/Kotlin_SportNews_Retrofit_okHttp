@@ -7,6 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -71,13 +74,15 @@ class NewsListFragment : Fragment() {
                 viewModel.newsListFlow.collect {
                     if (it.isEmpty()) {
                         binding.swipeContainer.apply {
-                            Picasso.get().load(R.drawable.no_data_yet).into(noDataImage)
-                            noDataText.text = resources.getString(R.string.noDataYet)
+                            noDataImage.isVisible = true
+                            noDataText.isVisible = true
                         }
                     }
                     else {
-                        noDataImage.setImageResource(0)
-                        noDataText.text = null
+                        binding.swipeContainer.apply {
+                            noDataImage.isInvisible = true
+                            noDataText.isInvisible = true
+                        }
                         adapter.submitList(it)
                     }
                 }
@@ -150,7 +155,9 @@ class NewsListFragment : Fragment() {
             snackbarTimeLength
         )
         snackbar.setActionTextColor(Color.parseColor("#00a390"))
-        snackbar.setAction(R.string.reload, SnackbarAction(viewModel))
+        snackbar.setAction(R.string.reload) {
+            viewModel.loadData()
+        }
         snackbar.show()
     }
 

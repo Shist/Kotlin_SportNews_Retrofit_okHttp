@@ -11,6 +11,7 @@ import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import java.io.IOException
 
 class NewsListViewModel (application: Application) : AndroidViewModel(application) {
 
@@ -35,16 +36,14 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
                 repository.loadNews()
                 state.value = LoadState.SUCCESS
             } catch (e: Throwable) {
-
-                if (isConnectedToInternet()) {
-                    state.value = LoadState.UNKNOWN_ERROR
-                    Log.d("MyLog", "Unknown error while loading data: $e")
-                }
-                else {
+                if (!isConnectedToInternet() && e is IOException) {
                     state.value = LoadState.INTERNET_ERROR
                     Log.d("MyLog", "Internet connection error while loading data: $e")
                 }
-
+                else {
+                    state.value = LoadState.UNKNOWN_ERROR
+                    Log.d("MyLog", "Unknown error while loading data: $e")
+                }
             }
         }
     }

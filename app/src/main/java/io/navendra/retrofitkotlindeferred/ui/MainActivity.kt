@@ -37,5 +37,12 @@ class MainActivity : AppCompatActivity() {
 }
 
 // TODO
+
 // 1) Посмотреть миграции базы данных
+// https://androidschool.ru/2020/03/24/room-migrations/
+
 // 2) Создать отдельную таблицу для одного item и загружать оттуда
+
+// 3) Dependency Injection
+
+// 4) Потестируй WorkManager

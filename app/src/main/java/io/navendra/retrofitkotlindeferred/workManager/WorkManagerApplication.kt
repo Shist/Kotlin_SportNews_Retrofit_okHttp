@@ -2,20 +2,33 @@ package io.navendra.retrofitkotlindeferred.workManager
 
 import android.app.Application
 import android.util.Log
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
+import java.util.*
+import java.util.concurrent.TimeUnit
+
 
 class WorkManagerApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        val saveRequest =
-            PeriodicWorkRequestBuilder<UploadWorker>(24,
-                java.util.concurrent.TimeUnit.HOURS)
-                .build()
+        val currentDate = Calendar.getInstance()
+        val dueDate = Calendar.getInstance()
 
-        Log.d("MyLog", "WorkManager: Successfully loaded data...")
+        dueDate[Calendar.HOUR_OF_DAY] = 8
+        dueDate[Calendar.MINUTE] = 0
+        dueDate[Calendar.SECOND] = 0
+
+        if(dueDate.before(currentDate)) {
+            dueDate.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        val timeDiff = dueDate.timeInMillis - currentDate.timeInMillis
+
+        val saveRequest =
+            OneTimeWorkRequestBuilder<UploadWorker>()
+                .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
+                .build()
 
         WorkManager.getInstance(applicationContext).enqueue(saveRequest)
     }

@@ -14,12 +14,11 @@ class NewsPageViewModel(application: Application, itemID: String) : AndroidViewM
     private val repository: NewsRepository
         get() = NewsRepository.getInstance(getApplication<Application>().applicationContext)
 
-    var newsPageFlow: Flow<NewsItemDB> = repository.getItemByID(itemID)
+    val newsPageFlow: Flow<NewsItemDB> = repository.getItemByID(itemID)
 
     fun loadData(itemID: String) {
         viewModelScope.launch {
             repository.loadNewsPageByID(itemID)
-            newsPageFlow = repository.getItemByID(itemID)
         }
     }
 

@@ -5,5 +5,6 @@ enum class LoadState {
     LOADING,
     INTERNET_ERROR,
     UNKNOWN_ERROR,
+    IOEXCEPTION_ERROR,
     IDLE
 }
