@@ -13,8 +13,8 @@ class WorkManagerApplication : Application() {
         super.onCreate()
 
         val currentDate = Calendar.getInstance()
-        val dueDate = Calendar.getInstance()
 
+        val dueDate = Calendar.getInstance()
         dueDate[Calendar.HOUR_OF_DAY] = 8
         dueDate[Calendar.MINUTE] = 0
         dueDate[Calendar.SECOND] = 0
@@ -26,9 +26,12 @@ class WorkManagerApplication : Application() {
         val timeDiff = dueDate.timeInMillis - currentDate.timeInMillis
 
         val saveRequest =
-            OneTimeWorkRequestBuilder<UploadWorker>()
+            PeriodicWorkRequestBuilder<UploadWorker>(24, TimeUnit.HOURS)
                 .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
                 .build()
+
+        Log.d("MyLog", "WorkManager: dueDate:\n$dueDate\ncurrentDate:\n$currentDate")
+        Log.d("MyLog", "WorkManager: timeDiff:\n$timeDiff")
 
         WorkManager.getInstance(applicationContext).enqueue(saveRequest)
     }
