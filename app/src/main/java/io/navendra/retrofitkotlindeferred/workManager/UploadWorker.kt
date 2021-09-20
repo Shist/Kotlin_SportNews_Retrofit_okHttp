@@ -12,8 +12,6 @@ class UploadWorker(appContext: Context, workerParams: WorkerParameters):
 
         NewsRepository.getInstance(applicationContext).loadNews()
 
-        Log.d("MyLog", "WorkManager: Successfully loaded data...")
-
         return Result.success()
     }
 

@@ -44,5 +44,3 @@ class MainActivity : AppCompatActivity() {
 // 2) Создать отдельную таблицу для одного item и загружать оттуда
 
 // 3) Dependency Injection
-
-// 4) Потестируй WorkManager

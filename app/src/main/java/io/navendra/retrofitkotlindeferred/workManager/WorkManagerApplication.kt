@@ -30,9 +30,6 @@ class WorkManagerApplication : Application() {
                 .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
                 .build()
 
-        Log.d("MyLog", "WorkManager: dueDate:\n$dueDate\ncurrentDate:\n$currentDate")
-        Log.d("MyLog", "WorkManager: timeDiff:\n$timeDiff")
-
         WorkManager.getInstance(applicationContext).enqueue(saveRequest)
     }
 

@@ -6,12 +6,12 @@ import java.time.ZoneId
 
 class Converters {
     @TypeConverter
-    fun fromTimestamp(value: Long?): LocalDate? {
+    fun fromTime(value: Long?): LocalDate? {
         return value?.let { LocalDate.ofEpochDay(it) }
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: LocalDate?): Long? {
+    fun dateToTime(date: LocalDate?): Long? {
         val zoneId: ZoneId = ZoneId.systemDefault()
         return date?.atStartOfDay(zoneId)?.toEpochSecond()
     }

@@ -49,16 +49,11 @@ class NewsRepository(context: Context) {
 
                 // На будущее: нужно будет сделать отдельную таблицу для айтема
                 newsDatabase.itemsDao().insertOneItem(item)
-
-                Log.d("MyLog", "Loading item from list...")
-                Log.d("MyLog", "Response item: $item")
             } else {
-                Log.d("MyLog", "Failure while loading item from list...")
-                Log.d("MyLog", "Reason: we've got empty item")
+                // something...
             }
         } catch (e: Throwable) {
-            Log.d("MyLog", "Failure while loading item from list...")
-            Log.d("MyLog", "Reason: ", e)
+            // something...
         }
 
         return item

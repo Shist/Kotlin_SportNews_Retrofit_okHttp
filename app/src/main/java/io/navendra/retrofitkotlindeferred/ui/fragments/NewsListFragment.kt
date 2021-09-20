@@ -95,11 +95,9 @@ class NewsListFragment : Fragment() {
                     when (it) {
                         LoadState.LOADING -> {
                             swipeContainer.isRefreshing = true
-                            Log.d("MyLog", "Got LOADING")
                         }
                         LoadState.SUCCESS -> {
                             swipeContainer.isRefreshing = false
-                            Log.d("MyLog", "Got SUCCESS")
                         }
                         LoadState.INTERNET_ERROR -> {
                             swipeContainer.isRefreshing = false
@@ -111,7 +109,6 @@ class NewsListFragment : Fragment() {
                                 createSnackbar(Snackbar.LENGTH_LONG,
                                     resources.getString(R.string.errorNetwork))
                             }
-                            Log.d("MyLog", "Got UNKNOWN_ERROR")
                         }
                         LoadState.UNKNOWN_ERROR -> {
                             swipeContainer.isRefreshing = false
@@ -123,10 +120,9 @@ class NewsListFragment : Fragment() {
                                 createSnackbar(Snackbar.LENGTH_LONG,
                                     resources.getString(R.string.errorUnknown))
                             }
-                            Log.d("MyLog", "Got UNKNOWN_ERROR")
                         }
                         LoadState.IDLE -> {
-                            Log.d("MyLog", "Something get wrong: IDLE state after LoadData() . . .")
+                            // Something get wrong: IDLE state after LoadData() . . .
                         }
                     }
                 }

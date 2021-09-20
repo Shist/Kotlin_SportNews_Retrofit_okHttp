@@ -38,11 +38,9 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
             } catch (e: Throwable) {
                 if (!isConnectedToInternet() && e is IOException) {
                     state.value = LoadState.INTERNET_ERROR
-                    Log.d("MyLog", "Internet connection error while loading data: $e")
                 }
                 else {
                     state.value = LoadState.UNKNOWN_ERROR
-                    Log.d("MyLog", "Unknown error while loading data: $e")
                 }
             }
         }
@@ -50,7 +48,6 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
 
     override fun onCleared() {
         super.onCleared()
-        Log.i("SportViewModel", "SportViewModel destroyed!")
     }
 
 }
