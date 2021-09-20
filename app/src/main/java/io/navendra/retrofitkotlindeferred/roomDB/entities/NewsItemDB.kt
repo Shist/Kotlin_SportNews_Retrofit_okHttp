@@ -9,7 +9,7 @@ import java.time.LocalDate
 data class NewsItemDB(
 
     @PrimaryKey
-    var itemId: String,
+    val itemId: String,
 
     @ColumnInfo(name = "body")
     val body: String,
