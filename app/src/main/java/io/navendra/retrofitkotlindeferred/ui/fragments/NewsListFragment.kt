@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -150,7 +151,7 @@ class NewsListFragment : Fragment() {
             messageError,
             snackbarTimeLength
         )
-        snackbar.setActionTextColor(Color.parseColor("#00a390"))
+        snackbar.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.colorForSnackBar))
         snackbar.setAction(R.string.reload) {
             viewModel.loadData()
         }
