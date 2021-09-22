@@ -115,11 +115,11 @@ class NewsListFragment : Fragment() {
                             swipeContainer.isRefreshing = false
                             if (adapter.itemCount == 0) { // Если данных вообще нету (даже в базе)
                                 createSnackbar(Snackbar.LENGTH_INDEFINITE,
-                                    resources.getString(R.string.errorUnknown))
+                                    resources.getString(R.string.errorUnknownNoData))
                             }
                             else { // Если новые данные не пришли, но есть старые данные в базе
                                 createSnackbar(Snackbar.LENGTH_LONG,
-                                    resources.getString(R.string.errorUnknown))
+                                    resources.getString(R.string.errorUnknownNoNewData))
                             }
                         }
                         LoadState.IDLE -> {

@@ -1,21 +1,18 @@
-package io.navendra.retrofitkotlindeferred.roomDB.entities
+package io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDate
 
-@Entity(tableName = "items")
-data class NewsItemDB(
+@Entity(tableName = "itemsWithDetails")
+data class NewsItemDetailsTable(
 
     @PrimaryKey
     val itemId: String,
 
     @ColumnInfo(name = "body")
     val body: String,
-
-    @ColumnInfo(name = "altText")
-    val altText: String,
 
     @ColumnInfo(name = "createdAt")
     val createdAt: LocalDate,

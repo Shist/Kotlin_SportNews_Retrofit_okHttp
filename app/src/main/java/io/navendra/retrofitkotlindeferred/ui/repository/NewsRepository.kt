@@ -1,13 +1,17 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
+import io.navendra.retrofitkotlindeferred.model.NewsContent
+import io.navendra.retrofitkotlindeferred.model.NewsContentDetails
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
-import io.navendra.retrofitkotlindeferred.roomDB.NewsDatabase
-import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemDB
-import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemsMapper
+import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
+import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsMapper
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import kotlinx.coroutines.flow.Flow
 
 class NewsRepository(context: Context) {
@@ -23,48 +27,45 @@ class NewsRepository(context: Context) {
         }
     }
 
-    private val newsDatabase: NewsDatabase = buildDatabase(context)
+    private val newsItemDatabase: NewsItemDatabase = buildDatabase(context)
 
     private fun buildDatabase(context: Context) =
         Room.databaseBuilder(context.applicationContext,
-            NewsDatabase::class.java, "newsDB")
+            NewsItemDatabase::class.java, "newsDB")
+            .addMigrations(MigrationDB.MIGRATION_1_2)
             .build()
 
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
     suspend fun loadNews() {
-        val latestNews: List<NewsItemDB> =
-            service.getNews().items.map { NewsItemsMapper.fromJsonToRoomDB(it) }
-        newsDatabase.itemsDao().insertItemsList(latestNews)
+        newsItemDatabase.itemsDao().insertItemsList(service.getNews().items
+            .map { NewsItemMapper.fromJsonToRoomDB(it) })
+        newsItemDatabase.itemsDetailsDao().insertItemsDetailsList(service.getNewsDetails().itemsDetails
+            .map { NewsItemDetailsMapper.fromJsonToRoomDB(it) })
     }
 
-    suspend fun loadNewsPageByID(itemID: String) : NewsItemDB? {
-        var item: NewsItemDB? = null
+    suspend fun loadNewsItemDetailsByID(itemID: String) : NewsItemDetailsTable? {
+        var itemDetails: NewsItemDetailsTable? = null
 
-        try {
-            val latestNews = service.getNews().items.map { NewsItemsMapper.fromJsonToRoomDB(it) }
-            item = latestNews.find { it.itemId == itemID }
+        val latestNews = service.getNewsDetails().itemsDetails
+            .map { NewsItemDetailsMapper.fromJsonToRoomDB(it) }
+        itemDetails = latestNews.find { it.itemId == itemID }
 
-            if (item != null) {
-
-                // На будущее: нужно будет сделать отдельную таблицу для айтема
-                newsDatabase.itemsDao().insertOneItem(item)
-            } else {
-                // something...
-            }
-        } catch (e: Throwable) {
-            // something...
+        if (itemDetails != null) {
+            newsItemDatabase.itemsDetailsDao().insertOneItemDetails(itemDetails)
+        } else {
+            // TODO make some snackbar with error
         }
 
-        return item
+        return itemDetails
     }
 
-    fun getItems(): Flow<List<NewsItemDB>> {
-        return newsDatabase.itemsDao().getAllItems()
+    fun getItems(): Flow<List<NewsItemTable>> {
+        return newsItemDatabase.itemsDao().getAllItems()
     }
 
-    fun getItemByID(itemId: String): Flow<NewsItemDB> {
-        return newsDatabase.itemsDao().getItemById(itemId)
+    fun getItemDetailsByID(itemDetailsId: String): Flow<NewsItemDetailsTable> {
+        return newsItemDatabase.itemsDetailsDao().getItemDetailsById(itemDetailsId)
     }
 
 }

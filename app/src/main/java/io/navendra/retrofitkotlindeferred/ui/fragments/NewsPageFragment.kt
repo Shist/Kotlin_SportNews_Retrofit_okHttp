@@ -13,7 +13,7 @@ import androidx.lifecycle.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
-import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemDB
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import io.navendra.retrofitkotlindeferred.ui.viewModel.PageViewModelFactory
 import kotlinx.coroutines.flow.collect
@@ -63,7 +63,7 @@ class NewsPageFragment : Fragment() {
         val pageImg: ImageView = binding.pageImg
         val pageText: TextView = binding.pageText
 
-        var item: NewsItemDB?
+        var item: NewsItemDetailsTable?
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

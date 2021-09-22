@@ -3,10 +3,9 @@ package io.navendra.retrofitkotlindeferred.ui.viewModel
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemDB
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import kotlinx.coroutines.*
@@ -18,7 +17,7 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
     private val repository: NewsRepository
         get() = NewsRepository.getInstance(getApplication<Application>().applicationContext)
 
-    val newsListFlow: Flow<List<NewsItemDB>> = repository.getItems()
+    val newsListFlow: Flow<List<NewsItemTable>> = repository.getItems()
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
 
