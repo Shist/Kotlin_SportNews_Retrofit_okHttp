@@ -20,7 +20,7 @@ data class NewsItemTable(
     @ColumnInfo(name = "context")
     val context: String,
 
-    @ColumnInfo(name = "shortHeadLine")
+    @ColumnInfo(name = "shortHeadline")
     var shortHeadline: String
 
 )
