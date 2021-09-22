@@ -32,28 +32,10 @@ class NewsRepository(context: Context) {
 
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
-    suspend fun loadNews(): List<NewsItemDB> {
-        var latestNews: List<NewsItemDB> = emptyList()
-
-        try {
-            latestNews = service.getNews().items.map { NewsItemsMapper.fromJsonToRoomDB(it) }
-            newsDatabase.itemsDao().insertItemsList(latestNews)
-
-            if(latestNews.isNotEmpty()) {
-                Log.d("MyLog", "Loading news to NewsRepository...")
-                Log.d("MyLog", "Response: ${latestNews.size} items...")
-                for (i in latestNews.indices)
-                    Log.d("MyLog", latestNews[i].toString())
-            }else {
-                Log.d("MyLog", "Failure while loading news to NewsRepository...")
-                Log.d("MyLog", "Reason: we've got empty list...")
-            }
-        } catch (e: Throwable) {
-            Log.d("MyLog", "Failure while loading news to NewsRepository...")
-            Log.d("MyLog", "Reason: ", e)
-        }
-
-        return latestNews
+    suspend fun loadNews() {
+        val latestNews: List<NewsItemDB> =
+            service.getNews().items.map { NewsItemsMapper.fromJsonToRoomDB(it) }
+        newsDatabase.itemsDao().insertItemsList(latestNews)
     }
 
     suspend fun loadNewsPageByID(itemID: String) : NewsItemDB? {
@@ -67,16 +49,11 @@ class NewsRepository(context: Context) {
 
                 // На будущее: нужно будет сделать отдельную таблицу для айтема
                 newsDatabase.itemsDao().insertOneItem(item)
-
-                Log.d("MyLog", "Loading item from list...")
-                Log.d("MyLog", "Response item: $item")
             } else {
-                Log.d("MyLog", "Failure while loading item from list...")
-                Log.d("MyLog", "Reason: we've got empty item")
+                // something...
             }
         } catch (e: Throwable) {
-            Log.d("MyLog", "Failure while loading item from list...")
-            Log.d("MyLog", "Reason: ", e)
+            // something...
         }
 
         return item

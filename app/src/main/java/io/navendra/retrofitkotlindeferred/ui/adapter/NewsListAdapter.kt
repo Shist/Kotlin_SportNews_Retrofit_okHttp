@@ -14,8 +14,6 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemDB
 class SportAdapter(private val clickListener: (NewsItemDB)-> Unit) :
     ListAdapter<NewsItemDB, SportAdapter.MyViewHolder>(SportNewsDiffCallback()) {
 
-    private var items : List<NewsItemDB> = emptyList()
-
     class MyViewHolder(itemBinding: NewsItemBinding): RecyclerView.ViewHolder(itemBinding.root){
         val image: ImageView = itemBinding.img
         val headline: TextView = itemBinding.headline
@@ -37,10 +35,6 @@ class SportAdapter(private val clickListener: (NewsItemDB)-> Unit) :
         Picasso.get().load(listItem.context).into(holder.image)
         holder.headline.text = listItem.shortHeadline
         holder.altText.text = listItem.altText
-    }
-
-    fun setItems(newData: List<NewsItemDB>) {
-        items = newData
     }
 
 }

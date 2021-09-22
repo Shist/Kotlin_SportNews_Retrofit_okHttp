@@ -49,14 +49,7 @@ class NewsPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val itemID = arguments?.getString(keyItemID)
-
         viewModel.loadData(itemID!!)
-
-        val pageHeadline: TextView = binding.pageHeadline
-        val pageImg: ImageView = binding.pageImg
-        val pageText: TextView = binding.pageText
-
-        var item: NewsItemDB? = null
 
         swipeContainer = binding.swipeContainer
         swipeContainer?.setColorSchemeResources(
@@ -66,10 +59,15 @@ class NewsPageFragment : Fragment() {
             android.R.color.holo_red_light
         )
 
+        val pageHeadline: TextView = binding.pageHeadline
+        val pageImg: ImageView = binding.pageImg
+        val pageText: TextView = binding.pageText
+
+        var item: NewsItemDB?
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsPageFlow.collect {
-                    binding.loadingPanel.visibility = View.GONE
                     item = it
 
                     pageHeadline.text = item?.shortHeadline

@@ -27,8 +27,7 @@ data class NewsItemFeaturedMedia(
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readParcelable(NewsItemFeaturedMediaContext::class.java.classLoader)!!
-    ) {
-    }
+    )
 
     override fun describeContents() = 0
 

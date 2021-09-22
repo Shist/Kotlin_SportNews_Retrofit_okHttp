@@ -1,4 +1,5 @@
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeContainer"
@@ -42,7 +43,8 @@
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pageHeadline" />
+                app:layout_constraintTop_toBottomOf="@id/pageHeadline"
+                android:contentDescription="@string/pageImgDesc" />
 
             <TextView
                 android:id="@+id/pageText"
@@ -58,18 +60,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pageImg"
                 tools:text="@string/pageText" />
-
-            <ProgressBar
-                android:id="@+id/loadingPanel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:foregroundGravity="center"
-                android:indeterminate="true"
-                app:layout_constraintBottom_toBottomOf="@+id/pageImg"
-                app:layout_constraintEnd_toEndOf="@+id/pageImg"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pageHeadline"
-                tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
