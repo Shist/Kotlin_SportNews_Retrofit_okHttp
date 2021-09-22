@@ -151,7 +151,7 @@ class NewsListFragment : Fragment() {
             messageError,
             snackbarTimeLength
         )
-        snackbar.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.colorForSnackBar))
+        snackbar.setActionTextColor(requireContext().getColor(R.color.colorForSnackBar))
         snackbar.setAction(R.string.reload) {
             viewModel.loadData()
         }
