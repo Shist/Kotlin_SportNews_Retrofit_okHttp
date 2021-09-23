@@ -3,6 +3,7 @@ package io.navendra.retrofitkotlindeferred.workManager
 import android.app.Application
 import androidx.work.*
 import io.navendra.retrofitkotlindeferred.koinModules.KoinModule
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import java.util.*
 import java.util.concurrent.TimeUnit
