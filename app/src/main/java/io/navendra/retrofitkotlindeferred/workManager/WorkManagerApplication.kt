@@ -2,6 +2,8 @@ package io.navendra.retrofitkotlindeferred.workManager
 
 import android.app.Application
 import androidx.work.*
+import io.navendra.retrofitkotlindeferred.koinModules.KoinModule
+import org.koin.core.context.startKoin
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -9,6 +11,10 @@ class WorkManagerApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        startKoin {
+            modules(KoinModule.newsRepositoryModule)
+        }
 
         val currentDate = Calendar.getInstance()
 
