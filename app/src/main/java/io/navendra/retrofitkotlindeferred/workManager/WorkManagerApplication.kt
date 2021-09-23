@@ -13,6 +13,7 @@ class WorkManagerApplication : Application() {
         super.onCreate()
 
         startKoin {
+            androidContext(this@WorkManagerApplication)
             modules(KoinModule.newsRepositoryModule)
         }
 
@@ -24,7 +25,7 @@ class WorkManagerApplication : Application() {
         dueDate[Calendar.SECOND] = 0
 
         if(dueDate.before(currentDate)) {
-            dueDate.add(Calendar.DAY_OF_MONTH, 1);
+            dueDate.add(Calendar.DAY_OF_MONTH, 1)
         }
 
         val timeDiff = dueDate.timeInMillis - currentDate.timeInMillis
