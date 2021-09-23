@@ -1,11 +1,9 @@
 package io.navendra.retrofitkotlindeferred.workManager
 
 import android.app.Application
-import android.util.Log
 import androidx.work.*
 import java.util.*
 import java.util.concurrent.TimeUnit
-
 
 class WorkManagerApplication : Application() {
 

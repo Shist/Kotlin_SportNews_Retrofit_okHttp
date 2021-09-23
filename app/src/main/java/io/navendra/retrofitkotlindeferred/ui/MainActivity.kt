@@ -35,7 +35,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
-// TODO
-
-// 1) Dependency Injection

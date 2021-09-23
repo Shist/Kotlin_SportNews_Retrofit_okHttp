@@ -1,14 +1,10 @@
 package io.navendra.retrofitkotlindeferred.ui.fragments
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -18,7 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
 import io.navendra.retrofitkotlindeferred.ui.MainActivity

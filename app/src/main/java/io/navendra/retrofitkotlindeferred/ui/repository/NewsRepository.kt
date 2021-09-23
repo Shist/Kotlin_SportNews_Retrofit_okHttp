@@ -2,8 +2,6 @@ package io.navendra.retrofitkotlindeferred.ui.repository
 
 import android.content.Context
 import androidx.room.Room
-import io.navendra.retrofitkotlindeferred.model.NewsContent
-import io.navendra.retrofitkotlindeferred.model.NewsContentDetails
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
