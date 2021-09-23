@@ -14,17 +14,6 @@ import kotlinx.coroutines.flow.Flow
 
 class NewsRepository(context: Context) {
 
-    companion object {
-        private var newsRepository: NewsRepository? = null
-
-        fun getInstance(context: Context): NewsRepository
-        {
-            return newsRepository ?: synchronized(this) {
-                newsRepository ?: NewsRepository(context).also { newsRepository = it }
-            }
-        }
-    }
-
     private val newsItemDatabase: NewsItemDatabase = buildDatabase(context)
 
     private fun buildDatabase(context: Context) =

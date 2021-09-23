@@ -8,17 +8,19 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsIt
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class NewsPageViewModel(application: Application, itemID: String) : AndroidViewModel(application) {
+class NewsPageViewModel(application: Application, itemID: String) :
+    AndroidViewModel(application), KoinComponent {
 
-    private val repository: NewsRepository
-        get() = NewsRepository.getInstance(getApplication<Application>().applicationContext)
+    private val newsRepository by inject<NewsRepository>()
 
-    val newsPageFlow: Flow<NewsItemDetailsTable> = repository.getItemDetailsByID(itemID)
+    val newsPageFlow: Flow<NewsItemDetailsTable> = newsRepository.getItemDetailsByID(itemID)
 
     fun loadData(itemID: String) {
         viewModelScope.launch {
-            repository.loadNewsItemDetailsByID(itemID)
+            newsRepository.loadNewsItemDetailsByID(itemID)
         }
     }
 
