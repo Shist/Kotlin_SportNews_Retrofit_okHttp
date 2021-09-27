@@ -38,4 +38,4 @@ class MainActivity : AppCompatActivity() {
 
 // TODO
 // Сделать все поля во всех классах через Koin
-// Когда закончим с Koin, в другой ветке сделать всё тоже самое через Dagger Healed
+// Когда закончим с Koin, в другой ветке сделать всё тоже самое через Dagger Hilt
