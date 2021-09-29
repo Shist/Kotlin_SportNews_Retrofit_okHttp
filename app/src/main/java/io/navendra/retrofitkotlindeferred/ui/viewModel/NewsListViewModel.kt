@@ -17,9 +17,9 @@ import java.io.IOException
 class NewsListViewModel (application: Application) :
     AndroidViewModel(application), KoinComponent {
 
-    private val newsRepository by inject<NewsRepository>()
+    private val newsRepository: NewsRepository by inject()
 
-    val newsListFlow: Flow<List<NewsItemTable>> = newsRepository.getItems()
+    val newsListFlow: Flow<List<NewsItemTable>> by inject()
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
 
