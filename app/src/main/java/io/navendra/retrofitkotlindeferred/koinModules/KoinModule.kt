@@ -31,7 +31,7 @@ val newsRepositoryModule = module {
 }
 
 val retrofitClientModule = module {
-    single { RetrofitClient(get()) }
+    single { RetrofitClient(client = get()) }
 
     single {
         return@single OkHttpClient()
@@ -40,4 +40,8 @@ val retrofitClientModule = module {
                 level = HttpLoggingInterceptor.Level.BODY })
             .build()
     }
+}
+
+val newsListAdapterModule = module {
+
 }
