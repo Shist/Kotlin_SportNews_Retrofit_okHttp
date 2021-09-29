@@ -43,3 +43,4 @@ class MainActivity : AppCompatActivity(), KoinComponent {
 // TODO
 // Сделать все поля во всех классах через Koin
 // Когда закончим с Koin, в другой ветке сделать всё тоже самое через Dagger Hilt
+// Сделать SnackBar и обработку ошибок для Page
