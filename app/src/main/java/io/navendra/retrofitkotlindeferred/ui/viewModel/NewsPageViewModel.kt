@@ -18,7 +18,16 @@ class NewsPageViewModel(application: Application, itemID: String) : AndroidViewM
 
     fun loadData(itemID: String) {
         viewModelScope.launch {
-            repository.loadNewsItemDetailsByID(itemID)
+            try {
+                repository.loadNewsItemDetailsByID(itemID)
+            } catch (e: Throwable) {
+//                if (!isConnectedToInternet() && e is IOException) {
+//                    state.value = LoadState.INTERNET_ERROR
+//                }
+//                else {
+//                    state.value = LoadState.UNKNOWN_ERROR
+//                }
+            }
         }
     }
 
