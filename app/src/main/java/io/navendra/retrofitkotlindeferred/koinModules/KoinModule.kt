@@ -6,9 +6,11 @@ import io.navendra.retrofitkotlindeferred.retrofit.RetrofitClient
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
+import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -43,6 +45,8 @@ val newsRepositoryModule = module {
         val newsRepository: NewsRepository by inject()
         newsRepository.getItemDetailsByID(itemDetailsId = params.get())
     }
+
+    single { MutableStateFlow(LoadState.IDLE) }
 }
 
 val retrofitClientModule = module {

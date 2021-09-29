@@ -22,7 +22,7 @@ class NewsListViewModel (application: Application) :
 
     val newsListFlow: Flow<List<NewsItemTable>> by inject(named("newsListFlow"))
 
-    val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
+    val state: MutableStateFlow<LoadState> by inject()
 
     private fun isConnectedToInternet() : Boolean {
         val context = getApplication<Application>().applicationContext
