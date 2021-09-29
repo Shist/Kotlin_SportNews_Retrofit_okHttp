@@ -9,7 +9,7 @@ import org.koin.core.component.inject
 class UploadWorker(appContext: Context, workerParams: WorkerParameters):
     CoroutineWorker(appContext, workerParams), KoinComponent {
 
-    private val newsRepository by inject<NewsRepository>()
+    private val newsRepository: NewsRepository by inject()
 
     override suspend fun doWork(): Result {
 

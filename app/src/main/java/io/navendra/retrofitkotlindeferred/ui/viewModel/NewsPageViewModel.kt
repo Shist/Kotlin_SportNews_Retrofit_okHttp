@@ -19,9 +19,9 @@ import java.io.IOException
 class NewsPageViewModel(application: Application, itemID: String) :
     AndroidViewModel(application), KoinComponent {
 
-    private val newsRepository by inject<NewsRepository>()
+    private val newsRepository: NewsRepository by inject()
 
-    val newsPageFlow: Flow<NewsItemDetailsTable> = newsRepository.getItemDetailsByID(itemID)
+    val newsPageFlow: Flow<NewsItemDetailsTable> by inject()
 
     fun loadData(itemID: String) {
         viewModelScope.launch {

@@ -7,7 +7,7 @@ object SportNewsClient : KoinComponent {
 
     private const val SPORT_NEWS_BASE_URL = "https://api.beinsports.com/"
 
-    private val retrofitClient by inject<RetrofitClient>()
+    private val retrofitClient: RetrofitClient by inject()
 
     val SPORT_NEWS_API : SportNewsApi by lazy {
         retrofitClient.retrofit(SPORT_NEWS_BASE_URL)

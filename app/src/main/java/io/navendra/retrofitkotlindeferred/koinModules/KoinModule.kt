@@ -34,8 +34,13 @@ val newsRepositoryModule = module {
     }
 
     single {
-        val newsRepository by inject<NewsRepository>()
+        val newsRepository: NewsRepository by inject()
         newsRepository.getItems()
+    }
+
+    single { params ->
+        val newsRepository: NewsRepository by inject()
+        newsRepository.getItemDetailsByID(itemDetailsId = params.get())
     }
 }
 
@@ -57,6 +62,4 @@ val uiModule = module {
     viewModel { params ->
         NewsPageViewModel(application = get(), itemID = params.get())
     }
-
-    single {  }
 }
