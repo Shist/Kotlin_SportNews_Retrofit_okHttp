@@ -13,7 +13,11 @@ class UploadWorker(appContext: Context, workerParams: WorkerParameters):
 
     override suspend fun doWork(): Result {
 
-        newsRepository.loadNews()
+        try {
+            newsRepository.loadNews()
+        } catch (e: Throwable) {
+            return Result.failure()
+        }
 
         return Result.success()
     }
