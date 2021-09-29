@@ -1,10 +1,7 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
-import android.content.Context
-import androidx.room.Room
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
-import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
@@ -12,15 +9,7 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsIt
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import kotlinx.coroutines.flow.Flow
 
-class NewsRepository(context: Context) {
-
-    private val newsItemDatabase: NewsItemDatabase = buildDatabase(context)
-
-    private fun buildDatabase(context: Context) =
-        Room.databaseBuilder(context.applicationContext,
-            NewsItemDatabase::class.java, "newsDB")
-            .addMigrations(MigrationDB.MIGRATION_1_2)
-            .build()
+class NewsRepository(private val newsItemDatabase: NewsItemDatabase) {
 
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
