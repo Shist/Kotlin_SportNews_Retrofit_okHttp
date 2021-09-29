@@ -2,6 +2,8 @@ package io.navendra.retrofitkotlindeferred.koinModules
 
 import android.content.Context
 import androidx.room.Room
+import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
+import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
@@ -10,7 +12,7 @@ import org.koin.dsl.module
 
 val newsRepositoryModule = module {
 
-    single { NewsRepository(get()) }
+    single { NewsRepository(newsItemDatabase = get(), service = get()) }
 
     single {
         fun buildDatabase(context: Context) =
@@ -20,6 +22,10 @@ val newsRepositoryModule = module {
                 .build()
 
         return@single buildDatabase(androidContext())
+    }
+
+    single {
+        return@single SportNewsClient.SPORT_NEWS_API
     }
 
 }

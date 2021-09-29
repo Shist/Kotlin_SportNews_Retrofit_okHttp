@@ -1,7 +1,6 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
-import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
@@ -9,9 +8,8 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsIt
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import kotlinx.coroutines.flow.Flow
 
-class NewsRepository(private val newsItemDatabase: NewsItemDatabase) {
-
-    private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
+class NewsRepository(private val newsItemDatabase: NewsItemDatabase,
+                     private val service: SportNewsApi) {
 
     suspend fun loadNews() {
         newsItemDatabase.itemsDao().insertItemsList(service.getNews().items
