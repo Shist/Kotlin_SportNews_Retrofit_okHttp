@@ -61,6 +61,8 @@ val retrofitClientModule = module {
                 level = HttpLoggingInterceptor.Level.BODY })
             .build()
     }
+
+    single (named("SPORT_NEWS_BASE_URL")) { "https://api.beinsports.com/" }
 }
 
 val uiModule = module {
