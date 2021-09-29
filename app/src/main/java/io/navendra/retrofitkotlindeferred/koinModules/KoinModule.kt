@@ -1,7 +1,9 @@
 package io.navendra.retrofitkotlindeferred.koinModules
 
 import android.content.Context
+import android.view.LayoutInflater
 import androidx.room.Room
+import io.navendra.retrofitkotlindeferred.databinding.ActivityMainBinding
 import io.navendra.retrofitkotlindeferred.retrofit.RetrofitClient
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
@@ -66,5 +68,9 @@ val uiModule = module {
 
     viewModel { params ->
         NewsPageViewModel(application = get(), itemID = params.get())
+    }
+
+    factory { params ->
+        ActivityMainBinding.inflate(params.get())
     }
 }
