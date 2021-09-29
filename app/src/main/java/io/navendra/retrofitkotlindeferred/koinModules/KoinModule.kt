@@ -1,15 +1,18 @@
 package io.navendra.retrofitkotlindeferred.koinModules
 
 import android.content.Context
+import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import io.navendra.retrofitkotlindeferred.retrofit.RetrofitClient
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
+import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val newsRepositoryModule = module {
@@ -42,6 +45,6 @@ val retrofitClientModule = module {
     }
 }
 
-val newsListAdapterModule = module {
-
+val newsListFragmentModule = module {
+    viewModel { NewsListViewModel(application = get()) }
 }

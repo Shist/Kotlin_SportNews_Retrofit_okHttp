@@ -1,6 +1,5 @@
 package io.navendra.retrofitkotlindeferred.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,10 +20,12 @@ import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class NewsListFragment : Fragment() {
+class NewsListFragment : Fragment(), KoinComponent {
 
-    private lateinit var viewModel: NewsListViewModel
+    private val viewModel: NewsListViewModel by inject()
 
     private var _binding: NewsItemsListBinding? = null
     private val binding get() = _binding!!
@@ -133,11 +133,6 @@ class NewsListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModel = ViewModelProvider(this).get(NewsListViewModel::class.java)
     }
 
     private fun createSnackbar(snackbarTimeLength : Int, messageError : String) {
