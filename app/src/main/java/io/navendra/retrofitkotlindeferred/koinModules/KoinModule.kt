@@ -14,6 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val newsRepositoryModule = module {
@@ -33,12 +34,12 @@ val newsRepositoryModule = module {
         SportNewsClient.SPORT_NEWS_API
     }
 
-    single {
+    single (named("newsListFlow")) {
         val newsRepository: NewsRepository by inject()
         newsRepository.getItems()
     }
 
-    single { params ->
+    single (named("newsPageFlow")) { params ->
         val newsRepository: NewsRepository by inject()
         newsRepository.getItemDetailsByID(itemDetailsId = params.get())
     }

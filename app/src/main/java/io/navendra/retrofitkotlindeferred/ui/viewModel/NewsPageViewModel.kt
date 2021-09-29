@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import java.io.IOException
 
 class NewsPageViewModel(application: Application, itemID: String) :
@@ -21,7 +22,7 @@ class NewsPageViewModel(application: Application, itemID: String) :
 
     private val newsRepository: NewsRepository by inject()
 
-    val newsPageFlow: Flow<NewsItemDetailsTable> by inject()
+    val newsPageFlow: Flow<NewsItemDetailsTable> by inject(named("newsPageFlow"))
 
     fun loadData(itemID: String) {
         viewModelScope.launch {
