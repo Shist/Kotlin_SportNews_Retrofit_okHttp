@@ -59,8 +59,4 @@ val uiModule = module {
     viewModel { params ->
         NewsPageViewModel(application = get(), itemID = params.get())
     }
-
-    factory { params ->
-        ActivityMainBinding.inflate(params.get())
-    }
 }
