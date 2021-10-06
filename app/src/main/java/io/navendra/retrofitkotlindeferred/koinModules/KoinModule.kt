@@ -1,25 +1,20 @@
 package io.navendra.retrofitkotlindeferred.koinModules
 
 import android.content.Context
-import android.view.LayoutInflater
 import androidx.room.Room
-import io.navendra.retrofitkotlindeferred.databinding.ActivityMainBinding
 import io.navendra.retrofitkotlindeferred.retrofit.RetrofitClient
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsMapper
-import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -36,8 +31,11 @@ val newsRepositoryModule = module {
         buildDatabase(androidContext())
     }
 
+    single { SportNewsClient() }
+
     single {
-        SportNewsClient.SPORT_NEWS_API
+        val sportNewsClient : SportNewsClient by inject()
+        sportNewsClient.sportNewsApi
     }
 }
 

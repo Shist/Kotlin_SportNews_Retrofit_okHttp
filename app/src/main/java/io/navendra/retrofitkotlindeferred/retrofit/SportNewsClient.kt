@@ -4,14 +4,14 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 
-object SportNewsClient : KoinComponent {
+class SportNewsClient : KoinComponent {
 
-    private val SPORT_NEWS_BASE_URL: String by inject(named("SPORT_NEWS_BASE_URL"))
+    private val sportNewsBaseUrl: String by inject(named("SPORT_NEWS_BASE_URL"))
 
     private val retrofitClient: RetrofitClient by inject()
 
-    val SPORT_NEWS_API : SportNewsApi by lazy {
-        retrofitClient.retrofit(SPORT_NEWS_BASE_URL)
+    val sportNewsApi : SportNewsApi by lazy {
+        retrofitClient.retrofit(sportNewsBaseUrl)
             .create(SportNewsApi::class.java)
     }
 
