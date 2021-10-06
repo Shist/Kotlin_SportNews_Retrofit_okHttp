@@ -3,7 +3,7 @@ package io.navendra.retrofitkotlindeferred.koinModules
 import android.content.Context
 import androidx.room.Room
 import io.navendra.retrofitkotlindeferred.retrofit.RetrofitClient
-import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
+import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
@@ -31,11 +31,13 @@ val newsRepositoryModule = module {
         buildDatabase(androidContext())
     }
 
-    single { SportNewsClient() }
-
     single {
-        val sportNewsClient : SportNewsClient by inject()
-        sportNewsClient.sportNewsApi
+        val retrofitClient: RetrofitClient = get()
+
+        val sportNewsBaseUrl: String = get(named("SPORT_NEWS_BASE_URL"))
+
+        retrofitClient.retrofit(sportNewsBaseUrl)
+            .create(SportNewsApi::class.java)
     }
 }
 
@@ -50,6 +52,7 @@ val retrofitClientModule = module {
             .build()
     }
 
+    // посмотреть аннотации для коина
     single (named("SPORT_NEWS_BASE_URL")) { "https://api.beinsports.com/" }
 }
 
