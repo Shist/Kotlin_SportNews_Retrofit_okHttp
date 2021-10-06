@@ -37,8 +37,6 @@ val newsRepositoryModule = module {
     single {
         SportNewsClient.SPORT_NEWS_API
     }
-
-    single { MutableStateFlow(LoadState.IDLE) }
 }
 
 val retrofitClientModule = module {
