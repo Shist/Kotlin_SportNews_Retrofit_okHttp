@@ -34,9 +34,7 @@ val newsRepositoryModule = module {
     single {
         val retrofitClient: RetrofitClient = get()
 
-        val sportNewsBaseUrl: String = get(named("SPORT_NEWS_BASE_URL"))
-
-        retrofitClient.retrofit(sportNewsBaseUrl)
+        retrofitClient.retrofit("https://api.beinsports.com/")
             .create(SportNewsApi::class.java)
     }
 }
@@ -51,9 +49,6 @@ val retrofitClientModule = module {
                 level = HttpLoggingInterceptor.Level.BODY })
             .build()
     }
-
-    // посмотреть аннотации для коина
-    single (named("SPORT_NEWS_BASE_URL")) { "https://api.beinsports.com/" }
 }
 
 val roomDbModule = module {
