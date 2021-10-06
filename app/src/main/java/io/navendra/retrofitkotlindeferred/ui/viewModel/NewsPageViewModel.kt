@@ -10,17 +10,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.core.parameter.parametersOf
-import org.koin.core.qualifier.named
 
 class NewsPageViewModel(application: Application, itemID: String) :
     AndroidViewModel(application), KoinComponent {
 
     private val newsRepository: NewsRepository by inject()
 
-    val newsPageFlow: Flow<NewsItemDetailsTable> by inject(named("newsPageFlow")) {
-        parametersOf(itemID)
-    }
+    val newsPageFlow: Flow<NewsItemDetailsTable> = newsRepository.getItemDetailsByID(itemID)
 
     fun loadData(itemID: String) {
         viewModelScope.launch {

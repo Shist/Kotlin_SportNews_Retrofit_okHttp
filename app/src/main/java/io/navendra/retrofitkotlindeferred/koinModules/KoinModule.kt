@@ -38,16 +38,6 @@ val newsRepositoryModule = module {
         SportNewsClient.SPORT_NEWS_API
     }
 
-    single (named("newsListFlow")) {
-        val newsRepository: NewsRepository by inject()
-        newsRepository.getItems()
-    }
-
-    single (named("newsPageFlow")) { params ->
-        val newsRepository: NewsRepository by inject()
-        newsRepository.getItemDetailsByID(itemDetailsId = params.get())
-    }
-
     single { MutableStateFlow(LoadState.IDLE) }
 }
 
