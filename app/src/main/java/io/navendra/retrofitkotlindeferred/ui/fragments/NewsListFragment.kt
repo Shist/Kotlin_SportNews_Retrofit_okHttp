@@ -22,6 +22,7 @@ import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewsListFragment : Fragment() {

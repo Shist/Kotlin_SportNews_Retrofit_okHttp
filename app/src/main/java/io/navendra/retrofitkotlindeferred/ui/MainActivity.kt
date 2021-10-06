@@ -2,11 +2,13 @@ package io.navendra.retrofitkotlindeferred.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.ActivityMainBinding
 import io.navendra.retrofitkotlindeferred.ui.fragments.NewsListFragment
 import io.navendra.retrofitkotlindeferred.ui.fragments.NewsPageFragment
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
