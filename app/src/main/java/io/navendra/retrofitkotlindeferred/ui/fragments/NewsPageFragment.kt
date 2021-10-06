@@ -1,6 +1,5 @@
 package io.navendra.retrofitkotlindeferred.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -9,28 +8,31 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
-import io.navendra.retrofitkotlindeferred.ui.viewModel.PageViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.lang.System.getProperty
+import java.lang.System.setProperty
 
+@AndroidEntryPoint
 class NewsPageFragment : Fragment() {
 
     companion object {
-        const val keyItemID = "itemID"
         fun newInstance(itemID: String) = NewsPageFragment().apply {
             arguments = Bundle().apply {
-                putString(keyItemID, itemID)
+                setProperty("itemID", itemID)
             }
         }
     }
 
-    private lateinit var viewModel: NewsPageViewModel
+    val viewModel: NewsPageViewModel by viewModels()
 
     private var swipeContainer: SwipeRefreshLayout? = null
 
@@ -48,7 +50,7 @@ class NewsPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemID = arguments?.getString(keyItemID)
+        val itemID = getProperty("itemID")
         viewModel.loadData(itemID!!)
 
         swipeContainer = binding.swipeContainer
@@ -87,15 +89,6 @@ class NewsPageFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        val itemID = arguments?.getString(keyItemID)
-
-        val pageViewModelFactory = PageViewModelFactory(activity?.application!!, itemID!!)
-        viewModel = ViewModelProvider(this, pageViewModelFactory).get(NewsPageViewModel::class.java)
     }
 
 }

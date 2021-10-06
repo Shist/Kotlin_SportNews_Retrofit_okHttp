@@ -1,16 +1,19 @@
 package io.navendra.retrofitkotlindeferred.workManager
 
 import android.content.Context
-import android.util.Log
 import androidx.work.*
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
+import javax.inject.Inject
 
 class UploadWorker(appContext: Context, workerParams: WorkerParameters):
     CoroutineWorker(appContext, workerParams) {
 
+    @Inject
+    lateinit var newsRepository: NewsRepository
+
     override suspend fun doWork(): Result {
 
-        NewsRepository.getInstance(applicationContext).loadNews()
+        newsRepository.loadNews()
 
         return Result.success()
     }

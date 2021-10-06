@@ -2,8 +2,8 @@ package io.navendra.retrofitkotlindeferred.ui.repository
 
 import android.content.Context
 import androidx.room.Room
-import io.navendra.retrofitkotlindeferred.model.NewsContent
-import io.navendra.retrofitkotlindeferred.model.NewsContentDetails
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
@@ -13,19 +13,9 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMappe
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsMapper
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class NewsRepository(context: Context) {
-
-    companion object {
-        private var newsRepository: NewsRepository? = null
-
-        fun getInstance(context: Context): NewsRepository
-        {
-            return newsRepository ?: synchronized(this) {
-                newsRepository ?: NewsRepository(context).also { newsRepository = it }
-            }
-        }
-    }
+class NewsRepository @Inject constructor(@ApplicationContext context: Context) {
 
     private val newsItemDatabase: NewsItemDatabase = buildDatabase(context)
 

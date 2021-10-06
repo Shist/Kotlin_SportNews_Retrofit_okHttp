@@ -4,17 +4,21 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.lang.System.getProperty
+import javax.inject.Inject
 
-class NewsPageViewModel(application: Application, itemID: String) : AndroidViewModel(application) {
+@HiltViewModel
+class NewsPageViewModel @Inject constructor(application: Application,
+                                            private val repository: NewsRepository) :
+    AndroidViewModel(application) {
 
-    private val repository: NewsRepository
-        get() = NewsRepository.getInstance(getApplication<Application>().applicationContext)
-
-    val newsPageFlow: Flow<NewsItemDetailsTable> = repository.getItemDetailsByID(itemID)
+    val newsPageFlow: Flow<NewsItemDetailsTable> =
+        repository.getItemDetailsByID(getProperty("itemID")!!)
 
     fun loadData(itemID: String) {
         viewModelScope.launch {

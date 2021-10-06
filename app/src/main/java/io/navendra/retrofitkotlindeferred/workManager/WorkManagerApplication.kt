@@ -1,12 +1,12 @@
 package io.navendra.retrofitkotlindeferred.workManager
 
 import android.app.Application
-import android.util.Log
 import androidx.work.*
+import dagger.hilt.android.HiltAndroidApp
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
+@HiltAndroidApp
 class WorkManagerApplication : Application() {
 
     override fun onCreate() {
