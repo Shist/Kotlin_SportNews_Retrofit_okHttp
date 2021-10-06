@@ -8,6 +8,8 @@ import io.navendra.retrofitkotlindeferred.retrofit.RetrofitClient
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsMapper
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
@@ -51,6 +53,12 @@ val retrofitClientModule = module {
     }
 
     single (named("SPORT_NEWS_BASE_URL")) { "https://api.beinsports.com/" }
+}
+
+val roomDbModule = module {
+    single { NewsItemMapper() }
+
+    single { NewsItemDetailsMapper() }
 }
 
 val uiModule = module {
