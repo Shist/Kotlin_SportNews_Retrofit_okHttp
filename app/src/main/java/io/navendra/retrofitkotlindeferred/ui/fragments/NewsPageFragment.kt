@@ -18,8 +18,6 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsIt
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.System.getProperty
-import java.lang.System.setProperty
 
 @AndroidEntryPoint
 class NewsPageFragment : Fragment() {
@@ -27,7 +25,7 @@ class NewsPageFragment : Fragment() {
     companion object {
         fun newInstance(itemID: String) = NewsPageFragment().apply {
             arguments = Bundle().apply {
-                setProperty("itemID", itemID)
+                putString("itemID", itemID)
             }
         }
     }
@@ -50,7 +48,7 @@ class NewsPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemID = getProperty("itemID")
+        val itemID = arguments?.getString("itemID")
         viewModel.loadData(itemID!!)
 
         swipeContainer = binding.swipeContainer
