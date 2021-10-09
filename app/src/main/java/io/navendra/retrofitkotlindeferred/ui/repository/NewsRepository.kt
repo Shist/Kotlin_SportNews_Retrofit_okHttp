@@ -15,15 +15,8 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsIt
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class NewsRepository @Inject constructor(@ApplicationContext context: Context) {
-
-    private val newsItemDatabase: NewsItemDatabase = buildDatabase(context)
-
-    private fun buildDatabase(context: Context) =
-        Room.databaseBuilder(context.applicationContext,
-            NewsItemDatabase::class.java, "newsDB")
-            .addMigrations(MigrationDB.MIGRATION_1_2)
-            .build()
+class NewsRepository @Inject constructor(private val newsItemDatabase: NewsItemDatabase,
+                                         private val service: SportNewsApi) {
 
     private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
