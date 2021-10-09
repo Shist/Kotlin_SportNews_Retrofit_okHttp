@@ -31,6 +31,10 @@ class DaggerHiltModule {
 
     @Provides
     @Singleton
+    fun provideRetrofitClient(): RetrofitClient
+
+    @Provides
+    @Singleton
     fun provideSportNewsApi() {
         val SPORT_NEWS_API : SportNewsApi by lazy {
             RetrofitClient.retrofit("https://api.beinsports.com/")

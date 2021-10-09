@@ -1,25 +1,15 @@
 package io.navendra.retrofitkotlindeferred.retrofit
 
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitClient{
-
-    private val loggingInterceptor =  HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
-    }
-
-    private val client = OkHttpClient()
-        .newBuilder()
-        .addInterceptor(loggingInterceptor)
-        .build()
+class RetrofitClient(private val client: OkHttpClient) {
 
     fun retrofit(baseUrl : String) : Retrofit = Retrofit.Builder()
-            .client(client)
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        .client(client)
+        .baseUrl(baseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
 }

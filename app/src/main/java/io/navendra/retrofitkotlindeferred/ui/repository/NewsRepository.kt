@@ -1,12 +1,6 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
-import android.content.Context
-import androidx.room.Room
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.qualifiers.ApplicationContext
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
-import io.navendra.retrofitkotlindeferred.retrofit.SportNewsClient
-import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
@@ -17,8 +11,6 @@ import javax.inject.Inject
 
 class NewsRepository @Inject constructor(private val newsItemDatabase: NewsItemDatabase,
                                          private val service: SportNewsApi) {
-
-    private val service: SportNewsApi = SportNewsClient.SPORT_NEWS_API
 
     suspend fun loadNews() {
         newsItemDatabase.itemsDao().insertItemsList(service.getNews().items
