@@ -6,10 +6,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.navendra.retrofitkotlindeferred.retrofit.RetrofitClient
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
 @Module
@@ -18,7 +21,7 @@ class DaggerHiltModule {
 
     @Provides
     @Singleton
-    fun provideNewsItemDatabase(context: Context): NewsItemDatabase
+    fun provideNewsItemDatabase(@ApplicationContext context: Context): NewsItemDatabase
     {
         return buildDatabase(context)
     }
@@ -31,18 +34,23 @@ class DaggerHiltModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitClient(): RetrofitClient
+    fun providesOkHttpClient(): OkHttpClient {
+        return OkHttpClient()
+            .newBuilder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY })
+            .build()
+    }
 
     @Provides
     @Singleton
-    fun provideSportNewsApi() {
-        val SPORT_NEWS_API : SportNewsApi by lazy {
-            RetrofitClient.retrofit("https://api.beinsports.com/")
-                .create(SportNewsApi::class.java)
-        }
+    fun provideRetrofitClient(client: OkHttpClient): RetrofitClient {
+        return RetrofitClient(client)
+    }
 
-        val retrofitClient: RetrofitClient = get()
-
+    @Provides
+    @Singleton
+    fun provideSportNewsApi(retrofitClient: RetrofitClient): SportNewsApi {
         return retrofitClient.retrofit("https://api.beinsports.com/")
             .create(SportNewsApi::class.java)
     }
