@@ -24,8 +24,8 @@ class WorkManagerApplication : Application(), Configuration.Provider {
         dueDate[Calendar.MINUTE] = 0
         dueDate[Calendar.SECOND] = 0
 
-        if(dueDate.before(currentDate)) {
-            dueDate.add(Calendar.DAY_OF_MONTH, 1);
+        if (dueDate.before(currentDate)) {
+            dueDate.add(Calendar.DAY_OF_MONTH, 1)
         }
 
         val timeDiff = dueDate.timeInMillis - currentDate.timeInMillis
