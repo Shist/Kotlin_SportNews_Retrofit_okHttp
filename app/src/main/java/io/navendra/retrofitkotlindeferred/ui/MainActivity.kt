@@ -37,3 +37,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+// Project version date: 11.10.2021
+// In this branch we can see how to work with Dagger Hilt dependency injection
