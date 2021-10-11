@@ -37,5 +37,6 @@ class MainActivity : AppCompatActivity() {
 }
 
 // TODO
-
-// 1) Dependency Injection
+// Сделать все поля во всех классах через Koin
+// Когда закончим с Koin, в другой ветке сделать всё тоже самое через Dagger Hilt
+// Сделать SnackBar и обработку ошибок для Page
