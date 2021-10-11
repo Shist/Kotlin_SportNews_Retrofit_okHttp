@@ -21,9 +21,7 @@ class NewsPageViewModel(application: Application, itemID: String) :
     fun loadData(itemID: String) {
         viewModelScope.launch {
             try {
-
                 newsRepository.loadNewsItemDetailsByID(itemID)
-
             } catch (e: Throwable) {
 //                if (!isConnectedToInternet() && e is IOException) {
 //                    state.value = LoadState.INTERNET_ERROR
