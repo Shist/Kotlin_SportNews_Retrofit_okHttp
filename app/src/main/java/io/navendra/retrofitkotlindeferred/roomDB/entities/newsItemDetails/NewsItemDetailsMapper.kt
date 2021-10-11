@@ -3,8 +3,9 @@ package io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails
 import io.navendra.retrofitkotlindeferred.model.NewsItemDetails
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class NewsItemDetailsMapper {
+class NewsItemDetailsMapper @Inject constructor() {
 
     fun fromJsonToRoomDB(item: NewsItemDetails) : NewsItemDetailsTable
     {

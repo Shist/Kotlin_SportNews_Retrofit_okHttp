@@ -56,16 +56,4 @@ class DaggerHiltModule {
             .create(SportNewsApi::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideNewsItemMapper(): NewsItemMapper {
-        return NewsItemMapper()
-    }
-
-    @Provides
-    @Singleton
-    fun provideNewsItemDetailsMapper(): NewsItemDetailsMapper {
-        return NewsItemDetailsMapper()
-    }
-
 }
