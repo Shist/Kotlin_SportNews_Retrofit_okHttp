@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import io.navendra.retrofitkotlindeferred.retrofit.RetrofitClient
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
@@ -16,13 +17,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 class DaggerHiltModule {
 
     @Provides
     @Singleton
-    fun provideNewsItemDatabase(@ApplicationContext context: Context): NewsItemDatabase
-    {
+    fun provideNewsItemDatabase(@ApplicationContext context: Context): NewsItemDatabase {
         return buildDatabase(context)
     }
 
