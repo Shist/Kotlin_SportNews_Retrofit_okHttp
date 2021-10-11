@@ -1,16 +1,22 @@
 package io.navendra.retrofitkotlindeferred.workManager
 
 import android.app.Application
-import android.util.Log
 import androidx.work.*
+import io.navendra.retrofitkotlindeferred.koinModules.*
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 import java.util.*
 import java.util.concurrent.TimeUnit
-
 
 class WorkManagerApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        startKoin {
+            androidContext(this@WorkManagerApplication)
+            modules(newsRepositoryModule, retrofitClientModule, roomDbModule, uiModule)
+        }
 
         val currentDate = Calendar.getInstance()
 
@@ -20,7 +26,7 @@ class WorkManagerApplication : Application() {
         dueDate[Calendar.SECOND] = 0
 
         if(dueDate.before(currentDate)) {
-            dueDate.add(Calendar.DAY_OF_MONTH, 1);
+            dueDate.add(Calendar.DAY_OF_MONTH, 1)
         }
 
         val timeDiff = dueDate.timeInMillis - currentDate.timeInMillis

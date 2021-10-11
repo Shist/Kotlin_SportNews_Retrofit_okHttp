@@ -6,12 +6,12 @@ import com.google.gson.annotations.SerializedName
 
 // Закомментированы те данные, которые нам пока что не нужны для ленты новостей...
 
-data class NewsItem(
+data class NewsItemDetails(
     @SerializedName("@id") var id: String,
     //@SerializedName("@type") val type: String,
     //@SerializedName("author") val author: NewsItemAuthor,
     //@SerializedName("authorName") val authorName: String,
-    //@SerializedName("body") val body: String,
+    @SerializedName("body") val body: String,
     //@SerializedName("channels") val channels: List<NewsItemChannel>,
     @SerializedName("createdAt") val createdAt: String,
     //@SerializedName("deletedAt") val deletedAt: String,
@@ -26,6 +26,7 @@ data class NewsItem(
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readParcelable(NewsItemFeaturedMedia::class.java.classLoader)!!,
         parcel.readString()!!
     )
@@ -34,6 +35,7 @@ data class NewsItem(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
+        parcel.writeString(body)
         parcel.writeString(createdAt)
         parcel.writeParcelable(featuredMedia, 0)
         parcel.writeString(shortHeadline)

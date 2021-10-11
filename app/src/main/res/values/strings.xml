@@ -4,7 +4,8 @@
     <string name="headline">Headline</string>
     <string name="altText">Alternate Text</string>
     <string name="pageText">Page Text</string>
-    <string name="errorUnknown">Unknown error while loading new data</string>
+    <string name="errorUnknownNoNewData">Unknown error while loading new data</string>
+    <string name="errorUnknownNoData">Unknown error while loading data from database</string>
     <string name="errorNetwork">Can\'t load new data from the Internet. Check your network connection.</string>
     <string name="reload">Reload</string>
     <string name="noDataYet">No data yet</string>

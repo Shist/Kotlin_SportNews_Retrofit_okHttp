@@ -3,22 +3,23 @@ package io.navendra.retrofitkotlindeferred.ui.viewModel
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemDB
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.io.IOException
 
-class NewsListViewModel (application: Application) : AndroidViewModel(application) {
+class NewsListViewModel (application: Application) :
+    AndroidViewModel(application), KoinComponent {
 
-    private val repository: NewsRepository
-        get() = NewsRepository.getInstance(getApplication<Application>().applicationContext)
+    private val newsRepository: NewsRepository by inject()
 
-    val newsListFlow: Flow<List<NewsItemDB>> = repository.getItems()
+    val newsListFlow: Flow<List<NewsItemTable>> = newsRepository.getItems()
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
 
@@ -33,7 +34,7 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
         viewModelScope.launch(Dispatchers.Main) {
             state.value = LoadState.LOADING
             try {
-                repository.loadNews()
+                newsRepository.loadNews()
                 state.value = LoadState.SUCCESS
             } catch (e: Throwable) {
                 if (!isConnectedToInternet() && e is IOException) {

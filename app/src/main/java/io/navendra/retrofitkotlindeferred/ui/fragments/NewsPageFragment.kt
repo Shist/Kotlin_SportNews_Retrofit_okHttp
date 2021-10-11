@@ -1,6 +1,5 @@
 package io.navendra.retrofitkotlindeferred.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -13,13 +12,15 @@ import androidx.lifecycle.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
-import io.navendra.retrofitkotlindeferred.roomDB.entities.NewsItemDB
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
-import io.navendra.retrofitkotlindeferred.ui.viewModel.PageViewModelFactory
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.parameter.parametersOf
 
-class NewsPageFragment : Fragment() {
+class NewsPageFragment : Fragment(), KoinComponent {
 
     companion object {
         const val keyItemID = "itemID"
@@ -30,7 +31,9 @@ class NewsPageFragment : Fragment() {
         }
     }
 
-    private lateinit var viewModel: NewsPageViewModel
+    private val viewModel: NewsPageViewModel by inject {
+        parametersOf(arguments?.getString(keyItemID))
+    }
 
     private var swipeContainer: SwipeRefreshLayout? = null
 
@@ -63,7 +66,7 @@ class NewsPageFragment : Fragment() {
         val pageImg: ImageView = binding.pageImg
         val pageText: TextView = binding.pageText
 
-        var item: NewsItemDB?
+        var item: NewsItemDetailsTable?
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -87,15 +90,6 @@ class NewsPageFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        val itemID = arguments?.getString(keyItemID)
-
-        val pageViewModelFactory = PageViewModelFactory(activity?.application!!, itemID!!)
-        viewModel = ViewModelProvider(this, pageViewModelFactory).get(NewsPageViewModel::class.java)
     }
 
 }
