@@ -11,6 +11,8 @@ import io.navendra.retrofitkotlindeferred.retrofit.RetrofitClient
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsMapper
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
@@ -56,9 +58,14 @@ class DaggerHiltModule {
 
     @Provides
     @Singleton
-    fun provideSportNewsApi(retrofitClient: RetrofitClient): SportNewsApi {
-        return retrofitClient.retrofit("https://api.beinsports.com/")
-            .create(SportNewsApi::class.java)
+    fun provideNewsItemMapper(): NewsItemMapper {
+        return NewsItemMapper()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsItemDetailsMapper(): NewsItemDetailsMapper {
+        return NewsItemDetailsMapper()
     }
 
 }
