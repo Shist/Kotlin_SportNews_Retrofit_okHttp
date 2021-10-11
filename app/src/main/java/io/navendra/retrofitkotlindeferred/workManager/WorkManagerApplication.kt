@@ -1,13 +1,18 @@
 package io.navendra.retrofitkotlindeferred.workManager
 
 import android.app.Application
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
 import dagger.hilt.android.HiltAndroidApp
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @HiltAndroidApp
-class WorkManagerApplication : Application() {
+class WorkManagerApplication : Application(), Configuration.Provider {
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
     override fun onCreate() {
         super.onCreate()
@@ -31,6 +36,12 @@ class WorkManagerApplication : Application() {
                 .build()
 
         WorkManager.getInstance(applicationContext).enqueue(saveRequest)
+    }
+
+    override fun getWorkManagerConfiguration(): Configuration {
+        return Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
     }
 
 }
