@@ -10,20 +10,22 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class NewsRepository @Inject constructor(private val newsItemDatabase: NewsItemDatabase,
-                                         private val service: SportNewsApi) {
+                                         private val service: SportNewsApi,
+                                         private val newsItemMapper: NewsItemMapper,
+                                         private val newsItemDetailsMapper: NewsItemDetailsMapper) {
 
     suspend fun loadNews() {
         newsItemDatabase.itemsDao().insertItemsList(service.getNews().items
-            .map { NewsItemMapper.fromJsonToRoomDB(it) })
+            .map { newsItemMapper.fromJsonToRoomDB(it) })
         newsItemDatabase.itemsDetailsDao().insertItemsDetailsList(service.getNewsDetails().itemsDetails
-            .map { NewsItemDetailsMapper.fromJsonToRoomDB(it) })
+            .map { newsItemDetailsMapper.fromJsonToRoomDB(it) })
     }
 
     suspend fun loadNewsItemDetailsByID(itemID: String) : NewsItemDetailsTable? {
         var itemDetails: NewsItemDetailsTable? = null
 
         val latestNews = service.getNewsDetails().itemsDetails
-            .map { NewsItemDetailsMapper.fromJsonToRoomDB(it) }
+            .map { newsItemDetailsMapper.fromJsonToRoomDB(it) }
         itemDetails = latestNews.find { it.itemId == itemID }
 
         if (itemDetails != null) {

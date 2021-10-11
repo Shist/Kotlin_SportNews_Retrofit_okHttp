@@ -54,4 +54,11 @@ class DaggerHiltModule {
             .create(SportNewsApi::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideSportNewsApi(retrofitClient: RetrofitClient): SportNewsApi {
+        return retrofitClient.retrofit("https://api.beinsports.com/")
+            .create(SportNewsApi::class.java)
+    }
+
 }
