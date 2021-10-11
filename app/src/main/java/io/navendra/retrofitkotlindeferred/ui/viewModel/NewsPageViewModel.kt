@@ -17,6 +17,7 @@ class NewsPageViewModel @Inject constructor(application: Application,
                                             private val repository: NewsRepository,
                                             state : SavedStateHandle) :
     AndroidViewModel(application) {
+
     val newsPageFlow: Flow<NewsItemDetailsTable> =
         repository.getItemDetailsByID(state.get<String>("itemID")!!)
 
