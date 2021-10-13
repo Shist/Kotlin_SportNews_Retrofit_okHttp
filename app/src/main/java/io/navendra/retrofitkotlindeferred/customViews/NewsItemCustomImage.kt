@@ -10,14 +10,11 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     androidx.appcompat.widget.AppCompatImageView(context!!, attrs) {
 
     private val paint = Paint()
+    private val n = 10
 
     override  fun  onDraw (canvas: Canvas ) {
-
-        val n = 9
         drawNAngle(canvas, n)
-
         super .onDraw (canvas)
-
     }
 
     private fun drawNAngle(canvas: Canvas, n: Int) {
@@ -25,56 +22,46 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
         val imageWidth = canvas.width
         val imageHeight = canvas.height
 
-        val perimeter = 2*imageWidth + 2*imageHeight
-
-        val anglesDistance = perimeter/n
-
-        //imageWidth = 518
-        //imageHeight = 291
-        //perimeter = 1618
-        //angles_distance = 323.6 (for pentagon)
-
         paint.color = Color.WHITE
         paint.style = Paint.Style.FILL
         paint.isAntiAlias = true
 
-        var currentSum = imageWidth/2
-        var x = 0
-        var y = 0
+        val ellipseX = DoubleArray(360)
+        val ellipseY = DoubleArray(360)
+
+        for (i in 0..359) {
+            ellipseX[i] = (imageWidth/2) + (imageWidth/2)*kotlin.math.cos(Math.toRadians(i.toDouble()))
+            ellipseY[i] = (imageHeight/2) + (imageHeight/2)*kotlin.math.sin(Math.toRadians(i.toDouble()))
+        }
+
+        val figureAngle = 360/n
+
+        var figureAnglePointX = 0
+        var figureAnglePointY = 0
 
         val path = Path()
         path.fillType = FillType.EVEN_ODD
 
-        path.moveTo(imageWidth/2.toFloat(), 0.toFloat())
+        path.moveTo(
+            ellipseX[269].toInt().toFloat(),
+            ellipseY[269].toInt().toFloat()
+        )
+
         for (i in 1..n) {
-            currentSum += anglesDistance
-            if (currentSum > perimeter) {
-                currentSum -= perimeter
+            if (figureAngle*i+270-1 <= 359) {
+                figureAnglePointX = ellipseX[figureAngle * i + 270 - 1].toInt()
+                figureAnglePointY = ellipseY[figureAngle * i + 270 - 1].toInt()
             }
-            if (currentSum in 0..imageWidth) {
-                x = currentSum
-                y = 0
-            }
-            if (currentSum in imageWidth..(imageWidth+imageHeight)) {
-                x = imageWidth
-                y = currentSum - imageWidth
-            }
-            if (currentSum in (imageWidth+imageHeight)..(2*imageWidth+imageHeight)) {
-                x = imageWidth-(currentSum-(imageWidth+imageHeight))
-                y = imageHeight
-            }
-            if (currentSum in (2*imageWidth+imageHeight)..perimeter) {
-                x = 0
-                y = imageHeight-(currentSum-(2*imageWidth+imageHeight))
+            if (figureAngle*i+270-1 > 359) {
+                figureAnglePointX = ellipseX[figureAngle * i - 90 - 1].toInt()
+                figureAnglePointY = ellipseY[figureAngle * i - 90 - 1].toInt()
             }
             path.lineTo(
-                x.toFloat(),
-                y.toFloat()
+                figureAnglePointX.toFloat(),
+                figureAnglePointY.toFloat()
             )
         }
-
         path.close()
-
         canvas.clipPath(path)
 
     }
