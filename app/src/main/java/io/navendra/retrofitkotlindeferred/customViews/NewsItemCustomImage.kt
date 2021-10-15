@@ -10,7 +10,8 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     androidx.appcompat.widget.AppCompatImageView(context!!, attrs) {
 
     private val paint = Paint()
-    private val n = 10
+    private val n =
+        resources.getInteger(io.navendra.retrofitkotlindeferred.R.integer.n_for_angles_number)
 
     override  fun  onDraw (canvas: Canvas ) {
         drawNAngle(canvas, n)
@@ -34,7 +35,11 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
             ellipseY[i] = (imageHeight/2) + (imageHeight/2)*kotlin.math.sin(Math.toRadians(i.toDouble()))
         }
 
-        val figureAngle = 360/n
+        var figureAngle = 360/n
+
+        if (figureAngle > 360) {
+            figureAngle = 360
+        }
 
         var figureAnglePointX = 0
         var figureAnglePointY = 0
