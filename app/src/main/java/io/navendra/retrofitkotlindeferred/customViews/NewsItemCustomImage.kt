@@ -9,16 +9,25 @@ import android.graphics.Path.FillType
 class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     androidx.appcompat.widget.AppCompatImageView(context!!, attrs) {
 
+    // четные штуки - 6 (картинка слева, текст - справа)
+    // нечетные штуки - 8 (картинска справа, текст - слева)
+    // у recycle-а (adapter-а) нужно будет посмотреть, как делать ViewType
+
     private val paint = Paint()
     private val n =
         resources.getInteger(io.navendra.retrofitkotlindeferred.R.integer.n_for_angles_number)
 
     override  fun  onDraw (canvas: Canvas ) {
-        drawNAngle(canvas, n)
+        clip(canvas, n)
         super .onDraw (canvas)
     }
 
-    private fun drawNAngle(canvas: Canvas, n: Int) {
+    private val ellipseX = DoubleArray(360)
+    private val ellipseY = DoubleArray(360)
+
+    private val path = Path()
+
+    private fun clip(canvas: Canvas, n: Int) {
 
         val imageWidth = canvas.width
         val imageHeight = canvas.height
@@ -27,9 +36,7 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
         paint.style = Paint.Style.FILL
         paint.isAntiAlias = true
 
-        val ellipseX = DoubleArray(360)
-        val ellipseY = DoubleArray(360)
-
+        // Вынести за функцию, но как-то передать туда ширину и высоту
         for (i in 0..359) {
             ellipseX[i] = (imageWidth/2) + (imageWidth/2)*kotlin.math.cos(Math.toRadians(i.toDouble()))
             ellipseY[i] = (imageHeight/2) + (imageHeight/2)*kotlin.math.sin(Math.toRadians(i.toDouble()))
@@ -44,9 +51,10 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
         var figureAnglePointX = 0
         var figureAnglePointY = 0
 
-        val path = Path()
+        path.reset() // Чистим его
         path.fillType = FillType.EVEN_ODD
 
+        // Тоже можно только один раз посчитать
         path.moveTo(
             ellipseX[269].toInt().toFloat(),
             ellipseY[269].toInt().toFloat()

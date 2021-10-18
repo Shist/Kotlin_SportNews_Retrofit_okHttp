@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="n_for_angles_number">360</integer>
+    <integer name="n_for_angles_number">7</integer>
 </resources>
