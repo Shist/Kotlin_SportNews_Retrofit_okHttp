@@ -19,7 +19,7 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     private val paint = Paint()
 
     private val typedArray =
-        context?.obtainStyledAttributes(attrs,R.styleable.NewsItemCustomImage)
+        context?.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomImage)
     private val anglesNumber =
         typedArray?.getInteger(R.styleable.NewsItemCustomImage_attrAnglesNumber, 4)
 
@@ -29,18 +29,19 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     private val path = Path()
 
     override  fun  onDraw (canvas: Canvas ) {
+
         paint.color = Color.WHITE
         paint.style = Paint.Style.FILL
         paint.isAntiAlias = true
 
         for (i in 0..359) {
-            ellipseX[i] = (width/2) + (width/2)* cos(Math.toRadians(i.toDouble()))
-            ellipseY[i] = (height/2) + (height/2)* sin(Math.toRadians(i.toDouble()))
+            ellipseX[i] = width / 2 + (width / 2) * cos(Math.toRadians(i.toDouble()))
+            ellipseY[i] = height / 2 + (height / 2) * sin(Math.toRadians(i.toDouble()))
         }
 
         path.moveTo(
-            ellipseX[269].toInt().toFloat(),
-            ellipseY[269].toInt().toFloat()
+            ellipseX[269].toFloat(),
+            ellipseY[269].toFloat()
         )
 
         clip(canvas, anglesNumber!!)
@@ -49,22 +50,19 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
 
     private fun clip(canvas: Canvas, anglesNumber: Int) {
 
-        val figureAngle = 360/anglesNumber
+        val figureAngle = 360 / anglesNumber
 
-        var figureAnglePointX = 0
-        var figureAnglePointY = 0
+        var figureAnglePointX: Int
+        var figureAnglePointY: Int
 
         path.fillType = FillType.EVEN_ODD
 
         for (i in 1..anglesNumber) {
-            if (figureAngle*i+270-1 <= 359) {
-                figureAnglePointX = ellipseX[figureAngle * i + 270 - 1].toInt()
-                figureAnglePointY = ellipseY[figureAngle * i + 270 - 1].toInt()
-            }
-            if (figureAngle*i+270-1 > 359) {
-                figureAnglePointX = ellipseX[figureAngle * i - 90 - 1].toInt()
-                figureAnglePointY = ellipseY[figureAngle * i - 90 - 1].toInt()
-            }
+            val neededAngle = (figureAngle * i + 269) % 360
+
+            figureAnglePointX = ellipseX[neededAngle].toInt()
+            figureAnglePointY = ellipseY[neededAngle].toInt()
+            
             path.lineTo(
                 figureAnglePointX.toFloat(),
                 figureAnglePointY.toFloat()
