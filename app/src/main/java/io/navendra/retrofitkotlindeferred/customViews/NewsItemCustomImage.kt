@@ -52,25 +52,25 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
 
         val figureAngle = 360 / anglesNumber
 
-        var figureAnglePointX: Int
-        var figureAnglePointY: Int
+        var figureAnglePointX: Double
+        var figureAnglePointY: Double
 
         path.fillType = FillType.EVEN_ODD
 
         for (i in 1..anglesNumber) {
             val neededAngle = (figureAngle * i + 269) % 360
 
-            figureAnglePointX = ellipseX[neededAngle].toInt()
-            figureAnglePointY = ellipseY[neededAngle].toInt()
+            figureAnglePointX = ellipseX[neededAngle]
+            figureAnglePointY = ellipseY[neededAngle]
             
             path.lineTo(
                 figureAnglePointX.toFloat(),
                 figureAnglePointY.toFloat()
             )
         }
+
         path.close()
         canvas.clipPath(path)
-
     }
 
 }
