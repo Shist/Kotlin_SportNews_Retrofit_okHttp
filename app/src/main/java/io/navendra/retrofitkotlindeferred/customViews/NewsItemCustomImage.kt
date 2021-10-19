@@ -17,49 +17,44 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     // у recycle-а (adapter-а) нужно будет посмотреть, как делать ViewType
 
     private val paint = Paint()
+
     private val typedArray =
         context?.obtainStyledAttributes(attrs,R.styleable.NewsItemCustomImage)
     private val anglesNumber =
         typedArray?.getInteger(R.styleable.NewsItemCustomImage_attrAnglesNumber, 4)
-
-    override  fun  onDraw (canvas: Canvas ) {
-        clip(canvas, anglesNumber!!)
-        super .onDraw (canvas)
-    }
 
     private val ellipseX = DoubleArray(360)
     private val ellipseY = DoubleArray(360)
 
     private val path = Path()
 
-    private fun clip(canvas: Canvas, anglesNumber: Int) {
-
-        val imageWidth = canvas.width
-        val imageHeight = canvas.height
-
+    override  fun  onDraw (canvas: Canvas ) {
         paint.color = Color.WHITE
         paint.style = Paint.Style.FILL
         paint.isAntiAlias = true
 
-        // Вынести за функцию, но как-то передать туда ширину и высоту
         for (i in 0..359) {
-            ellipseX[i] = (imageWidth/2) + (imageWidth/2)* cos(Math.toRadians(i.toDouble()))
-            ellipseY[i] = (imageHeight/2) + (imageHeight/2)* sin(Math.toRadians(i.toDouble()))
+            ellipseX[i] = (width/2) + (width/2)* cos(Math.toRadians(i.toDouble()))
+            ellipseY[i] = (height/2) + (height/2)* sin(Math.toRadians(i.toDouble()))
         }
+
+        path.moveTo(
+            ellipseX[269].toInt().toFloat(),
+            ellipseY[269].toInt().toFloat()
+        )
+
+        clip(canvas, anglesNumber!!)
+        super .onDraw (canvas)
+    }
+
+    private fun clip(canvas: Canvas, anglesNumber: Int) {
 
         val figureAngle = 360/anglesNumber
 
         var figureAnglePointX = 0
         var figureAnglePointY = 0
 
-        path.reset() // Чистим его
         path.fillType = FillType.EVEN_ODD
-
-        // Тоже можно только один раз посчитать
-        path.moveTo(
-            ellipseX[269].toInt().toFloat(),
-            ellipseY[269].toInt().toFloat()
-        )
 
         for (i in 1..anglesNumber) {
             if (figureAngle*i+270-1 <= 359) {
