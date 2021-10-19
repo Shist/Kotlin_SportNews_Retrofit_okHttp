@@ -35,13 +35,13 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
         paint.isAntiAlias = true
 
         for (i in 0..359) {
-            ellipseX[i] = width / 2 + (width / 2) * cos(Math.toRadians(i.toDouble()))
-            ellipseY[i] = height / 2 + (height / 2) * sin(Math.toRadians(i.toDouble()))
+            ellipseX[i] = (width / 2) * (1 + sin(Math.toRadians(i.toDouble())))
+            ellipseY[i] = (height / 2) * (1 + cos(Math.toRadians((i + 180).toDouble()))) // + 180, т.к. нам нужно, чтобы начальная вершина была вверху, а не внизу
         }
 
         path.moveTo(
-            ellipseX[269].toFloat(),
-            ellipseY[269].toFloat()
+            ellipseX[0].toFloat(),
+            ellipseY[0].toFloat()
         )
 
         clip(canvas, anglesNumber!!)
@@ -58,7 +58,7 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
         path.fillType = FillType.EVEN_ODD
 
         for (i in 1..anglesNumber) {
-            val neededAngle = (figureAngle * i + 269) % 360
+            val neededAngle = (figureAngle * i) % 360
 
             figureAnglePointX = ellipseX[neededAngle]
             figureAnglePointY = ellipseY[neededAngle]
