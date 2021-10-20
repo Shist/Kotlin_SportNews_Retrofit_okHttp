@@ -29,6 +29,8 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
             ellipseY[i] = (h / 2) * (1 + cos(Math.toRadians((i + 180).toDouble()))) // + 180, т.к. нам нужно, чтобы начальная вершина была вверху, а не внизу
         }
 
+        path.fillType = FillType.EVEN_ODD
+
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
@@ -42,6 +44,7 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
         )
 
         clip(canvas, anglesNumber!!)
+
         super .onDraw (canvas)
     }
 
@@ -51,8 +54,6 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
 
         var figureAnglePointX: Double
         var figureAnglePointY: Double
-
-        path.fillType = FillType.EVEN_ODD
 
         for (i in 1..anglesNumber) {
             val neededAngle = (figureAngle * i) % 360
