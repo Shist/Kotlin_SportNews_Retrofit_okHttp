@@ -12,7 +12,7 @@ import io.navendra.retrofitkotlindeferred.databinding.NewsItemOddBinding
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemEvenBinding
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
 
-// Мы не можем возвращать две штуки сразу, но нам нужны обе
+// Мы не можем иметь два типа штуки сразу, но нам нужны обе
 class SportAdapter(private val clickListener: (NewsItemTable)-> Unit) :
     ListAdapter<NewsItemTable, SportAdapter.OddViewHolder>(SportNewsDiffCallback()),
     ListAdapter<NewsItemTable, SportAdapter.EvenViewHolder>(SportNewsDiffCallback()) {
@@ -34,7 +34,7 @@ class SportAdapter(private val clickListener: (NewsItemTable)-> Unit) :
         val altText: TextView = evenItemBinding.altText
     }
 
-    // Проблема связана с верхней проблемой: мы не знаем, какой из двух возвращаем и соответственно какой нужен
+    // Проблема связана с верхней проблемой: мы не знаем, какой из двух типов используется классом и соответственно какой нужен
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         TYPE_ODD -> NewsItemOddBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         TYPE_EVEN -> NewsItemEvenBinding.inflate(LayoutInflater.from(parent.context), parent, false)
