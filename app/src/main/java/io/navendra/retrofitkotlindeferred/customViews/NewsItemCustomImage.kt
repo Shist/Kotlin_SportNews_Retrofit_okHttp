@@ -12,10 +12,6 @@ import kotlin.math.sin
 class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     AppCompatImageView(context!!, attrs) {
 
-    // четные штуки - 6 (картинка слева, текст - справа)
-    // нечетные штуки - 8 (картинска справа, текст - слева)
-    // у recycle-а (adapter-а) нужно будет посмотреть, как делать ViewType
-
     private fun initPaint(paint: Paint): Paint {
         paint.color = Color.WHITE
         paint.style = Paint.Style.FILL
@@ -36,6 +32,8 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     private val path = Path()
 
     override fun onDraw (canvas: Canvas) {
+
+        path.reset()
 
         for (i in 0..359) {
             ellipseX[i] = (width / 2) * (1 + sin(Math.toRadians(i.toDouble())))
