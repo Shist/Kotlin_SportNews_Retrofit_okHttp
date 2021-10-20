@@ -62,18 +62,9 @@ class SportAdapter(private val clickListener: (NewsItemTable)-> Unit) :
             clickListener(listItem)
         }
 
-        when (holder.itemViewType) {
-            TYPE_ODD -> {
-                Picasso.get().load(listItem.context).into(holder.image)
-                holder.headline.text = listItem.shortHeadline
-                holder.altText.text = listItem.altText
-            }
-            TYPE_EVEN -> {
-                Picasso.get().load(listItem.context).into(holder.image)
-                holder.headline.text = listItem.shortHeadline
-                holder.altText.text = listItem.altText
-            }
-        }
+        Picasso.get().load(listItem.context).into(holder.image)
+        holder.headline.text = listItem.shortHeadline
+        holder.altText.text = listItem.altText
     }
 
 }
