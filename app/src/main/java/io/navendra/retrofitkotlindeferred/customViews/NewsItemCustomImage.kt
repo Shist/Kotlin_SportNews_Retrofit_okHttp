@@ -35,7 +35,7 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
 
     private val path = Path()
 
-    override fun onDraw (canvas: Canvas ) {
+    override fun onDraw (canvas: Canvas) {
 
         for (i in 0..359) {
             ellipseX[i] = (width / 2) * (1 + sin(Math.toRadians(i.toDouble())))
