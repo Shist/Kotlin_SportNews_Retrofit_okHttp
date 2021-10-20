@@ -12,15 +12,6 @@ import kotlin.math.sin
 class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     AppCompatImageView(context!!, attrs) {
 
-    private fun initPaint(paint: Paint): Paint {
-        paint.color = Color.WHITE
-        paint.style = Paint.Style.FILL
-        paint.isAntiAlias = true
-        return paint
-    }
-
-    private val paint = initPaint(Paint()) // Я переместил инициализацию аттрибутов из onDraw() сюда, только... нафига он нам?
-
     private val typedArray =
         context?.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomImage)
     private val anglesNumber =
