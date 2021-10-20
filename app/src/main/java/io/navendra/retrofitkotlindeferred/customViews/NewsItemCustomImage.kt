@@ -22,14 +22,19 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
 
     private val path = Path()
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+
+        for (i in 0..359) {
+            ellipseX[i] = (w / 2) * (1 + sin(Math.toRadians(i.toDouble())))
+            ellipseY[i] = (h / 2) * (1 + cos(Math.toRadians((i + 180).toDouble()))) // + 180, т.к. нам нужно, чтобы начальная вершина была вверху, а не внизу
+        }
+
+        super.onSizeChanged(w, h, oldw, oldh)
+    }
+
     override fun onDraw (canvas: Canvas) {
 
         path.reset()
-
-        for (i in 0..359) {
-            ellipseX[i] = (width / 2) * (1 + sin(Math.toRadians(i.toDouble())))
-            ellipseY[i] = (height / 2) * (1 + cos(Math.toRadians((i + 180).toDouble()))) // + 180, т.к. нам нужно, чтобы начальная вершина была вверху, а не внизу
-        }
 
         path.moveTo(
             ellipseX[0].toFloat(),
