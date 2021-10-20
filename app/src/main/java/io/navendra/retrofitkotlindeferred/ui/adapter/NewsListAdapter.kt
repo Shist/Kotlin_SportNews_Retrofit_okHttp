@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemOddBinding
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemEvenBinding
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
@@ -55,16 +54,18 @@ class SportAdapter(private val clickListener: (NewsItemTable)-> Unit) :
             clickListener(listItem)
         }
 
-        when (getItemViewType(position)) {
+        when (holder.itemViewType) {
             TYPE_ODD -> {
-                Picasso.get().load(listItem.context).into(holder.itemView.findViewById() image)
-                holder.itemViewType. .headline.text = listItem.shortHeadline
-                oddHolder.altText.text = listItem.altText
+                holder as OddViewHolder
+                Picasso.get().load(listItem.context).into(holder.image)
+                holder.headline.text = listItem.shortHeadline
+                holder.altText.text = listItem.altText
             }
             TYPE_EVEN -> {
-                Picasso.get().load(listItem.context).into(evenHolder.image)
-                evenHolder.headline.text = listItem.shortHeadline
-                evenHolder.altText.text = listItem.altText
+                holder as EvenViewHolder
+                Picasso.get().load(listItem.context).into(holder.image)
+                holder.headline.text = listItem.shortHeadline
+                holder.altText.text = listItem.altText
             }
         }
     }
