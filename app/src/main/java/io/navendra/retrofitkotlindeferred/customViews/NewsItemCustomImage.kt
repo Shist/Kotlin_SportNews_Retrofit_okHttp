@@ -16,7 +16,14 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     // нечетные штуки - 8 (картинска справа, текст - слева)
     // у recycle-а (adapter-а) нужно будет посмотреть, как делать ViewType
 
-    private val paint = Paint()
+    private fun initPaint(paint: Paint): Paint {
+        paint.color = Color.WHITE
+        paint.style = Paint.Style.FILL
+        paint.isAntiAlias = true
+        return paint
+    }
+
+    private val paint = initPaint(Paint()) // Я переместил инициализацию аттрибутов из onDraw() сюда, только... нафига он нам?
 
     private val typedArray =
         context?.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomImage)
@@ -28,11 +35,7 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
 
     private val path = Path()
 
-    override  fun  onDraw (canvas: Canvas ) {
-
-        paint.color = Color.WHITE
-        paint.style = Paint.Style.FILL
-        paint.isAntiAlias = true
+    override fun onDraw (canvas: Canvas ) {
 
         for (i in 0..359) {
             ellipseX[i] = (width / 2) * (1 + sin(Math.toRadians(i.toDouble())))
