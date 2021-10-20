@@ -21,35 +21,30 @@ class SportAdapter(private val clickListener: (NewsItemTable)-> Unit) :
         private const val TYPE_EVEN = 1
     }
 
-    class ItemViewHolder(bindType: ViewBinding): RecyclerView.ViewHolder(bindType.root) {
+    class ItemViewHolder: RecyclerView.ViewHolder {
 
-        lateinit var image: ImageView
-        lateinit var headline: TextView
-        lateinit var altText: TextView
+        val image: ImageView
+        val headline: TextView
+        val altText: TextView
 
-        constructor(bindType: ViewBinding, typeNum: Int) : this(bindType) {
-            when (typeNum) {
-                0 -> {
-                    bindType as NewsItemOddBinding
-                    image = bindType.img
-                    headline = bindType.headline
-                    altText = bindType.altText
-                }
-                1 -> {
-                    bindType as NewsItemEvenBinding
-                    image = bindType.img
-                    headline = bindType.headline
-                    altText = bindType.altText
-                }
-            }
+        constructor(oddBinding: NewsItemOddBinding): super(oddBinding.root) {
+            image = oddBinding.img
+            headline = oddBinding.headline
+            altText = oddBinding.altText
+        }
+
+        constructor(evenBinding: NewsItemEvenBinding): super(evenBinding.root) {
+            image = evenBinding.img
+            headline = evenBinding.headline
+            altText = evenBinding.altText
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         TYPE_ODD -> ItemViewHolder(NewsItemOddBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false), 0)
+            .inflate(LayoutInflater.from(parent.context), parent, false))
         TYPE_EVEN -> ItemViewHolder(NewsItemEvenBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false), 1)
+            .inflate(LayoutInflater.from(parent.context), parent, false))
         else -> throw IllegalArgumentException()
     }
 
