@@ -9,12 +9,11 @@ class NewsItemMapper {
     fun fromJsonToRoomDB(item: NewsItem) : NewsItemTable?
     {
         return try {
-            val newsItemTable = NewsItemTable(item.id,
+            NewsItemTable(item.id,
                 item.featuredMedia.featuredMediaAltText,
                 LocalDate.parse(item.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
                 item.featuredMedia.featuredMediaContext.featuredMediaContext,
                 item.shortHeadline)
-            newsItemTable
         } catch (e: Throwable) {
             null
         }
