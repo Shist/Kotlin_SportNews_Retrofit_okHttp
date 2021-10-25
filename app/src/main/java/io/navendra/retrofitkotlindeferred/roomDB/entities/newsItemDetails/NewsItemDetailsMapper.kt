@@ -6,13 +6,18 @@ import java.time.format.DateTimeFormatter
 
 class NewsItemDetailsMapper {
 
-    fun fromJsonToRoomDB(item: NewsItemDetails) : NewsItemDetailsTable
+    fun fromJsonToRoomDB(item: NewsItemDetails) : NewsItemDetailsTable?
     {
-        return NewsItemDetailsTable(item.id,
-            item.body,
-            LocalDate.parse(item.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
-            item.featuredMedia.featuredMediaContext.featuredMediaContext,
-            item.shortHeadline)
+        return try {
+            val newsItemDetailsTable = NewsItemDetailsTable(item.id,
+                item.body,
+                LocalDate.parse(item.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+                item.featuredMedia.featuredMediaContext.featuredMediaContext,
+                item.shortHeadline)
+            newsItemDetailsTable
+        } catch (e: Throwable) {
+            null
+        }
     }
 
 }
