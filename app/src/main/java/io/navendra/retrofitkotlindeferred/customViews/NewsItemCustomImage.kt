@@ -29,19 +29,19 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
             ellipseY[i] = (h / 2) * (1 + cos(Math.toRadians((i + 180).toDouble()))) // + 180, т.к. нам нужно, чтобы начальная вершина была вверху, а не внизу
         }
 
-        path.fillType = FillType.EVEN_ODD
-
-        super.onSizeChanged(w, h, oldw, oldh)
-    }
-
-    override fun onDraw (canvas: Canvas) {
-
         path.reset()
+
+        path.fillType = FillType.EVEN_ODD
 
         path.moveTo(
             ellipseX[0].toFloat(),
             ellipseY[0].toFloat()
         )
+
+        super.onSizeChanged(w, h, oldw, oldh)
+    }
+
+    override fun onDraw (canvas: Canvas) {
 
         clip(canvas, anglesNumber!!)
 
