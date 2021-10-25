@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 // Закомментированы те данные, которые нам пока что не нужны для ленты новостей...
 
 data class NewsItemDetails(
-    @SerializedName("@id") var id: String,
+    @SerializedName("@id") var id: String?,
     //@SerializedName("@type") val type: String?,
     //@SerializedName("author") val author: NewsItemAuthor?,
     //@SerializedName("authorName") val authorName: String?,

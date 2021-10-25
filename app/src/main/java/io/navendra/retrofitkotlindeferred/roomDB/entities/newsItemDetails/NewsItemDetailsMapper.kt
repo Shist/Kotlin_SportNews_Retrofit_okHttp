@@ -19,7 +19,7 @@ class NewsItemDetailsMapper {
             }
         }
 
-        return NewsItemDetailsTable(item.id,
+        return NewsItemDetailsTable(item.id!!,
             item.body,
             LocalDate.parse(item.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
             featuredMediaContext,

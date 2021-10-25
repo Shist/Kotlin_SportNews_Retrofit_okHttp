@@ -1,5 +1,7 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
+import io.navendra.retrofitkotlindeferred.model.NewsItem
+import io.navendra.retrofitkotlindeferred.model.NewsItemDetails
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
@@ -17,38 +19,56 @@ class NewsRepository(private val newsItemDatabase: NewsItemDatabase,
 
     private val newsItemDetailsMapper: NewsItemDetailsMapper by inject()
 
+    private fun isItemWithID(item: NewsItem): Boolean {
+        return item.id != null
+    }
+
+    private fun isItemWithID(item: NewsItemDetails): Boolean {
+        return item.id != null
+    }
+
     private fun isItemNotEmpty(item: NewsItemTable): Boolean {
-        return !(item.altText == null &&
-                item.context == null &&
-                item.shortHeadline == null)
+        return item.altText != null ||
+                item.context != null ||
+                item.shortHeadline != null
     }
 
     private fun isItemNotEmpty(item: NewsItemDetailsTable): Boolean {
-        return !(item.body == null &&
-                item.context == null &&
-                item.shortHeadline == null)
+        return item.body != null ||
+                item.context != null ||
+                item.shortHeadline != null
     }
 
     suspend fun loadNews() {
-
-        newsItemDatabase.itemsDao().insertItemsList(service.getNews()
-            .items.map { newsItemMapper.fromJsonToRoomDB(it) }.filter { isItemNotEmpty(it) })
-
-        newsItemDatabase.itemsDetailsDao().insertItemsDetailsList(service.getNewsDetails()
-            .itemsDetails.map { newsItemDetailsMapper.fromJsonToRoomDB(it) }.filter { isItemNotEmpty(it) })
+        try {
+            newsItemDatabase.itemsDao().insertItemsList(service.getNews().items!!
+                .filter { isItemWithID(it) }
+                .map { newsItemMapper.fromJsonToRoomDB(it) }
+                .filter { isItemNotEmpty(it) })
+            newsItemDatabase.itemsDetailsDao().insertItemsDetailsList(service.getNewsDetails().itemsDetails!!
+                .filter { isItemWithID(it) }
+                .map { newsItemDetailsMapper.fromJsonToRoomDB(it) }
+                .filter { isItemNotEmpty(it) })
+        } catch (e: Throwable) {
+            // TODO make some snackbar with error "There is empty item list received from json API"
+        }
     }
 
     suspend fun loadNewsItemDetailsByID(itemID: String) : NewsItemDetailsTable? {
-        val itemDetails: NewsItemDetailsTable?
+        var itemDetails: NewsItemDetailsTable? = null
 
-        val latestNews = service.getNewsDetails().itemsDetails
-            .map { newsItemDetailsMapper.fromJsonToRoomDB(it) }
-        itemDetails = latestNews.find { it.itemId == itemID }
+        try {
+            val latestNews = service.getNewsDetails().itemsDetails
+                ?.map { newsItemDetailsMapper.fromJsonToRoomDB(it) }
+            itemDetails = latestNews?.find { it.itemId == itemID }
 
-        if (itemDetails != null) {
-            newsItemDatabase.itemsDetailsDao().insertOneItemDetails(itemDetails)
-        } else {
-            // TODO make some snackbar with error
+            if (itemDetails != null) {
+                newsItemDatabase.itemsDetailsDao().insertOneItemDetails(itemDetails)
+            } else {
+                // TODO make some snackbar with error "Can't find out item with such an id"
+            }
+        } catch (e: Throwable) {
+            // TODO make some snackbar with error "There is empty item list received from json API"
         }
 
         return itemDetails

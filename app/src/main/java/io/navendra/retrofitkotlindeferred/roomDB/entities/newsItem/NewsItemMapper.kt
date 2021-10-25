@@ -25,7 +25,7 @@ class NewsItemMapper {
             }
         }
 
-        return NewsItemTable(item.id,
+        return NewsItemTable(item.id!!,
             featuredMediaAltText,
             LocalDate.parse(item.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
             featuredMediaContext,
