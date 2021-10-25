@@ -9,7 +9,7 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemDAO
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsDAO
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 
-@Database(entities = [NewsItemTable::class, NewsItemDetailsTable::class], version = 2)
+@Database(entities = [NewsItemTable::class, NewsItemDetailsTable::class], version = 3)
 @TypeConverters(Converters::class)
 abstract class NewsItemDatabase : RoomDatabase() {
     abstract fun itemsDao(): NewsItemDAO

@@ -5,7 +5,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class NewsItemFeaturedMediaContext(
-    @SerializedName("thumbnail_resized_800") val featuredMediaContext: String
+    @SerializedName("thumbnail_resized_800") val featuredMediaContext: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(parcel.readString()!!)
 

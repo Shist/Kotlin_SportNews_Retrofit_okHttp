@@ -17,20 +17,32 @@ class NewsRepository(private val newsItemDatabase: NewsItemDatabase,
 
     private val newsItemDetailsMapper: NewsItemDetailsMapper by inject()
 
+    private fun isItemNotEmpty(item: NewsItemTable): Boolean {
+        return !(item.altText == null &&
+                item.context == null &&
+                item.shortHeadline == null)
+    }
+
+    private fun isItemNotEmpty(item: NewsItemDetailsTable): Boolean {
+        return !(item.body == null &&
+                item.context == null &&
+                item.shortHeadline == null)
+    }
+
     suspend fun loadNews() {
 
         newsItemDatabase.itemsDao().insertItemsList(service.getNews()
-            .items.mapNotNull { newsItemMapper.fromJsonToRoomDB(it) })
+            .items.map { newsItemMapper.fromJsonToRoomDB(it) }.filter { isItemNotEmpty(it) })
 
         newsItemDatabase.itemsDetailsDao().insertItemsDetailsList(service.getNewsDetails()
-            .itemsDetails.mapNotNull { newsItemDetailsMapper.fromJsonToRoomDB(it) })
+            .itemsDetails.map { newsItemDetailsMapper.fromJsonToRoomDB(it) }.filter { isItemNotEmpty(it) })
     }
 
     suspend fun loadNewsItemDetailsByID(itemID: String) : NewsItemDetailsTable? {
-        var itemDetails: NewsItemDetailsTable? = null
+        val itemDetails: NewsItemDetailsTable?
 
         val latestNews = service.getNewsDetails().itemsDetails
-            .mapNotNull { newsItemDetailsMapper.fromJsonToRoomDB(it) }
+            .map { newsItemDetailsMapper.fromJsonToRoomDB(it) }
         itemDetails = latestNews.find { it.itemId == itemID }
 
         if (itemDetails != null) {

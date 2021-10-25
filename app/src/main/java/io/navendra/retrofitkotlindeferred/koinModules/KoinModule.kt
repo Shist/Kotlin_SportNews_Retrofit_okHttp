@@ -25,7 +25,7 @@ val newsRepositoryModule = module {
         fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
                 NewsItemDatabase::class.java, "newsDB")
-                .addMigrations(MigrationDB.MIGRATION_1_2)
+                .addMigrations(MigrationDB.MIGRATION_2_3)
                 .build()
 
         buildDatabase(androidContext())

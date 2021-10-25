@@ -3,7 +3,6 @@ package io.navendra.retrofitkotlindeferred.customViews
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.graphics.Path.FillType
 import androidx.appcompat.widget.AppCompatImageView
 import io.navendra.retrofitkotlindeferred.R
 import kotlin.math.cos
@@ -12,55 +11,32 @@ import kotlin.math.sin
 class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     AppCompatImageView(context!!, attrs) {
 
-    private val typedArray =
-        context?.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomImage)
     private val anglesNumber =
-        typedArray?.getInteger(R.styleable.NewsItemCustomImage_attrAnglesNumber, 4)
+        context?.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomImage)?.
+        getInteger(R.styleable.NewsItemCustomImage_attrAnglesNumber, 4)
 
-    private val ellipseX = DoubleArray(360)
-    private val ellipseY = DoubleArray(360)
+    private val figureAngle = 360.0 / anglesNumber!!.toDouble()
 
     private val path = Path()
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
 
-        for (i in 0..359) {
-            ellipseX[i] = (w / 2) * (1 + sin(Math.toRadians(i.toDouble())))
-            ellipseY[i] = (h / 2) * (1 + cos(Math.toRadians((i + 180).toDouble()))) // + 180, т.к. нам нужно, чтобы начальная вершина была вверху, а не внизу
-        }
-
-        path.reset()
-
-        path.fillType = FillType.EVEN_ODD
-
-        path.moveTo(
-            ellipseX[0].toFloat(),
-            ellipseY[0].toFloat()
-        )
+        path.moveTo(w / 2.0f, 0.0f) // Ставим точку наверх в середину
 
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
     override fun onDraw (canvas: Canvas) {
 
-        clip(canvas, anglesNumber!!)
-
-        super .onDraw (canvas)
-    }
-
-    private fun clip(canvas: Canvas, anglesNumber: Int) {
-
-        val figureAngle = 360 / anglesNumber
-
         var figureAnglePointX: Double
         var figureAnglePointY: Double
 
-        for (i in 1..anglesNumber) {
-            val neededAngle = (figureAngle * i) % 360
+        for (angleNum in 1..anglesNumber!!) {
+            val neededAngle = figureAngle * angleNum
 
-            figureAnglePointX = ellipseX[neededAngle]
-            figureAnglePointY = ellipseY[neededAngle]
-            
+            figureAnglePointX = (width / 2) * (1 + sin(Math.toRadians(neededAngle)))
+            figureAnglePointY = (height / 2) * (1 + cos(Math.toRadians((neededAngle + 180.0))))
+
             path.lineTo(
                 figureAnglePointX.toFloat(),
                 figureAnglePointY.toFloat()
@@ -69,6 +45,8 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
 
         path.close()
         canvas.clipPath(path)
+
+        super .onDraw (canvas)
     }
 
 }
