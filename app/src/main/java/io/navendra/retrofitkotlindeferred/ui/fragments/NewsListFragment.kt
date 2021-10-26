@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
@@ -85,41 +86,47 @@ class NewsListFragment : Fragment(), KoinComponent {
             }
         }
 
+        val timeLength = if (adapter.itemCount == 0) // Если данных вообще нету (даже в базе)
+            Snackbar.LENGTH_INDEFINITE
+        else // Если новые данные не пришли, но есть старые данные в базе
+            Snackbar.LENGTH_LONG
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect {
                     when (it) {
                         LoadState.LOADING -> {
                             swipeContainer.isRefreshing = true
+                            createSnackbar(resources.getString(R.string.loading),
+                                requireContext().getColor(R.color.colorLoading))
                         }
                         LoadState.SUCCESS -> {
                             swipeContainer.isRefreshing = false
+                            createSnackbar(resources.getString(R.string.loadingSuccess),
+                                requireContext().getColor(R.color.colorSuccess))
                         }
                         LoadState.INTERNET_ERROR -> {
                             swipeContainer.isRefreshing = false
-                            if (adapter.itemCount == 0) { // Если данных вообще нету (даже в базе)
-                                createSnackbar(Snackbar.LENGTH_INDEFINITE,
-                                    resources.getString(R.string.errorNetwork))
-                            }
-                            else { // Если новые данные не пришли, но есть старые данные в базе
-                                createSnackbar(Snackbar.LENGTH_LONG,
-                                    resources.getString(R.string.errorNetwork))
-                            }
+                            createSnackbarWithReload(timeLength,
+                                resources.getString(R.string.errorNetwork))
                         }
                         LoadState.UNKNOWN_ERROR -> {
                             swipeContainer.isRefreshing = false
-                            if (adapter.itemCount == 0) { // Если данных вообще нету (даже в базе)
-                                createSnackbar(Snackbar.LENGTH_INDEFINITE,
-                                    resources.getString(R.string.errorUnknownNoData))
-                            }
-                            else { // Если новые данные не пришли, но есть старые данные в базе
-                                createSnackbar(Snackbar.LENGTH_LONG,
-                                    resources.getString(R.string.errorUnknownNoNewData))
-                            }
+                            createSnackbarWithReload(timeLength,
+                                resources.getString(R.string.errorUnknownNoData))
                         }
-                        LoadState.IDLE -> {
-                            // Something get wrong: IDLE state after LoadData() . . .
+                        LoadState.EMPTY_ITEMS_LIST_ERROR -> {
+                            swipeContainer.isRefreshing = false
+                            createSnackbarWithReload(timeLength,
+                                resources.getString(R.string.errorNoNewsOnAPI))
                         }
+                        LoadState.EMPTY_ITEMS_DETAILS_LIST_ERROR -> {
+                            swipeContainer.isRefreshing = false
+                            createSnackbarWithReload(timeLength,
+                                resources.getString(R.string.errorNoNewsDetailsOnAPI))
+                        }
+                        else -> createSnackbar(resources.getString(R.string.launching),
+                            requireContext().getColor(R.color.colorLaunching))
                     }
                 }
             }
@@ -135,13 +142,24 @@ class NewsListFragment : Fragment(), KoinComponent {
         _binding = null
     }
 
-    private fun createSnackbar(snackbarTimeLength : Int, messageError : String) {
+    private fun createSnackbar(message: String, color: Int) {
+        val snackbar = Snackbar.make(
+            binding.swipeContainer,
+            message,
+            LENGTH_SHORT
+        )
+        snackbar.setTextColor(color)
+        snackbar.show()
+    }
+
+    private fun createSnackbarWithReload(snackbarTimeLength: Int, messageError: String) {
         val snackbar = Snackbar.make(
             binding.swipeContainer,
             messageError,
             snackbarTimeLength
         )
-        snackbar.setActionTextColor(requireContext().getColor(R.color.colorForSnackBar))
+        snackbar.setTextColor(requireContext().getColor(R.color.colorMistakeText))
+        snackbar.setActionTextColor(requireContext().getColor(R.color.colorMistakeReload))
         snackbar.setAction(R.string.reload) {
             viewModel.loadData()
         }

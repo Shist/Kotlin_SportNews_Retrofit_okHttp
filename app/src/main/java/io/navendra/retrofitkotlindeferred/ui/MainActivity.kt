@@ -35,6 +35,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
-// TODO
-// Сделать SnackBar и обработку ошибок для Page

@@ -40,15 +40,19 @@ class NewsListViewModel (application: Application) :
                 if (!isConnectedToInternet() && e is IOException) {
                     state.value = LoadState.INTERNET_ERROR
                 }
+                else if (e is NullPointerException) {
+                    when (e.message) {
+                        "Error: List<NewsItem> from json is empty!" ->
+                            state.value = LoadState.EMPTY_ITEMS_LIST_ERROR
+                        "Error: List<NewsItemDetails> from json is empty!" ->
+                            state.value = LoadState.EMPTY_ITEMS_DETAILS_LIST_ERROR
+                    }
+                }
                 else {
                     state.value = LoadState.UNKNOWN_ERROR
                 }
             }
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
     }
 
 }

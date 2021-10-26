@@ -1,7 +1,6 @@
 package io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails
 
 import io.navendra.retrofitkotlindeferred.model.NewsItemDetails
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

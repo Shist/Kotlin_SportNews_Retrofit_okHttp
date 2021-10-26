@@ -9,10 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
+import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -35,8 +39,6 @@ class NewsPageFragment : Fragment(), KoinComponent {
         parametersOf(arguments?.getString(keyItemID))
     }
 
-    private var swipeContainer: SwipeRefreshLayout? = null
-
     private var _binding: NewsPageBinding? = null
     private val binding get() = _binding!!
 
@@ -54,8 +56,8 @@ class NewsPageFragment : Fragment(), KoinComponent {
         val itemID = arguments?.getString(keyItemID)
         viewModel.loadData(itemID!!)
 
-        swipeContainer = binding.swipeContainer
-        swipeContainer?.setColorSchemeResources(
+        val swipeContainer = binding.swipeContainer
+        swipeContainer.setColorSchemeResources(
             android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
             android.R.color.holo_orange_light,
@@ -68,6 +70,10 @@ class NewsPageFragment : Fragment(), KoinComponent {
 
         var item: NewsItemDetailsTable?
 
+        swipeContainer.setOnRefreshListener {
+            viewModel.loadData(itemID)
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsPageFlow.collect {
@@ -77,10 +83,42 @@ class NewsPageFragment : Fragment(), KoinComponent {
                     Picasso.get().load(item?.context)
                         .into(pageImg)
                     pageText.text = Html.fromHtml(item?.body, Html.FROM_HTML_MODE_LEGACY).toString()
+                }
+            }
+        }
 
-                    swipeContainer?.setOnRefreshListener {
-                        viewModel.loadData(itemID)
-                        swipeContainer?.isRefreshing = false
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect {
+                    when (it) {
+                        LoadState.LOADING -> {
+                            swipeContainer.isRefreshing = true
+                            createSnackbar(resources.getString(R.string.loadingItem),
+                                requireContext().getColor(R.color.colorLoading))
+                        }
+                        LoadState.SUCCESS -> {
+                            swipeContainer.isRefreshing = false
+                            createSnackbar(resources.getString(R.string.loadingItemSuccess),
+                                requireContext().getColor(R.color.colorSuccess))
+                        }
+                        LoadState.INTERNET_ERROR -> {
+                            swipeContainer.isRefreshing = false
+                            createSnackbarWithReload(resources.getString(R.string.errorNetwork))
+                        }
+                        LoadState.UNKNOWN_ERROR -> {
+                            swipeContainer.isRefreshing = false
+                            createSnackbarWithReload(resources.getString(R.string.errorUnknownNoData))
+                        }
+                        LoadState.EMPTY_ITEMS_DETAILS_LIST_ERROR -> {
+                            swipeContainer.isRefreshing = false
+                            createSnackbarWithReload(resources.getString(R.string.errorNoNewsDetailsOnAPI))
+                        }
+                        LoadState.INCONSISTENCY_ITEM_ID_ERROR -> {
+                            swipeContainer.isRefreshing = false
+                            createSnackbarWithReload(resources.getString(R.string.errorNoSuchItem))
+                        }
+                        else -> createSnackbar(resources.getString(R.string.launchingItem),
+                            requireContext().getColor(R.color.colorLaunching))
                     }
                 }
             }
@@ -90,6 +128,30 @@ class NewsPageFragment : Fragment(), KoinComponent {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun createSnackbar(message: String, color: Int) {
+        val snackbar = Snackbar.make(
+            binding.swipeContainer,
+            message,
+            LENGTH_SHORT
+        )
+        snackbar.setTextColor(color)
+        snackbar.show()
+    }
+
+    private fun createSnackbarWithReload(messageError: String) {
+        val snackbar = Snackbar.make(
+            binding.swipeContainer,
+            messageError,
+            LENGTH_LONG
+        )
+        snackbar.setTextColor(requireContext().getColor(R.color.colorMistakeText))
+        snackbar.setActionTextColor(requireContext().getColor(R.color.colorMistakeReload))
+        snackbar.setAction(R.string.reload) {
+            viewModel.loadData(keyItemID)
+        }
+        snackbar.show()
     }
 
 }
