@@ -35,3 +35,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+//TODO
+//Constraint layout заменять на свой(пусть наследуется от FrameLayout)
+//Поместить в новом layout картинки так же, как сейчас
+//Нельзя использовать margin, перегрузить метод onLayout и правильно расставить views
+//Возможно придётся самим делать margin чтобы image имел правильную высоту

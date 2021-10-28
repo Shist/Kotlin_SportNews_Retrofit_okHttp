@@ -12,10 +12,10 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
     AppCompatImageView(context!!, attrs) {
 
     private val anglesNumber =
-        context?.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomImage)?.
+        context!!.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomImage).
         getInteger(R.styleable.NewsItemCustomImage_attrAnglesNumber, 4)
 
-    private val figureAngle = 360.0 / anglesNumber!!.toDouble()
+    private val figureAngle = 360.0 / anglesNumber.toDouble()
 
     private val path = Path()
 
@@ -31,7 +31,7 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
         var figureAnglePointX: Double
         var figureAnglePointY: Double
 
-        for (angleNum in 1..anglesNumber!!) {
+        for (angleNum in 1..anglesNumber) {
             val neededAngle = figureAngle * angleNum
 
             figureAnglePointX = (width / 2) * (1 + sin(Math.toRadians(neededAngle)))
