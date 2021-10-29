@@ -15,60 +15,42 @@
 
         <io.navendra.retrofitkotlindeferred.customViews.NewsItemCustomImage
             android:id="@+id/img"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_left="0"
             app:layout_top="0"
             app:layout_cellsWidth="1"
             app:layout_cellsHeight="2"
             tools:contentDescription="@string/img"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/altText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.5"
-            app:layout_constraintDimensionRatio="1:1"
             android:scaleType="centerCrop"
             android:contentDescription="@string/listImgDesc"
             app:attrAnglesNumber='6' />
 
         <TextView
             android:id="@+id/altText"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_left="1"
             app:layout_top="0"
             app:layout_cellsWidth="1"
             app:layout_cellsHeight="1"
-            android:layout_marginStart="8dp"
-            android:gravity="start|top"
             tools:text="@string/altText"
             android:textColor="@android:color/holo_purple"
             android:textSize="12sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@id/headline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img"
-            app:layout_constraintTop_toTopOf="@id/img" />
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/headline"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_left="1"
             app:layout_top="1"
             app:layout_cellsWidth="1"
             app:layout_cellsHeight="1"
-            android:layout_marginStart="8dp"
-            android:gravity="start|top"
             tools:text="@string/headline"
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/img"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img"
-            app:layout_constraintTop_toBottomOf="@+id/altText" />
+            android:textStyle="bold" />
 
     </io.navendra.retrofitkotlindeferred.customViews.NewsItemCustomLayout>
 

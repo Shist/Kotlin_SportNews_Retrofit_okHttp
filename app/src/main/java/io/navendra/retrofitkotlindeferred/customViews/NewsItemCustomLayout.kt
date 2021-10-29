@@ -46,7 +46,7 @@ class NewsItemCustomLayout(context: Context?, attrs: AttributeSet?) :
         if (widthMode == MeasureSpec.AT_MOST || widthMode == MeasureSpec.EXACTLY) {
             width = MeasureSpec.getSize(widthMeasureSpec)
             cellSize =
-                ((measuredWidth - paddingLeft - paddingRight).toFloat() / columns)
+                ((measuredWidthAndState - paddingLeft - paddingRight).toFloat() / columns)
         } else {
             cellSize = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, defaultCellSize, resources
@@ -91,11 +91,11 @@ class NewsItemCustomLayout(context: Context?, attrs: AttributeSet?) :
 
         setMeasuredDimension(width, height)
 
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-
-        super.onLayout(changed, left, top, right, bottom)
 
         val childCount = childCount
 
@@ -107,21 +107,24 @@ class NewsItemCustomLayout(context: Context?, attrs: AttributeSet?) :
             //TODO columns, spacing, leftAttr, topAttr, widthAttr, heightAttr
             //не успевают получить значения и имеют ненужные дефолтные
 
-            val topOnLayout =
-                (topAttr * cellSize) + paddingTop + spacing
             val leftOnLayout =
                 (leftAttr * cellSize) + paddingLeft + spacing
+            val topOnLayout =
+                (topAttr * cellSize) + paddingTop + spacing
             val rightOnLayout =
                 ((leftAttr + widthAttr) * cellSize) + paddingLeft - spacing
             val bottomOnLayout =
                 ((topAttr + heightAttr) * cellSize) + paddingTop - spacing
 
             child.layout(
-                topOnLayout.toInt(),
                 leftOnLayout.toInt(),
+                topOnLayout.toInt(),
                 rightOnLayout.toInt(),
                 bottomOnLayout.toInt())
         }
+
+        super.onLayout(changed, left, top, right, bottom)
     }
+
 
 }
