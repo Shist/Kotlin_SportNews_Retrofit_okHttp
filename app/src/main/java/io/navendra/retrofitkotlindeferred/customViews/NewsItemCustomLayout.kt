@@ -1,95 +1,33 @@
 package io.navendra.retrofitkotlindeferred.customViews
 
 import android.content.Context
+import android.graphics.Point
 import android.util.AttributeSet
+import android.view.Display
 import android.widget.FrameLayout
 import io.navendra.retrofitkotlindeferred.R
-import android.view.View
-import android.util.TypedValue
-import kotlin.math.roundToInt
-
+import android.view.WindowManager
 
 class NewsItemCustomLayout(context: Context?, attrs: AttributeSet?) :
     FrameLayout(context!!, attrs) {
 
-    private val defaultCellSize = 48f
+    private var itemWidth = 0
+    private var itemHeight = 0
 
-    private var cellSize = 0f
+    init {
+        val display: Display =
+            (context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+        val deviceDisplay = Point()
+        display.getSize(deviceDisplay)
+        itemWidth = deviceDisplay.x
+        itemHeight = itemWidth / 2
+    }
 
-    private val columns =
+    private val even_item =
         context!!.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomLayout).
-        getInteger(R.styleable.NewsItemCustomLayout_columns, 0)
-    private val spacing =
-        context!!.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomLayout).
-        getDimension(R.styleable.NewsItemCustomLayout_spacing, 0F)
-    private val leftAttr =
-        context!!.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomLayout).
-        getInteger(R.styleable.NewsItemCustomLayout_layout_left, 0)
-    private val topAttr =
-        context!!.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomLayout).
-        getInteger(R.styleable.NewsItemCustomLayout_layout_top, 0)
-    private val widthAttr =
-        context!!.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomLayout).
-        getInteger(R.styleable.NewsItemCustomLayout_layout_cellsWidth, -1)
-    private val heightAttr =
-        context!!.obtainStyledAttributes(attrs, R.styleable.NewsItemCustomLayout).
-        getInteger(R.styleable.NewsItemCustomLayout_layout_cellsHeight, -1)
+        getBoolean(R.styleable.NewsItemCustomLayout_even_item, false)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-
-        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
-        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
-
-        val width: Int
-        val height: Int
-
-        if (widthMode == MeasureSpec.AT_MOST || widthMode == MeasureSpec.EXACTLY) {
-            width = MeasureSpec.getSize(widthMeasureSpec)
-            cellSize =
-                ((measuredWidthAndState - paddingLeft - paddingRight).toFloat() / columns)
-        } else {
-            cellSize = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, defaultCellSize, resources
-                    .displayMetrics
-            )
-            width = ((columns * cellSize).toInt())
-        }
-
-        val childCount = childCount
-        var child: View
-
-        var maxRow = 0
-
-        for (i in 0 until childCount) {
-            child = getChildAt(i)
-
-
-            val bottomOfSize = topAttr + heightAttr
-
-            val childWidthSpec = MeasureSpec.makeMeasureSpec(
-                ((widthAttr * cellSize).toInt() - spacing * 2).toInt(),
-                MeasureSpec.EXACTLY
-            )
-            val childHeightSpec = MeasureSpec.makeMeasureSpec(
-                ((heightAttr * cellSize).toInt() - spacing * 2).toInt(),
-                MeasureSpec.EXACTLY
-            )
-            child.measure(childWidthSpec, childHeightSpec)
-            if (bottomOfSize > maxRow) {
-                maxRow = bottomOfSize
-            }
-        }
-
-        val measuredHeight = ((maxRow * cellSize).roundToInt() + paddingTop + paddingBottom)
-        height = when (heightMode) {
-            MeasureSpec.EXACTLY ->
-                MeasureSpec.getSize(heightMeasureSpec)
-            MeasureSpec.AT_MOST ->
-                MeasureSpec.getSize(heightMeasureSpec).coerceAtMost(measuredHeight)
-            else -> measuredHeight
-        }
-
-        setMeasuredDimension(width, height)
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
@@ -97,31 +35,38 @@ class NewsItemCustomLayout(context: Context?, attrs: AttributeSet?) :
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
 
-        val childCount = childCount
+        val imgLeft = this.paddingLeft
+        val imgTop = this.paddingTop
+        val imgRight = itemWidth / 2 - this.paddingRight
+        val imgBottom = itemHeight - this.paddingBottom
+        val imgWidth = imgRight - imgLeft
+        val imgHeight = imgBottom - imgTop
+        val imgView = getChildAt(0)
+        imgView.measure(MeasureSpec.makeMeasureSpec(imgWidth, MeasureSpec.AT_MOST),
+            MeasureSpec.makeMeasureSpec(imgHeight, MeasureSpec.AT_MOST))
+        imgView.layout(imgLeft, imgTop, imgRight, imgBottom)
 
-        var child: View
+        val altTextLeft = itemWidth / 2 + this.paddingLeft
+        val altTextTop = this.paddingTop
+        val altTextRight = itemWidth - this.paddingRight
+        val altTextBottom = itemHeight / 2 - this.paddingBottom
+        val altTextWidth = altTextRight - altTextLeft
+        val altTextHeight = altTextBottom - altTextTop
+        val altTextView = getChildAt(1)
+        altTextView.measure(MeasureSpec.makeMeasureSpec(altTextWidth, MeasureSpec.AT_MOST),
+            MeasureSpec.makeMeasureSpec(altTextHeight, MeasureSpec.AT_MOST))
+        altTextView.layout(altTextLeft, altTextTop, altTextRight, altTextBottom)
 
-        for (i in 0 until childCount) {
-            child = getChildAt(i)
-
-            //TODO columns, spacing, leftAttr, topAttr, widthAttr, heightAttr
-            //не успевают получить значения и имеют ненужные дефолтные
-
-            val leftOnLayout =
-                (leftAttr * cellSize) + paddingLeft + spacing
-            val topOnLayout =
-                (topAttr * cellSize) + paddingTop + spacing
-            val rightOnLayout =
-                ((leftAttr + widthAttr) * cellSize) + paddingLeft - spacing
-            val bottomOnLayout =
-                ((topAttr + heightAttr) * cellSize) + paddingTop - spacing
-
-            child.layout(
-                leftOnLayout.toInt(),
-                topOnLayout.toInt(),
-                rightOnLayout.toInt(),
-                bottomOnLayout.toInt())
-        }
+        val headlineLeft = itemWidth / 2 + this.paddingLeft
+        val headlineTop = itemHeight / 2 + this.paddingTop
+        val headlineRight = itemWidth - this.paddingRight
+        val headlineBottom = itemHeight - this.paddingBottom
+        val headlineWidth = headlineRight - headlineLeft
+        val headlineHeight = headlineBottom - headlineTop
+        val headlineView = getChildAt(2)
+        headlineView.measure(MeasureSpec.makeMeasureSpec(headlineWidth, MeasureSpec.AT_MOST),
+            MeasureSpec.makeMeasureSpec(headlineHeight, MeasureSpec.AT_MOST))
+        headlineView.layout(headlineLeft, headlineTop, headlineRight, headlineBottom)
 
         super.onLayout(changed, left, top, right, bottom)
     }
