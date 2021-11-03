@@ -8,7 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
+import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -19,9 +19,9 @@ import java.io.IOException
 class NewsPageViewModel(application: Application, itemID: String) :
     AndroidViewModel(application), KoinComponent {
 
-    private val newsRepository: NewsRepository by inject()
+    private val newsRepositoryImpl: NewsRepositoryImpl by inject()
 
-    val newsPageFlow: Flow<NewsItemDetailsTable> = newsRepository.getItemDetailsByID(itemID)
+    val newsPageFlow: Flow<NewsItemDetailsTable> = newsRepositoryImpl.getItemDetailsByID(itemID)
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
 
@@ -36,7 +36,7 @@ class NewsPageViewModel(application: Application, itemID: String) :
         viewModelScope.launch {
             state.value = LoadState.LOADING
             try {
-                newsRepository.loadNewsItemDetailsByID(itemID)
+                newsRepositoryImpl.loadNewsItemDetailsByID(itemID)
                 state.value = LoadState.SUCCESS
             } catch (e: Throwable) {
                 if (!isConnectedToInternet() && e is IOException) {

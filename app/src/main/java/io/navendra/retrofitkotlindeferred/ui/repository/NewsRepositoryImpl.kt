@@ -10,10 +10,10 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsIt
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import kotlinx.coroutines.flow.Flow
 
-class NewsRepository(private val newsItemDatabase: NewsItemDatabase,
-                     private val service: SportNewsApi,
-                     private val newsItemMapper: NewsItemMapper,
-                     private val newsItemDetailsMapper: NewsItemDetailsMapper) {
+class NewsRepositoryImpl(private val newsItemDatabase: NewsItemDatabase,
+                         private val service: SportNewsApi,
+                         private val newsItemMapper: NewsItemMapper,
+                         private val newsItemDetailsMapper: NewsItemDetailsMapper) {
 
     private fun isItemWithID(item: NewsItem): Boolean {
         return item.id != null

@@ -2,19 +2,19 @@ package io.navendra.retrofitkotlindeferred.workManager
 
 import android.content.Context
 import androidx.work.*
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
+import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class UploadWorker(appContext: Context, workerParams: WorkerParameters):
     CoroutineWorker(appContext, workerParams), KoinComponent {
 
-    private val newsRepository: NewsRepository by inject()
+    private val newsRepositoryImpl: NewsRepositoryImpl by inject()
 
     override suspend fun doWork(): Result {
 
         try {
-            newsRepository.loadNews()
+            newsRepositoryImpl.loadNews()
         } catch (e: Throwable) {
             return Result.failure()
         }
