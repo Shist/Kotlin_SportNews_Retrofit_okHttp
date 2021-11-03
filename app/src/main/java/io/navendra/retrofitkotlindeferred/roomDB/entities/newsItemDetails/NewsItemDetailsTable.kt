@@ -12,15 +12,15 @@ data class NewsItemDetailsTable(
     val itemId: String,
 
     @ColumnInfo(name = "body")
-    val body: String,
+    val body: String?,
 
     @ColumnInfo(name = "createdAt")
-    val createdAt: LocalDate,
+    val createdAt: LocalDate?,
 
     @ColumnInfo(name = "context")
-    val context: String,
+    val context: String?,
 
     @ColumnInfo(name = "shortHeadline")
-    var shortHeadline: String
+    var shortHeadline: String?
 
 )

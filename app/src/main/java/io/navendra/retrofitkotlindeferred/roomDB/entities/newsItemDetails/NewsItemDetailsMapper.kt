@@ -8,10 +8,20 @@ class NewsItemDetailsMapper {
 
     fun fromJsonToRoomDB(item: NewsItemDetails) : NewsItemDetailsTable
     {
-        return NewsItemDetailsTable(item.id,
+        val featuredMediaContext = if (item.featuredMedia == null) {
+            null
+        } else {
+            if (item.featuredMedia.featuredMediaContext == null) {
+                null
+            } else {
+                item.featuredMedia.featuredMediaContext.featuredMediaContext
+            }
+        }
+
+        return NewsItemDetailsTable(item.id!!,
             item.body,
             LocalDate.parse(item.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
-            item.featuredMedia.featuredMediaContext.featuredMediaContext,
+            featuredMediaContext,
             item.shortHeadline)
     }
 

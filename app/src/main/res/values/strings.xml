@@ -7,9 +7,19 @@
     <string name="errorUnknownNoNewData">Unknown error while loading new data</string>
     <string name="errorUnknownNoData">Unknown error while loading data from database</string>
     <string name="errorNetwork">Can\'t load new data from the Internet. Check your network connection.</string>
+    <string name="errorNoNewsOnAPI">There is no any news at https://www.beinsports.com/en/uefa-champions-league/news</string>
+    <string name="errorNoNewsDetailsOnAPI">There is no any news\' details at https://www.beinsports.com/en/uefa-champions-league/news</string>
+    <string name="errorNoSuchItem">Application was unable to find the selected item in the database</string>
+    <string name="errorUnknown">Unknown error. Try to restart the application.</string>
     <string name="reload">Reload</string>
     <string name="noDataYet">No data yet</string>
     <string name="listImgDesc">Image of one item from whole list</string>
     <string name="pageImgDesc">Image of the item on the page</string>
     <string name="noDataYetDesc">Image for case when we have no news</string>
+    <string name="launching">Launching the application</string>
+    <string name="launchingItem">Launching the item page</string>
+    <string name="loading">Loading news list</string>
+    <string name="loadingItem">Loading news item</string>
+    <string name="loadingSuccess">News list has been loaded successfully</string>
+    <string name="loadingItemSuccess">News item has been loaded successfully</string>
 </resources>

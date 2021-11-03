@@ -36,5 +36,6 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-// TODO
-// Сделать SnackBar и обработку ошибок для Page
+//TODO
+//создать доменный модуль, запихнуть модель классы, интерфейс, репозиторий.
+//потом создать дата модельку (view model / business logic)

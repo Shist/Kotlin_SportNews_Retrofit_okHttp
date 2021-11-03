@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="NewsItemCustomImage">
+        <attr name="attrAnglesNumber" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="NewsItemCustomLayout">
+        <attr name="even_item" format="boolean" />
+    </declare-styleable>
+
+</resources>
