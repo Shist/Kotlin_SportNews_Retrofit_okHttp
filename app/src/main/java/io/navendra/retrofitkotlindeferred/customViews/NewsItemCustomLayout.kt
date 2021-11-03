@@ -87,19 +87,32 @@ class NewsItemCustomLayout(context: Context?, attrs: AttributeSet?) :
             MeasureSpec.makeMeasureSpec(imgWidth, MeasureSpec.EXACTLY),
             MeasureSpec.makeMeasureSpec(imgHeight, MeasureSpec.EXACTLY)
         )
-        imgView.layout(imgLeft, imgTop, imgRight, imgBottom)
 
         altTextView.measure(
-            MeasureSpec.makeMeasureSpec(altTextWidth, MeasureSpec.EXACTLY),
-            MeasureSpec.makeMeasureSpec(altTextHeight, MeasureSpec.EXACTLY)
+            MeasureSpec.makeMeasureSpec(altTextWidth, MeasureSpec.AT_MOST),
+            MeasureSpec.makeMeasureSpec(altTextHeight, MeasureSpec.AT_MOST)
         )
-        altTextView.layout(altTextLeft, altTextTop, altTextRight, altTextBottom)
 
         headlineView.measure(
-            MeasureSpec.makeMeasureSpec(headlineWidth, MeasureSpec.EXACTLY),
-            MeasureSpec.makeMeasureSpec(headlineHeight, MeasureSpec.EXACTLY)
+            MeasureSpec.makeMeasureSpec(headlineWidth, MeasureSpec.AT_MOST),
+            MeasureSpec.makeMeasureSpec(headlineHeight, MeasureSpec.AT_MOST)
         )
-        headlineView.layout(headlineLeft, headlineTop, headlineRight, headlineBottom)
+
+        imgView.layout(imgLeft, imgTop, imgRight, imgBottom)
+
+        altTextView.layout(
+            altTextLeft,
+            headlineTop - altTextView.measuredHeight,
+            altTextLeft + altTextView.measuredWidth,
+            headlineTop
+        )
+
+        headlineView.layout(
+            headlineLeft,
+            headlineTop,
+            headlineLeft + headlineView.measuredWidth,
+            headlineTop + headlineView.measuredHeight
+        )
 
     }
 
