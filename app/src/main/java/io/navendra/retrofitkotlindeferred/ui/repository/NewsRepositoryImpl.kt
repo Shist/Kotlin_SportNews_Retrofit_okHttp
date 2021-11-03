@@ -13,7 +13,8 @@ import kotlinx.coroutines.flow.Flow
 class NewsRepositoryImpl(private val newsItemDatabase: NewsItemDatabase,
                          private val service: SportNewsApi,
                          private val newsItemMapper: NewsItemMapper,
-                         private val newsItemDetailsMapper: NewsItemDetailsMapper) {
+                         private val newsItemDetailsMapper: NewsItemDetailsMapper)
+    : NewsRepository {
 
     private fun isItemWithID(item: NewsItem): Boolean {
         return item.id != null
@@ -35,7 +36,7 @@ class NewsRepositoryImpl(private val newsItemDatabase: NewsItemDatabase,
                 item.shortHeadline != null
     }
 
-    suspend fun loadNews() {
+    override suspend fun loadNews() {
         val items = service.getNews().items
         val itemsDetails = service.getNewsDetails().itemsDetails
 
@@ -57,7 +58,7 @@ class NewsRepositoryImpl(private val newsItemDatabase: NewsItemDatabase,
         }
     }
 
-    suspend fun loadNewsItemDetailsByID(itemID: String) : NewsItemDetailsTable {
+    override suspend fun loadNewsItemDetailsByID(itemID: String) : NewsItemDetailsTable {
         val neededItem: NewsItemDetailsTable?
         val itemsDetails = service.getNewsDetails().itemsDetails
 
@@ -81,11 +82,11 @@ class NewsRepositoryImpl(private val newsItemDatabase: NewsItemDatabase,
         return neededItem
     }
 
-    fun getItems(): Flow<List<NewsItemTable>> {
+    override fun getItems(): Flow<List<NewsItemTable>> {
         return newsItemDatabase.itemsDao().getAllItems()
     }
 
-    fun getItemDetailsByID(itemDetailsId: String): Flow<NewsItemDetailsTable> {
+    override fun getItemDetailsByID(itemDetailsId: String): Flow<NewsItemDetailsTable> {
         return newsItemDatabase.itemsDetailsDao().getItemDetailsById(itemDetailsId)
     }
 
