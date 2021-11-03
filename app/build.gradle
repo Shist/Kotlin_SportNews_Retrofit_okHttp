@@ -125,4 +125,6 @@ dependencies {
     implementation "io.insert-koin:koin-core:$koin_version"
     // Koin main features for Android (Scope,ViewModel ...)
     implementation "io.insert-koin:koin-android:$koin_version"
+
+    implementation(project(":domain"))
 }
