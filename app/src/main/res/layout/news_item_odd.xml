@@ -6,56 +6,39 @@
     android:layout_margin="8dp"
     app:cardElevation="8dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <io.navendra.retrofitkotlindeferred.customViews.NewsItemCustomLayout
+        android:id="@+id/NewsItemCustomLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:even_item="false">
 
         <io.navendra.retrofitkotlindeferred.customViews.NewsItemCustomImage
             android:id="@+id/img"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/listImgDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:contentDescription="@string/img"
             android:scaleType="centerCrop"
-            app:attrAnglesNumber='8'
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/altText"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.5"
-            tools:contentDescription="@string/img" />
+            android:contentDescription="@string/listImgDesc"
+            app:attrAnglesNumber='8' />
 
         <TextView
             android:id="@+id/altText"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:gravity="start|top"
+            tools:text="@string/altText"
             android:textColor="@android:color/holo_purple"
             android:textSize="12sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@id/headline"
-            app:layout_constraintEnd_toStartOf="@id/img"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/altText" />
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/headline"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:gravity="start|top"
+            tools:text="@string/headline"
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/img"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/altText"
-            tools:text="@string/headline" />
+            android:textStyle="bold" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </io.navendra.retrofitkotlindeferred.customViews.NewsItemCustomLayout>
 
 </androidx.cardview.widget.CardView>

@@ -13,97 +13,94 @@ class NewsItemCustomLayout(context: Context?, attrs: AttributeSet?) :
         getBoolean(R.styleable.NewsItemCustomLayout_even_item, false)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val parentWidth = MeasureSpec.getSize(measuredWidth)
-        val parentHeight = parentWidth/2
-        this.setMeasuredDimension(parentWidth, parentHeight)
+        val itemWidth = getDefaultSize(suggestedMinimumWidth, widthMeasureSpec)
+        val itemHeight = itemWidth / 2
+        this.setMeasuredDimension(itemWidth, itemHeight)
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-
         val viewWidth = width
-        val viewHeight = viewWidth/2
+        val viewHeight = height
+
+        val imgView = getChildAt(0)
+        val altTextView = getChildAt(1)
+        val headlineView = getChildAt(2)
+
+        val imgLeft: Int
+        val imgTop: Int
+        val imgRight: Int
+        val imgBottom: Int
+
+        val altTextLeft: Int
+        val altTextTop: Int
+        val altTextRight: Int
+        val altTextBottom: Int
+
+        val headlineLeft: Int
+        val headlineTop: Int
+        val headlineRight: Int
+        val headlineBottom: Int
 
         if (evenItem) {
-            val imgLeft = this.paddingLeft
-            val imgTop = this.paddingTop
-            val imgRight = viewWidth / 2 - this.paddingRight
-            val imgBottom = viewHeight - this.paddingBottom
-            val imgWidth = imgRight - imgLeft
-            val imgHeight = imgBottom - imgTop
-            val imgView = getChildAt(0)
-            imgView.measure(
-                MeasureSpec.makeMeasureSpec(imgWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(imgHeight, MeasureSpec.EXACTLY)
-            )
-            imgView.layout(imgLeft, imgTop, imgRight, imgBottom)
+            imgLeft = this.paddingLeft
+            imgTop = this.paddingTop
+            imgRight = viewWidth / 2 - this.paddingRight
+            imgBottom = viewHeight - this.paddingBottom
 
-            val altTextLeft = viewWidth / 2 + this.paddingLeft
-            val altTextTop = this.paddingTop
-            val altTextRight = viewWidth - this.paddingRight
-            val altTextBottom = viewHeight / 2 - this.paddingBottom
-            val altTextWidth = altTextRight - altTextLeft
-            val altTextHeight = altTextBottom - altTextTop
-            val altTextView = getChildAt(1)
-            altTextView.measure(
-                MeasureSpec.makeMeasureSpec(altTextWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(altTextHeight, MeasureSpec.EXACTLY)
-            )
-            altTextView.layout(altTextLeft, altTextTop, altTextRight, altTextBottom)
+            altTextLeft = viewWidth / 2 + this.paddingLeft
+            altTextTop = this.paddingTop
+            altTextRight = viewWidth - this.paddingRight
+            altTextBottom = viewHeight / 2 - this.paddingBottom
 
-            val headlineLeft = viewWidth / 2 + this.paddingLeft
-            val headlineTop = viewHeight / 2 + this.paddingTop
-            val headlineRight = viewWidth - this.paddingRight
-            val headlineBottom = viewHeight - this.paddingBottom
-            val headlineWidth = headlineRight - headlineLeft
-            val headlineHeight = headlineBottom - headlineTop
-            val headlineView = getChildAt(2)
-            headlineView.measure(
-                MeasureSpec.makeMeasureSpec(headlineWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(headlineHeight, MeasureSpec.EXACTLY)
-            )
-            headlineView.layout(headlineLeft, headlineTop, headlineRight, headlineBottom)
+            headlineLeft = viewWidth / 2 + this.paddingLeft
+            headlineTop = viewHeight / 2 + this.paddingTop
+            headlineRight = viewWidth - this.paddingRight
+            headlineBottom = viewHeight - this.paddingBottom
         }
         else {
-            val imgLeft = viewWidth / 2 + this.paddingLeft
-            val imgTop = this.paddingTop
-            val imgRight = viewWidth - this.paddingRight
-            val imgBottom = viewHeight - this.paddingBottom
-            val imgWidth = imgRight - imgLeft
-            val imgHeight = imgBottom - imgTop
-            val imgView = getChildAt(0)
-            imgView.measure(
-                MeasureSpec.makeMeasureSpec(imgWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(imgHeight, MeasureSpec.EXACTLY)
-            )
-            imgView.layout(imgLeft, imgTop, imgRight, imgBottom)
-            val altTextLeft = this.paddingLeft
-            val altTextTop = this.paddingTop
-            val altTextRight = viewWidth / 2 - this.paddingRight
-            val altTextBottom = viewHeight / 2 - this.paddingBottom
-            val altTextWidth = altTextRight - altTextLeft
-            val altTextHeight = altTextBottom - altTextTop
-            val altTextView = getChildAt(1)
-            altTextView.measure(
-                MeasureSpec.makeMeasureSpec(altTextWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(altTextHeight, MeasureSpec.EXACTLY)
-            )
-            altTextView.layout(altTextLeft, altTextTop, altTextRight, altTextBottom)
-            val headlineLeft = this.paddingLeft
-            val headlineTop = viewHeight / 2 + this.paddingTop
-            val headlineRight = viewWidth / 2 - this.paddingRight
-            val headlineBottom = viewHeight - this.paddingBottom
-            val headlineWidth = headlineRight - headlineLeft
-            val headlineHeight = headlineBottom - headlineTop
-            val headlineView = getChildAt(2)
-            headlineView.measure(
-                MeasureSpec.makeMeasureSpec(headlineWidth, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(headlineHeight, MeasureSpec.EXACTLY)
-            )
-            headlineView.layout(headlineLeft, headlineTop, headlineRight, headlineBottom)
+            imgLeft = viewWidth / 2 + this.paddingLeft
+            imgTop = this.paddingTop
+            imgRight = viewWidth - this.paddingRight
+            imgBottom = viewHeight - this.paddingBottom
+
+            altTextLeft = this.paddingLeft
+            altTextTop = this.paddingTop
+            altTextRight = viewWidth / 2 - this.paddingRight
+            altTextBottom = viewHeight / 2 - this.paddingBottom
+
+            headlineLeft = this.paddingLeft
+            headlineTop = viewHeight / 2 + this.paddingTop
+            headlineRight = viewWidth / 2 - this.paddingRight
+            headlineBottom = viewHeight - this.paddingBottom
         }
 
-        super.onLayout(changed, left, top, right, bottom)
+        val imgWidth = imgRight - imgLeft
+        val imgHeight = imgBottom - imgTop
+
+        val altTextWidth = altTextRight - altTextLeft
+        val altTextHeight = altTextBottom - altTextTop
+
+        val headlineWidth = headlineRight - headlineLeft
+        val headlineHeight = headlineBottom - headlineTop
+
+        imgView.measure(
+            MeasureSpec.makeMeasureSpec(imgWidth, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(imgHeight, MeasureSpec.EXACTLY)
+        )
+        imgView.layout(imgLeft, imgTop, imgRight, imgBottom)
+
+        altTextView.measure(
+            MeasureSpec.makeMeasureSpec(altTextWidth, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(altTextHeight, MeasureSpec.EXACTLY)
+        )
+        altTextView.layout(altTextLeft, altTextTop, altTextRight, altTextBottom)
+
+        headlineView.measure(
+            MeasureSpec.makeMeasureSpec(headlineWidth, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(headlineHeight, MeasureSpec.EXACTLY)
+        )
+        headlineView.layout(headlineLeft, headlineTop, headlineRight, headlineBottom)
+
     }
 
 
