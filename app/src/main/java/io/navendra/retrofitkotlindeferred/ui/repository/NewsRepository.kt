@@ -9,15 +9,11 @@ import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMappe
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsMapper
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
 import kotlinx.coroutines.flow.Flow
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class NewsRepository(private val newsItemDatabase: NewsItemDatabase,
-                     private val service: SportNewsApi) : KoinComponent {
-
-    private val newsItemMapper: NewsItemMapper by inject()
-
-    private val newsItemDetailsMapper: NewsItemDetailsMapper by inject()
+                     private val service: SportNewsApi,
+                     private val newsItemMapper: NewsItemMapper,
+                     private val newsItemDetailsMapper: NewsItemDetailsMapper) {
 
     private fun isItemWithID(item: NewsItem): Boolean {
         return item.id != null

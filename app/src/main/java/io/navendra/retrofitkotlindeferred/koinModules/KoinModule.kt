@@ -18,7 +18,8 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val newsRepositoryModule = module {
-    single { NewsRepository(newsItemDatabase = get(), service = get()) }
+    single<NewsRepository> { NewsRepository(newsItemDatabase = get(), service = get(),
+        newsItemMapper = get(), newsItemDetailsMapper = get()) }
 
     single {
         fun buildDatabase(context: Context) =
