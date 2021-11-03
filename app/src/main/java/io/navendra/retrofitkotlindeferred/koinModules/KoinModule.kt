@@ -8,6 +8,7 @@ import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsMapper
+import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
@@ -18,7 +19,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val newsRepositoryModule = module {
-    single<NewsRepositoryImpl> { NewsRepositoryImpl(newsItemDatabase = get(), service = get(),
+    single<NewsRepository> { NewsRepositoryImpl(newsItemDatabase = get(), service = get(),
         newsItemMapper = get(), newsItemDetailsMapper = get()) }
 
     single {
