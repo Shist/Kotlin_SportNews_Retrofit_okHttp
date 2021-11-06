@@ -6,22 +6,27 @@ import android.net.ConnectivityManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTable
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTableImpl
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
+import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemDetailsTableMapper
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.IOException
 
-class NewsPageViewModel(application: Application, itemID: String) :
-    AndroidViewModel(application), KoinComponent {
+class NewsPageViewModel(application: Application,
+                        itemID: String,
+                        private val newsItemDetailsTableMapper: NewsItemDetailsTableMapper
+                        ) : AndroidViewModel(application), KoinComponent {
 
     private val newsRepositoryImpl: NewsRepositoryImpl by inject()
 
-    val newsPageFlow: Flow<NewsItemDetailsTable> = newsRepositoryImpl.getItemDetailsByID(itemID)
+    val newsPageFlow: Flow<NewsItemDetailsTableImpl> = newsRepositoryImpl
+        .getItemDetailsByID(itemID).map { newsItemDetailsTableMapper.fromNotImplToImpl(it) }
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
 

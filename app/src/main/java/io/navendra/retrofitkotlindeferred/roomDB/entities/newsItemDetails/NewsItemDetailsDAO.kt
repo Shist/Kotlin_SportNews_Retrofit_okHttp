@@ -7,36 +7,36 @@ import kotlinx.coroutines.flow.Flow
 interface NewsItemDetailsDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOneItemDetails(itemDetails: NewsItemDetailsTable)
+    suspend fun insertOneItemDetails(itemDetails: NewsItemDetailsTableImpl)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSomeItemsDetails(vararg nextItemDetails: NewsItemDetailsTable)
+    suspend fun insertSomeItemsDetails(vararg nextItemDetails: NewsItemDetailsTableImpl)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertItemsDetailsList(itemsDetails: List<NewsItemDetailsTable>)
+    suspend fun insertItemsDetailsList(itemsDetails: List<NewsItemDetailsTableImpl>)
 
     @Update
-    suspend fun updateOneItemDetails(itemDetails: NewsItemDetailsTable)
+    suspend fun updateOneItemDetails(itemDetails: NewsItemDetailsTableImpl)
 
     @Update
-    suspend fun updateSomeItemsDetails(vararg nextItem: NewsItemDetailsTable)
+    suspend fun updateSomeItemsDetails(vararg nextItem: NewsItemDetailsTableImpl)
 
     @Update
-    suspend fun updateAllItemsDetails(itemsDetails: List<NewsItemDetailsTable>)
+    suspend fun updateAllItemsDetails(itemsDetails: List<NewsItemDetailsTableImpl>)
 
     @Delete
-    suspend fun deleteOneItemDetails(itemDetails: NewsItemDetailsTable)
+    suspend fun deleteOneItemDetails(itemDetails: NewsItemDetailsTableImpl)
 
     @Delete
-    suspend fun deleteSomeItemsDetails(vararg nextItemDetails: NewsItemDetailsTable)
+    suspend fun deleteSomeItemsDetails(vararg nextItemDetails: NewsItemDetailsTableImpl)
 
     @Delete
-    suspend fun deleteAllItemsDetails(itemsDetails: List<NewsItemDetailsTable>)
+    suspend fun deleteAllItemsDetails(itemsDetails: List<NewsItemDetailsTableImpl>)
 
     @Query("SELECT * FROM itemsWithDetails ORDER BY createdAt DESC, itemId")
-    fun getAllItemsDetails(): Flow<List<NewsItemDetailsTable>>
+    fun getAllItemsDetails(): Flow<List<NewsItemDetailsTableImpl>>
 
     @Query("SELECT * FROM itemsWithDetails WHERE itemId = :neededId")
-    fun getItemDetailsById(neededId: String): Flow<NewsItemDetailsTable>
+    fun getItemDetailsById(neededId: String): Flow<NewsItemDetailsTableImpl>
 
 }

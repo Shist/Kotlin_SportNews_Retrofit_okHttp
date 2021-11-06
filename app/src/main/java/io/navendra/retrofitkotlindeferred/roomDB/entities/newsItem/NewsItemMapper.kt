@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter
 
 class NewsItemMapper {
 
-    fun fromJsonToRoomDB(item: NewsItem) : NewsItemTable
+    fun fromJsonToRoomDB(item: NewsItem) : NewsItemTableImpl
     {
         val featuredMediaAltText: String?
         val featuredMediaContext: String?
@@ -25,7 +25,7 @@ class NewsItemMapper {
             }
         }
 
-        return NewsItemTable(item.id!!,
+        return NewsItemTableImpl(item.id!!,
             featuredMediaAltText,
             LocalDate.parse(item.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
             featuredMediaContext,

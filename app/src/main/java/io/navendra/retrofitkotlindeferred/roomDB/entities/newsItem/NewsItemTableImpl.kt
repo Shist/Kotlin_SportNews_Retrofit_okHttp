@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 @Entity(tableName = "items")
-data class NewsItemTable(
+data class NewsItemTableImpl(
 
     @PrimaryKey
     val itemId: String,

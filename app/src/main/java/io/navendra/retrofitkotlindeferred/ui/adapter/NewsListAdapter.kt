@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemOddBinding
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemEvenBinding
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTable
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTableImpl
 
-class SportAdapter(private val clickListener: (NewsItemTable)-> Unit) :
-    ListAdapter<NewsItemTable, SportAdapter.ItemViewHolder>(SportNewsDiffCallback()) {
+class SportAdapter(private val clickListener: (NewsItemTableImpl)-> Unit) :
+    ListAdapter<NewsItemTableImpl, SportAdapter.ItemViewHolder>(SportNewsDiffCallback()) {
 
     companion object {
         private const val TYPE_ODD = 0
@@ -68,12 +68,12 @@ class SportAdapter(private val clickListener: (NewsItemTable)-> Unit) :
 
 }
 
-class SportNewsDiffCallback : DiffUtil.ItemCallback<NewsItemTable>() {
-    override fun areItemsTheSame(oldItem: NewsItemTable, newItem: NewsItemTable): Boolean {
+class SportNewsDiffCallback : DiffUtil.ItemCallback<NewsItemTableImpl>() {
+    override fun areItemsTheSame(oldItem: NewsItemTableImpl, newItem: NewsItemTableImpl): Boolean {
         return oldItem.itemId == newItem.itemId
     }
 
-    override fun areContentsTheSame(oldItem: NewsItemTable, newItem: NewsItemTable): Boolean {
+    override fun areContentsTheSame(oldItem: NewsItemTableImpl, newItem: NewsItemTableImpl): Boolean {
         return oldItem == newItem
     }
 }
