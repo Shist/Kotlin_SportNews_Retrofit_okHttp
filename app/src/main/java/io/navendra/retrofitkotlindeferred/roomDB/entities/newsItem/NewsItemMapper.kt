@@ -1,35 +1,35 @@
 package io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem
 
-import io.navendra.retrofitkotlindeferred.model.NewsItem
+import io.navendra.retrofitkotlindeferred.model.NewsItemJson
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class NewsItemMapper {
 
-    fun fromJsonToRoomDB(item: NewsItem) : NewsItemTableImpl
+    fun fromJsonToRoomDB(itemJson: NewsItemJson) : NewsItemDB
     {
         val featuredMediaAltText: String?
         val featuredMediaContext: String?
 
-        if (item.featuredMedia == null) {
+        if (itemJson.featuredMediaJson == null) {
             featuredMediaAltText = null
             featuredMediaContext = null
         }
         else {
-            featuredMediaAltText = item.featuredMedia.featuredMediaAltText
+            featuredMediaAltText = itemJson.featuredMediaJson.featuredMediaAltText
             
-            featuredMediaContext = if (item.featuredMedia.featuredMediaContext == null) {
+            featuredMediaContext = if (itemJson.featuredMediaJson.featuredMediaContextJson == null) {
                 null
             } else {
-                item.featuredMedia.featuredMediaContext.featuredMediaContext
+                itemJson.featuredMediaJson.featuredMediaContextJson.featuredMediaContext
             }
         }
 
-        return NewsItemTableImpl(item.id!!,
+        return NewsItemDB(itemJson.id!!,
             featuredMediaAltText,
-            LocalDate.parse(item.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+            LocalDate.parse(itemJson.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
             featuredMediaContext,
-            item.shortHeadline)
+            itemJson.shortHeadline)
     }
 
 }

@@ -1,19 +1,19 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTableImpl
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsDB
 
 class NewsItemDetailsTableMapper {
 
-    fun fromImplToNotImpl(item: NewsItemDetailsTableImpl) : NewsItemDetailsTable {
-        return NewsItemDetailsTable(itemId = item.itemId,
+    fun fromImplToNotImpl(item: NewsItemDetailsDB) : NewsItemDetails {
+        return NewsItemDetails(itemId = item.itemId,
             body = item.body,
             createdAt = item.createdAt,
             context = item.context,
             shortHeadline = item.shortHeadline)
     }
 
-    fun fromNotImplToImpl(item: NewsItemDetailsTable) : NewsItemDetailsTableImpl {
-        return NewsItemDetailsTableImpl(itemId = item.itemId,
+    fun fromNotImplToImpl(item: NewsItemDetails) : NewsItemDetailsDB {
+        return NewsItemDetailsDB(itemId = item.itemId,
             body = item.body,
             createdAt = item.createdAt,
             context = item.context,

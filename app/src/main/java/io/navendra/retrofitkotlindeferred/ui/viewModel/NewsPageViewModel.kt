@@ -6,7 +6,7 @@ import android.net.ConnectivityManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTableImpl
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsDB
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemDetailsTableMapper
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
@@ -25,7 +25,7 @@ class NewsPageViewModel(application: Application,
 
     private val newsRepositoryImpl: NewsRepositoryImpl by inject()
 
-    val newsPageFlow: Flow<NewsItemDetailsTableImpl> = newsRepositoryImpl
+    val newsPageFlow: Flow<NewsItemDetailsDB> = newsRepositoryImpl
         .getItemDetailsByID(itemID).map { newsItemDetailsTableMapper.fromNotImplToImpl(it) }
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)

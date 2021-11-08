@@ -2,11 +2,11 @@ package io.navendra.retrofitkotlindeferred.ui.repository
 
 import java.time.LocalDate
 
-data class NewsItemDetailsTable(
+data class NewsItem(
 
     val itemId: String,
 
-    val body: String?,
+    val altText: String?,
 
     val createdAt: LocalDate?,
 

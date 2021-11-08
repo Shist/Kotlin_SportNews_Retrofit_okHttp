@@ -1,13 +1,13 @@
 package io.navendra.retrofitkotlindeferred.ui.repository
 
-import io.navendra.retrofitkotlindeferred.model.NewsItem
-import io.navendra.retrofitkotlindeferred.model.NewsItemDetails
+import io.navendra.retrofitkotlindeferred.model.NewsItemJson
+import io.navendra.retrofitkotlindeferred.model.NewsItemDetailsJson
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTableImpl
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemDB
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsMapper
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTableImpl
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsDB
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -19,28 +19,28 @@ class NewsRepositoryImpl(private val newsItemDatabase: NewsItemDatabase,
                          private val newsItemDetailsTableMapper: NewsItemDetailsTableMapper)
     : NewsRepository {
 
-    private fun isItemWithID(item: NewsItem): Boolean {
-        return item.id != null
+    private fun isItemWithID(itemJson: NewsItemJson): Boolean {
+        return itemJson.id != null
     }
 
-    private fun isItemWithID(item: NewsItemDetails): Boolean {
-        return item.id != null
+    private fun isItemWithID(itemJson: NewsItemDetailsJson): Boolean {
+        return itemJson.id != null
     }
 
-    private fun isItemNotEmpty(item: NewsItemTableImpl): Boolean {
+    private fun isItemNotEmpty(item: NewsItemDB): Boolean {
         return item.altText != null ||
                 item.context != null ||
                 item.shortHeadline != null
     }
 
-    private fun isItemNotEmpty(item: NewsItemDetailsTableImpl): Boolean {
+    private fun isItemNotEmpty(item: NewsItemDetailsDB): Boolean {
         return item.body != null ||
                 item.context != null ||
                 item.shortHeadline != null
     }
 
     override suspend fun loadNews() {
-        val items = service.getNews().items
+        val items = service.getNews().itemJsons
         val itemsDetails = service.getNewsDetails().itemsDetails
 
         try {
@@ -61,8 +61,8 @@ class NewsRepositoryImpl(private val newsItemDatabase: NewsItemDatabase,
         }
     }
 
-    override suspend fun loadNewsItemDetailsByID(itemID: String) : NewsItemDetailsTable {
-        val neededItem: NewsItemDetailsTableImpl?
+    override suspend fun loadNewsItemDetailsByID(itemID: String) : NewsItemDetails {
+        val neededItem: NewsItemDetailsDB?
         val itemsDetails = service.getNewsDetails().itemsDetails
 
         try {
@@ -85,12 +85,12 @@ class NewsRepositoryImpl(private val newsItemDatabase: NewsItemDatabase,
         return newsItemDetailsTableMapper.fromImplToNotImpl(neededItem)
     }
 
-    override fun getItems(): Flow<List<NewsItemTable>> {
+    override fun getItems(): Flow<List<NewsItem>> {
         return newsItemDatabase.itemsDao().getAllItems().map { list ->
             list.map { newsItemTableMapper.fromImplToNotImpl(it) } }
     }
 
-    override fun getItemDetailsByID(itemDetailsId: String): Flow<NewsItemDetailsTable> {
+    override fun getItemDetailsByID(itemDetailsId: String): Flow<NewsItemDetails> {
         return newsItemDatabase.itemsDetailsDao().getItemDetailsById(itemDetailsId).map {
             newsItemDetailsTableMapper.fromImplToNotImpl(it) }
     }

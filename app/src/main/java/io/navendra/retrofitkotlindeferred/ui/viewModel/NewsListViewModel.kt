@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemTableImpl
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemDB
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemTableMapper
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
@@ -21,7 +21,7 @@ class NewsListViewModel (application: Application,
 
     private val newsRepositoryImpl: NewsRepositoryImpl by inject()
 
-    val newsListFlow: Flow<List<NewsItemTableImpl>> = newsRepositoryImpl.getItems().map { list ->
+    val newsListFlow: Flow<List<NewsItemDB>> = newsRepositoryImpl.getItems().map { list ->
         list.map { newsItemTableMapper.fromNotImplToImpl(it) }
     }
 

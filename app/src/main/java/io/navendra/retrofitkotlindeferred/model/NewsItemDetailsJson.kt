@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 // Закомментированы те данные, которые нам пока что не нужны для ленты новостей...
 
-data class NewsItemDetails(
+data class NewsItemDetailsJson(
     @SerializedName("@id") var id: String?,
     //@SerializedName("@type") val type: String?,
     //@SerializedName("author") val author: NewsItemAuthor?,
@@ -19,7 +19,7 @@ data class NewsItemDetails(
     //@SerializedName("externalId") val externalId: String?,
     //@SerializedName("externalUrl") val externalUrl: String?,
     //@SerializedName("featured") val featured: Boolean?,
-    @SerializedName("featuredMedia") val featuredMedia: NewsItemFeaturedMedia?,
+    @SerializedName("featuredMedia") val featuredMediaJson: NewsItemFeaturedMediaJson?,
     //@SerializedName("headline")  val headline: String?,
     @SerializedName("shortHeadline") var shortHeadline: String?
 ) : Parcelable {
@@ -27,7 +27,7 @@ data class NewsItemDetails(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readParcelable(NewsItemFeaturedMedia::class.java.classLoader)!!,
+        parcel.readParcelable(NewsItemFeaturedMediaJson::class.java.classLoader)!!,
         parcel.readString()!!
     )
 
@@ -37,16 +37,16 @@ data class NewsItemDetails(
         parcel.writeString(id)
         parcel.writeString(body)
         parcel.writeString(createdAt)
-        parcel.writeParcelable(featuredMedia, 0)
+        parcel.writeParcelable(featuredMediaJson, 0)
         parcel.writeString(shortHeadline)
     }
 
-    companion object CREATOR : Parcelable.Creator<NewsItem> {
-        override fun createFromParcel(parcel: Parcel): NewsItem {
-            return NewsItem(parcel)
+    companion object CREATOR : Parcelable.Creator<NewsItemJson> {
+        override fun createFromParcel(parcel: Parcel): NewsItemJson {
+            return NewsItemJson(parcel)
         }
 
-        override fun newArray(size: Int): Array<NewsItem?> {
+        override fun newArray(size: Int): Array<NewsItemJson?> {
             return arrayOfNulls(size)
         }
     }

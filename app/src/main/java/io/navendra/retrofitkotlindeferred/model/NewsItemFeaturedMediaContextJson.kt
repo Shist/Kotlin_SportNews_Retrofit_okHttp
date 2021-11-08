@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-data class NewsItemFeaturedMediaContext(
+data class NewsItemFeaturedMediaContextJson(
     @SerializedName("thumbnail_resized_800") val featuredMediaContext: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(parcel.readString()!!)
@@ -15,12 +15,12 @@ data class NewsItemFeaturedMediaContext(
         parcel.writeString(featuredMediaContext)
     }
 
-    companion object CREATOR : Parcelable.Creator<NewsItemFeaturedMediaContext> {
-        override fun createFromParcel(parcel: Parcel): NewsItemFeaturedMediaContext {
-            return NewsItemFeaturedMediaContext(parcel)
+    companion object CREATOR : Parcelable.Creator<NewsItemFeaturedMediaContextJson> {
+        override fun createFromParcel(parcel: Parcel): NewsItemFeaturedMediaContextJson {
+            return NewsItemFeaturedMediaContextJson(parcel)
         }
 
-        override fun newArray(size: Int): Array<NewsItemFeaturedMediaContext?> {
+        override fun newArray(size: Int): Array<NewsItemFeaturedMediaContextJson?> {
             return arrayOfNulls(size)
         }
     }

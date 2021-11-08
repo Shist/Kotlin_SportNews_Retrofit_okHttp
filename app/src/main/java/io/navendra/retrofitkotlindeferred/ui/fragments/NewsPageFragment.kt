@@ -15,7 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsTableImpl
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsDB
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import kotlinx.coroutines.flow.collect
@@ -68,7 +68,7 @@ class NewsPageFragment : Fragment(), KoinComponent {
         val pageImg: ImageView = binding.pageImg
         val pageText: TextView = binding.pageText
 
-        var item: NewsItemDetailsTableImpl?
+        var item: NewsItemDetailsDB?
 
         swipeContainer.setOnRefreshListener {
             viewModel.loadData(itemID)
