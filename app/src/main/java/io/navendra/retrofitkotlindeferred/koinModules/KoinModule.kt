@@ -22,8 +22,8 @@ import org.koin.dsl.module
 
 val newsRepositoryModule = module {
     single<NewsRepository> { NewsRepositoryImpl(newsItemDatabase = get(), service = get(),
-        newsItemMapper = get(), newsItemDetailsMapper = get(), newsItemTableMapper = get(),
-        newsItemDetailsTableMapper = get()) }
+    newsItemJsonMapper = get(), newsItemDetailsJsonMapper = get(), newsItemDBMapper = get(),
+    newsItemDetailsDBMapper = get()) }
 
     single {
         fun buildDatabase(context: Context) =
@@ -62,12 +62,12 @@ val roomDbModule = module {
 }
 
 val uiModule = module {
-    viewModel { NewsListViewModel(application = get(), newsItemTableMapper = get()) }
+    viewModel { NewsListViewModel(application = get(), newsItemDBMapper = get()) }
 
     single { NewsItemDBMapper() }
 
     viewModel { params ->
-        NewsPageViewModel(application = get(), itemID = params.get(), newsItemDetailsTableMapper = get())
+        NewsPageViewModel(application = get(), itemID = params.get(), newsItemDetailsDBMapper = get())
     }
 
     single { NewsItemDetailsDBMapper() }
