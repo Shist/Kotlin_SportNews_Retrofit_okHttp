@@ -4,7 +4,7 @@ import io.navendra.retrofitkotlindeferred.model.NewsItemJson
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class NewsItemMapper {
+class NewsItemJsonMapper {
 
     fun fromJsonToRoomDB(itemJson: NewsItemJson) : NewsItemDB
     {

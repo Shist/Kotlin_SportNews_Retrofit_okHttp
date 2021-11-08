@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemDB
 import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemTableMapper
+import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemDBMapper
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -16,13 +16,13 @@ import org.koin.core.component.inject
 import java.io.IOException
 
 class NewsListViewModel (application: Application,
-                         private val newsItemTableMapper: NewsItemTableMapper
+                         private val newsItemDBMapper: NewsItemDBMapper
                          ) : AndroidViewModel(application), KoinComponent {
 
     private val newsRepositoryImpl: NewsRepositoryImpl by inject()
 
     val newsListFlow: Flow<List<NewsItemDB>> = newsRepositoryImpl.getItems().map { list ->
-        list.map { newsItemTableMapper.fromNotImplToImpl(it) }
+        list.map { newsItemDBMapper.fromNotImplToDB(it) }
     }
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)

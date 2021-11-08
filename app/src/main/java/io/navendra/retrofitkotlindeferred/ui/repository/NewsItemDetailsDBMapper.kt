@@ -2,9 +2,9 @@ package io.navendra.retrofitkotlindeferred.ui.repository
 
 import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsDB
 
-class NewsItemDetailsTableMapper {
+class NewsItemDetailsDBMapper {
 
-    fun fromImplToNotImpl(item: NewsItemDetailsDB) : NewsItemDetails {
+    fun fromDBToNotImpl(item: NewsItemDetailsDB) : NewsItemDetails {
         return NewsItemDetails(itemId = item.itemId,
             body = item.body,
             createdAt = item.createdAt,
@@ -12,7 +12,7 @@ class NewsItemDetailsTableMapper {
             shortHeadline = item.shortHeadline)
     }
 
-    fun fromNotImplToImpl(item: NewsItemDetails) : NewsItemDetailsDB {
+    fun fromDBToImpl(item: NewsItemDetails) : NewsItemDetailsDB {
         return NewsItemDetailsDB(itemId = item.itemId,
             body = item.body,
             createdAt = item.createdAt,

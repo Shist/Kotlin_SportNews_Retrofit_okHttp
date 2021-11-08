@@ -6,10 +6,10 @@ import io.navendra.retrofitkotlindeferred.retrofit.RetrofitClient
 import io.navendra.retrofitkotlindeferred.retrofit.SportNewsApi
 import io.navendra.retrofitkotlindeferred.roomDB.MigrationDB
 import io.navendra.retrofitkotlindeferred.roomDB.NewsItemDatabase
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemMapper
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsMapper
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemDetailsTableMapper
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemTableMapper
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemJsonMapper
+import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsJsonMapper
+import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemDetailsDBMapper
+import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemDBMapper
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepository
 import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
@@ -56,19 +56,19 @@ val retrofitClientModule = module {
 }
 
 val roomDbModule = module {
-    single { NewsItemMapper() }
+    single { NewsItemJsonMapper() }
 
-    single { NewsItemDetailsMapper() }
+    single { NewsItemDetailsJsonMapper() }
 }
 
 val uiModule = module {
     viewModel { NewsListViewModel(application = get(), newsItemTableMapper = get()) }
 
-    single { NewsItemTableMapper() }
+    single { NewsItemDBMapper() }
 
     viewModel { params ->
         NewsPageViewModel(application = get(), itemID = params.get(), newsItemDetailsTableMapper = get())
     }
 
-    single { NewsItemDetailsTableMapper() }
+    single { NewsItemDetailsDBMapper() }
 }
