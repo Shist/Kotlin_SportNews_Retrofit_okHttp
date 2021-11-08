@@ -15,7 +15,7 @@ class WorkManagerApplication : Application() {
 
         startKoin {
             androidContext(this@WorkManagerApplication)
-            modules(newsRepositoryModule, retrofitClientModule, roomDbModule, uiModule)
+            modules(allKoinInfoModule)
         }
 
         val currentDate = Calendar.getInstance()

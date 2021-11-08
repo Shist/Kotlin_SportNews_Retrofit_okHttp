@@ -20,15 +20,21 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val newsRepositoryModule = module {
-    single<NewsRepository> { NewsRepositoryImpl(newsItemDatabase = get(), service = get(),
-    newsItemJsonMapper = get(), newsItemDetailsJsonMapper = get(), newsItemDBMapper = get(),
-    newsItemDetailsDBMapper = get()) }
+val allKoinInfoModule = module {
+    single {
+        NewsRepositoryImpl(
+            newsItemDatabase = get(), service = get(),
+            newsItemJsonMapper = get(), newsItemDetailsJsonMapper = get(), newsItemDBMapper = get(),
+            newsItemDetailsDBMapper = get()
+        )
+    }
 
     single {
         fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                NewsItemDatabase::class.java, "newsDB")
+            Room.databaseBuilder(
+                context.applicationContext,
+                NewsItemDatabase::class.java, "newsDB"
+            )
                 .addMigrations(MigrationDB.MIGRATION_2_3)
                 .build()
 
@@ -41,34 +47,33 @@ val newsRepositoryModule = module {
         retrofitClient.retrofit("https://api.beinsports.com/")
             .create(SportNewsApi::class.java)
     }
-}
 
-val retrofitClientModule = module {
+    single { NewsItemJsonMapper() }
+
+    single { NewsItemDetailsJsonMapper() }
+
+    single { NewsItemDBMapper() }
+
+    single { NewsItemDetailsDBMapper() }
+
     single { RetrofitClient(client = get()) }
 
     single {
         OkHttpClient()
             .newBuilder()
             .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY })
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .build()
     }
-}
 
-val roomDbModule = module {
-    single { NewsItemJsonMapper() }
-
-    single { NewsItemDetailsJsonMapper() }
-}
-
-val uiModule = module {
     viewModel { NewsListViewModel(application = get(), newsItemDBMapper = get()) }
 
-    single { NewsItemDBMapper() }
-
     viewModel { params ->
-        NewsPageViewModel(application = get(), itemID = params.get(), newsItemDetailsDBMapper = get())
+        NewsPageViewModel(
+            application = get(),
+            itemID = params.get(),
+            newsItemDetailsDBMapper = get()
+        )
     }
-
-    single { NewsItemDetailsDBMapper() }
 }
