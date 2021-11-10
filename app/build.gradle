@@ -44,6 +44,9 @@ dependencies {
     implementation project(':data')
     implementation project(':ui')
 
+    //UnitTest
+    testImplementation 'junit:junit:4.13.2'
+
     // Work Manager
     def work_version = "2.6.0"
     // Kotlin + coroutines

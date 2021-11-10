@@ -40,6 +40,9 @@ android {
 dependencies {
     implementation project(':domain')
 
+    //UnitTest
+    testImplementation 'junit:junit:4.13.2'
+
     //RecycleView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
