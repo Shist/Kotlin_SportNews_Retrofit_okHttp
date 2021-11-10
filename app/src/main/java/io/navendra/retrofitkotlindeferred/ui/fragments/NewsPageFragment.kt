@@ -15,8 +15,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsDB
-import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
+import com.example.data.roomDB.entities.newsItemDetails.NewsItemDetailsDB
+import com.example.data.ui.repository.LoadState
 import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

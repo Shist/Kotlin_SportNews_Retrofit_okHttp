@@ -6,10 +6,10 @@ import android.net.ConnectivityManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItemDetails.NewsItemDetailsDB
-import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemDetailsDBMapper
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
+import com.example.data.roomDB.entities.newsItemDetails.NewsItemDetailsDB
+import com.example.data.ui.repository.LoadState
+import com.example.data.ui.repository.NewsItemDetailsDBMapper
+import com.example.data.ui.repository.NewsRepositoryImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map

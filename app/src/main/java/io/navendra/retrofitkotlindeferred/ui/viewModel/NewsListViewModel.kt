@@ -5,10 +5,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemDB
-import io.navendra.retrofitkotlindeferred.ui.repository.LoadState
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsItemDBMapper
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
+import com.example.data.roomDB.entities.newsItem.NewsItemDB
+import com.example.data.ui.repository.LoadState
+import com.example.data.ui.repository.NewsItemDBMapper
+import com.example.data.ui.repository.NewsRepositoryImpl
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent

@@ -2,7 +2,7 @@ package io.navendra.retrofitkotlindeferred.workManager
 
 import android.content.Context
 import androidx.work.*
-import io.navendra.retrofitkotlindeferred.ui.repository.NewsRepositoryImpl
+import com.example.data.ui.repository.NewsRepositoryImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

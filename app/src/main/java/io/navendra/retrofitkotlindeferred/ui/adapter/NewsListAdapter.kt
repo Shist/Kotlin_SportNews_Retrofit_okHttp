@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemOddBinding
 import io.navendra.retrofitkotlindeferred.databinding.NewsItemEvenBinding
-import io.navendra.retrofitkotlindeferred.roomDB.entities.newsItem.NewsItemDB
+import com.example.data.roomDB.entities.newsItem.NewsItemDB
 
 class SportAdapter(private val clickListener: (NewsItemDB)-> Unit) :
     ListAdapter<NewsItemDB, SportAdapter.ItemViewHolder>(SportNewsDiffCallback()) {
