@@ -1,11 +1,11 @@
-package io.navendra.retrofitkotlindeferred.koinModule
+package com.example.koinModule
 
-import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
-import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
+import com.example.ui.viewModel.NewsListViewModel
+import com.example.ui.viewModel.NewsPageViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val appModule = module {
+val uiModule = module {
 
     viewModel { NewsListViewModel(application = get(), newsItemDBMapper = get()) }
 

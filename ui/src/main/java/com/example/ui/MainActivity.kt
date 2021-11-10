@@ -1,11 +1,10 @@
-package io.navendra.retrofitkotlindeferred.ui
+package com.example.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import io.navendra.retrofitkotlindeferred.R
-import io.navendra.retrofitkotlindeferred.databinding.ActivityMainBinding
-import io.navendra.retrofitkotlindeferred.ui.fragments.NewsListFragment
-import io.navendra.retrofitkotlindeferred.ui.fragments.NewsPageFragment
+import com.example.ui.databinding.ActivityMainBinding
+import com.example.ui.fragments.NewsListFragment
+import com.example.ui.fragments.NewsPageFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +34,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
-//TODO
-//создать доменный модуль, запихнуть модель классы, интерфейс, репозиторий.
-//потом создать дата модельку (view model / business logic)

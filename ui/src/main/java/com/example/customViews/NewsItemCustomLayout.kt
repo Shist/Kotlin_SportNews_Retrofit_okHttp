@@ -1,9 +1,9 @@
-package io.navendra.retrofitkotlindeferred.customViews
+package com.example.customViews
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import io.navendra.retrofitkotlindeferred.R
+import com.example.ui.R
 
 class NewsItemCustomLayout(context: Context?, attrs: AttributeSet?) :
     FrameLayout(context!!, attrs) {

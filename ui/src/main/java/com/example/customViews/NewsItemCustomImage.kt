@@ -1,10 +1,10 @@
-package io.navendra.retrofitkotlindeferred.customViews
+package com.example.customViews
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
-import io.navendra.retrofitkotlindeferred.R
+import com.example.ui.R
 import kotlin.math.cos
 import kotlin.math.sin
 

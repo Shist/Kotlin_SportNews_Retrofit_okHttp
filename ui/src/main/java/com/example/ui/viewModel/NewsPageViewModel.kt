@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.ui.viewModel
+package com.example.ui.viewModel
 
 import android.app.Application
 import android.content.Context

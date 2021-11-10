@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.ui.fragments
+package com.example.ui.fragments
 
 import android.os.Bundle
 import android.text.Html
@@ -13,11 +13,11 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import io.navendra.retrofitkotlindeferred.R
-import io.navendra.retrofitkotlindeferred.databinding.NewsPageBinding
 import com.example.data.roomDB.entities.newsItemDetails.NewsItemDetailsDB
 import com.example.data.ui.repository.LoadState
-import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsPageViewModel
+import com.example.ui.R
+import com.example.ui.databinding.NewsPageBinding
+import com.example.ui.viewModel.NewsPageViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent

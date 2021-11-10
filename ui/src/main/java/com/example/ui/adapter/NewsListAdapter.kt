@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.ui.adapter
+package com.example.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,10 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import io.navendra.retrofitkotlindeferred.databinding.NewsItemOddBinding
-import io.navendra.retrofitkotlindeferred.databinding.NewsItemEvenBinding
 import com.example.data.roomDB.entities.newsItem.NewsItemDB
+import com.example.ui.databinding.NewsItemEvenBinding
+import com.example.ui.databinding.NewsItemOddBinding
+import com.squareup.picasso.Picasso
 
 class SportAdapter(private val clickListener: (NewsItemDB)-> Unit) :
     ListAdapter<NewsItemDB, SportAdapter.ItemViewHolder>(SportNewsDiffCallback()) {

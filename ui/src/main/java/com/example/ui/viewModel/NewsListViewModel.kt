@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.ui.viewModel
+package com.example.ui.viewModel
 
 import android.app.Application
 import android.content.Context
@@ -8,20 +8,20 @@ import androidx.lifecycle.viewModelScope
 import com.example.data.roomDB.entities.newsItem.NewsItemDB
 import com.example.data.ui.repository.LoadState
 import com.example.data.ui.repository.NewsItemDBMapper
-import com.example.data.ui.repository.NewsRepositoryImpl
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import ui.repository.NewsRepository
 import java.io.IOException
 
 class NewsListViewModel (application: Application,
                          private val newsItemDBMapper: NewsItemDBMapper
                          ) : AndroidViewModel(application), KoinComponent {
 
-    private val newsRepositoryImpl: NewsRepositoryImpl by inject()
+    private val newsRepository: NewsRepository by inject()
 
-    val newsListFlow: Flow<List<NewsItemDB>> = newsRepositoryImpl.getItems().map { list ->
+    val newsListFlow: Flow<List<NewsItemDB>> = newsRepository.getItems().map { list ->
         list.map { newsItemDBMapper.fromNotImplToDB(it) }
     }
 
@@ -38,7 +38,7 @@ class NewsListViewModel (application: Application,
         viewModelScope.launch(Dispatchers.Main) {
             state.value = LoadState.LOADING
             try {
-                newsRepositoryImpl.loadNews()
+                newsRepository.loadNews()
                 state.value = LoadState.SUCCESS
             } catch (e: Throwable) {
                 if (!isConnectedToInternet() && e is IOException) {

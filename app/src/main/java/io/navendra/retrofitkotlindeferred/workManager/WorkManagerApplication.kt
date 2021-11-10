@@ -3,7 +3,7 @@ package io.navendra.retrofitkotlindeferred.workManager
 import android.app.Application
 import androidx.work.*
 import com.example.data.koinModule.dataModule
-import io.navendra.retrofitkotlindeferred.koinModule.*
+import com.example.koinModule.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import java.util.*
@@ -16,7 +16,7 @@ class WorkManagerApplication : Application() {
 
         startKoin {
             androidContext(this@WorkManagerApplication)
-            modules(appModule, dataModule)
+            modules(dataModule, uiModule)
         }
 
         val currentDate = Calendar.getInstance()

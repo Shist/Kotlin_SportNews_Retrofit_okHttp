@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.ui.fragments
+package com.example.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,13 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.data.ui.repository.LoadState
+import com.example.ui.MainActivity
+import com.example.ui.R
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
-import io.navendra.retrofitkotlindeferred.R
-import io.navendra.retrofitkotlindeferred.databinding.NewsItemsListBinding
-import io.navendra.retrofitkotlindeferred.ui.MainActivity
-import io.navendra.retrofitkotlindeferred.ui.adapter.SportAdapter
-import io.navendra.retrofitkotlindeferred.ui.viewModel.NewsListViewModel
+import com.example.ui.adapter.SportAdapter
+import com.example.ui.databinding.NewsItemsListBinding
+import com.example.ui.viewModel.NewsListViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent

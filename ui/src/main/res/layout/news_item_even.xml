@@ -6,20 +6,20 @@
     android:layout_margin="8dp"
     app:cardElevation="8dp">
 
-    <io.navendra.retrofitkotlindeferred.customViews.NewsItemCustomLayout
+    <com.example.customViews.NewsItemCustomLayout
         android:id="@+id/NewsItemCustomLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:even_item="false">
+        app:even_item="true">
 
-        <io.navendra.retrofitkotlindeferred.customViews.NewsItemCustomImage
+        <com.example.customViews.NewsItemCustomImage
             android:id="@+id/img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:contentDescription="@string/img"
             android:scaleType="centerCrop"
             android:contentDescription="@string/listImgDesc"
-            app:attrAnglesNumber='8' />
+            app:attrAnglesNumber='6' />
 
         <TextView
             android:id="@+id/altText"
@@ -39,6 +39,6 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-    </io.navendra.retrofitkotlindeferred.customViews.NewsItemCustomLayout>
+    </com.example.customViews.NewsItemCustomLayout>
 
 </androidx.cardview.widget.CardView>

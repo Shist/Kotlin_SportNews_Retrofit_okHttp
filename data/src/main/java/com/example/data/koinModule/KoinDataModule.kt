@@ -15,10 +15,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
+import ui.repository.NewsRepository
 
 val dataModule = module {
 
-    single {
+    single<NewsRepository> {
         NewsRepositoryImpl(
             newsItemDatabase = get(), service = get(),
             newsItemJsonMapper = get(), newsItemDetailsJsonMapper = get(), newsItemDBMapper = get(),
