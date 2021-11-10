@@ -7,7 +7,7 @@ plugins {
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "io.navendra.retrofitkotlindeferred"
+        applicationId 'com.app'
         minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
