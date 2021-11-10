@@ -1,4 +1,4 @@
-package io.navendra.retrofitkotlindeferred.workManager
+package com.example.data.workManager
 
 import android.content.Context
 import androidx.work.*

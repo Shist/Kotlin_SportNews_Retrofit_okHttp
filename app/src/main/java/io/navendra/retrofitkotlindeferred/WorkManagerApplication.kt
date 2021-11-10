@@ -1,8 +1,9 @@
-package io.navendra.retrofitkotlindeferred.workManager
+package io.navendra.retrofitkotlindeferred
 
 import android.app.Application
 import androidx.work.*
 import com.example.data.koinModule.dataModule
+import com.example.data.workManager.UploadWorker
 import com.example.koinModule.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
