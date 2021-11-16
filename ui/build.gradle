@@ -37,6 +37,9 @@ android {
 }
 
 dependencies {
+
+    //TODO: only domain module should be included here.
+    // view models have to work with domain entities.
     implementation project(':data')
     implementation project(':domain')
 
