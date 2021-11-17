@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import data.roomDB.entities.newsItem.NewsItemDB
-import data.repository.LoadState
 import data.repository.NewsItemDBMapper
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

@@ -7,7 +7,6 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import data.roomDB.entities.newsItemDetails.NewsItemDetailsDB
-import data.repository.LoadState
 import data.repository.NewsItemDetailsDBMapper
 import domain.NewsRepository
 import kotlinx.coroutines.flow.Flow

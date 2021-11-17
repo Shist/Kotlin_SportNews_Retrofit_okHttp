@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import data.roomDB.entities.newsItemDetails.NewsItemDetailsDB
-import data.repository.LoadState
+import ui.viewModel.LoadState
 import ui.viewModel.NewsPageViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

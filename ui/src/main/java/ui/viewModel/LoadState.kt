@@ -1,4 +1,4 @@
-package data.repository
+package ui.viewModel
 
 //TODO: move to ui module
 enum class LoadState {
