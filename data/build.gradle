@@ -40,30 +40,25 @@ android {
 dependencies {
     implementation project(':domain')
 
-    //UnitTest
-    testImplementation 'junit:junit:4.13.2'
+    // UnitTest
+    testImplementation "junit:junit:$unit_test_version"
 
-    //RecycleView
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    // RecycleView
+    implementation "androidx.recyclerview:recyclerview:$recycle_view_version"
 
-    //Gson
-    implementation 'com.google.code.gson:gson:2.8.7'
+    // Gson
+    implementation "com.google.code.gson:gson:$gson_version"
 
-    //Retrofit2
-    def retrofit2_version = "2.6.0"
+    // Retrofit2
     implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
-    //TODO: clean up here.
-    //TODO: consider to move version constants to root build.gradle file.
     implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
 
-    //Okhttp3
-    def okhttp3_version = "3.12.0"
+    // Okhttp3
     implementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 
     // Room DB
-    def room_version = "2.3.0"
     implementation("androidx.room:room-runtime:$room_version")
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$room_version")
@@ -71,12 +66,8 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
     // Work Manager
-    def work_version = "2.6.0"
-    // Kotlin + coroutines
     implementation("androidx.work:work-runtime-ktx:$work_version")
 
-    // Koin version
-    def koin_version = "3.1.2"
     // Koin for Dependency Injection
     implementation "io.insert-koin:koin-core:$koin_version"
     // Koin main features for Android (Scope,ViewModel ...)

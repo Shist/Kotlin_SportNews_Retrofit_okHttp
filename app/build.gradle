@@ -32,16 +32,12 @@ dependencies {
     implementation project(':data')
     implementation project(':ui')
 
-    //UnitTest
-    testImplementation 'junit:junit:4.13.2'
+    // UnitTest
+    testImplementation "junit:junit:$unit_test_version"
 
     // Work Manager
-    def work_version = "2.6.0"
-    // Kotlin + coroutines
-    implementation("androidx.work:work-runtime-ktx:$work_version")
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
-    // Koin version
-    def koin_version = "3.1.2"
     // Koin for Dependency Injection
     implementation "io.insert-koin:koin-core:$koin_version"
     // Koin main features for Android (Scope,ViewModel ...)
