@@ -7,13 +7,12 @@ import org.koin.dsl.module
 
 val uiModule = module {
 
-    viewModel { NewsListViewModel(application = get(), newsItemDBMapper = get()) }
+    viewModel { NewsListViewModel(application = get()) }
 
     viewModel { params ->
         NewsPageViewModel(
             application = get(),
-            itemID = params.get(),
-            newsItemDetailsDBMapper = get()
+            itemID = params.get()
         )
     }
 

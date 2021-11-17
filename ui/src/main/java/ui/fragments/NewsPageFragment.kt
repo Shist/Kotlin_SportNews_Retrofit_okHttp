@@ -13,7 +13,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import data.roomDB.entities.newsItemDetails.NewsItemDetailsDB
+import domain.NewsItemDetails
 import ui.viewModel.LoadState
 import ui.viewModel.NewsPageViewModel
 import kotlinx.coroutines.flow.collect
@@ -68,7 +68,7 @@ class NewsPageFragment : Fragment(), KoinComponent {
         val pageImg: ImageView = binding.pageImg
         val pageText: TextView = binding.pageText
 
-        var item: NewsItemDetailsDB?
+        var item: NewsItemDetails?
 
         swipeContainer.setOnRefreshListener {
             viewModel.loadData(itemID)

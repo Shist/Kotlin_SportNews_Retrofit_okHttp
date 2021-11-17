@@ -7,13 +7,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import data.roomDB.entities.newsItem.NewsItemDB
 import com.squareup.picasso.Picasso
+import domain.NewsItem
 import ui.databinding.NewsItemEvenBinding
 import ui.databinding.NewsItemOddBinding
 
-class SportAdapter(private val clickListener: (NewsItemDB)-> Unit) :
-    ListAdapter<NewsItemDB, SportAdapter.ItemViewHolder>(SportNewsDiffCallback()) {
+class SportAdapter(private val clickListener: (NewsItem)-> Unit) :
+    ListAdapter<NewsItem, SportAdapter.ItemViewHolder>(SportNewsDiffCallback()) {
 
     companion object {
         private const val TYPE_ODD = 0
@@ -68,12 +68,12 @@ class SportAdapter(private val clickListener: (NewsItemDB)-> Unit) :
 
 }
 
-class SportNewsDiffCallback : DiffUtil.ItemCallback<NewsItemDB>() {
-    override fun areItemsTheSame(oldItem: NewsItemDB, newItem: NewsItemDB): Boolean {
+class SportNewsDiffCallback : DiffUtil.ItemCallback<NewsItem>() {
+    override fun areItemsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
         return oldItem.itemId == newItem.itemId
     }
 
-    override fun areContentsTheSame(oldItem: NewsItemDB, newItem: NewsItemDB): Boolean {
+    override fun areContentsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
         return oldItem == newItem
     }
 }
