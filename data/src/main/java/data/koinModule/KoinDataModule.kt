@@ -33,7 +33,7 @@ val dataModule = module {
                 context.applicationContext,
                 NewsItemDatabase::class.java, "newsDB"
             )
-                //TODO: migration 1_2 also should be added.
+                .addMigrations(MigrationDB.MIGRATION_1_2)
                 .addMigrations(MigrationDB.MIGRATION_2_3)
                 .build()
 
