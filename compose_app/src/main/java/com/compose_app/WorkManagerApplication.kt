@@ -1,8 +1,7 @@
-package com.app
+package com.compose_app
 
 import android.app.Application
 import androidx.work.*
-import com.view_model.koinModule.viewModelModule
 import data.koinModule.dataModule
 import data.workManager.UploadWorker
 import org.koin.android.ext.koin.androidContext
@@ -17,7 +16,7 @@ class WorkManagerApplication : Application() {
 
         startKoin {
             androidContext(this@WorkManagerApplication)
-            modules(dataModule, viewModelModule)
+            modules(dataModule)
         }
 
         val currentDate = Calendar.getInstance()

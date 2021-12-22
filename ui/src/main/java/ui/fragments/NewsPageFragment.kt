@@ -14,8 +14,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import domain.NewsItemDetails
-import ui.viewModel.LoadState
-import ui.viewModel.NewsPageViewModel
+import com.view_model.loadState.LoadState
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -35,7 +34,7 @@ class NewsPageFragment : Fragment(), KoinComponent {
         }
     }
 
-    private val viewModel: NewsPageViewModel by inject {
+    private val viewModel: com.view_model.NewsPageViewModel by inject {
         parametersOf(arguments?.getString(keyItemID))
     }
 

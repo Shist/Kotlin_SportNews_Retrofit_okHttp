@@ -19,7 +19,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 @ExperimentalCoilApi
-class Home : KoinComponent {
+class NewsItemsList : KoinComponent {
     private val newsRepository: NewsRepository by inject()
     private val newsListFlow: Flow<List<NewsItem>> = newsRepository.getItems()
     private val newsListItemsState = mutableStateListOf<NewsItem>()

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import coil.annotation.ExperimentalCoilApi
 import com.compose_app.theme.NewsItemsAppTheme
-import com.compose_ui.Home
+import com.compose_ui.NewsItemsList
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter
 )
 fun NewsItemsListPreview() {
     NewsItemsAppTheme {
-        Home().NewsItemsList()
+        NewsItemsList().NewsItemsList()
     }
 }
 
@@ -38,6 +38,6 @@ fun NewsItemPreview() {
         "https://images.beinsports.com/lbC99KH5kQB05f29Mn7IpDMKiVM=/800x450/4080544-2021-12-15T195957Z_1016770655_UP1EHCF1JJVC0_RTRMADP_3_SOCCER-CHAMPIONS-FCB-KOG-REPORT.JPG",
         "Women's Champions League draw")
     NewsItemsAppTheme {
-        Home().NewsItem(item)
+        NewsItemsList().NewsItem(item)
     }
 }

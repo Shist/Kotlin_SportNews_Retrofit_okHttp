@@ -1,6 +1,5 @@
-package ui.viewModel
+package com.view_model.loadState
 
-//TODO: move to ui module
 enum class LoadState {
     SUCCESS,
     LOADING,

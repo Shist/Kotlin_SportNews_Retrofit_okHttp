@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId 'com.app'
         minSdkVersion 26
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -31,6 +31,7 @@ dependencies {
     implementation project(':domain')
     implementation project(':data')
     implementation project(':ui')
+    implementation project(':view_model')
 
     // UnitTest
     testImplementation "junit:junit:$unit_test_version"
