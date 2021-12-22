@@ -6,7 +6,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.annotation.ExperimentalCoilApi
 import com.compose_ui.theme.NewsItemsAppTheme
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @ExperimentalCoilApi
 @Composable
@@ -18,7 +17,7 @@ import java.time.format.DateTimeFormatter
 )
 fun NewsItemsListPreview() {
     NewsItemsAppTheme {
-        NewsItemsList().NewsItemsList()
+        NewsList().NewsItemsList()
     }
 }
 
@@ -33,10 +32,10 @@ fun NewsItemsListPreview() {
 fun NewsItemPreview() {
     val item = domain.NewsItem("/contents/1803102",
         "UWCL",
-        LocalDate.parse("1639947600", DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+        LocalDate.of(2021, 12, 22),
         "https://images.beinsports.com/lbC99KH5kQB05f29Mn7IpDMKiVM=/800x450/4080544-2021-12-15T195957Z_1016770655_UP1EHCF1JJVC0_RTRMADP_3_SOCCER-CHAMPIONS-FCB-KOG-REPORT.JPG",
         "Women's Champions League draw")
     NewsItemsAppTheme {
-        NewsItemsList().NewsItem(item)
+        NewsList().NewsItem(item)
     }
 }

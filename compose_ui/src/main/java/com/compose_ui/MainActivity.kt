@@ -10,13 +10,14 @@ import com.compose_ui.theme.NewsItemsAppTheme
 
 @ExperimentalCoilApi
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             NewsItemsAppTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    NewsItemsList().NewsItemsList()
+                    NewsList().NewsItemsList()
                 }
             }
         }
