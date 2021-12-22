@@ -32,11 +32,17 @@ android {
 }
 
 dependencies {
-    implementation project(':data')
+    implementation project(':domain')
 
     // UnitTest
     testImplementation "junit:junit:$unit_test_version"
 
     // Work Manager
     implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    // Koin version
+    // Koin for Dependency Injection
+    implementation "io.insert-koin:koin-core:$koin_version"
+    // Koin main features for Android (Scope,ViewModel ...)
+    implementation "io.insert-koin:koin-android:$koin_version"
 }

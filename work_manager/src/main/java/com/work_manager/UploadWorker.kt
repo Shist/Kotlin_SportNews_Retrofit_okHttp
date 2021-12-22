@@ -1,4 +1,4 @@
-package data.workManager
+package com.work_manager
 
 import android.content.Context
 import androidx.work.CoroutineWorker
