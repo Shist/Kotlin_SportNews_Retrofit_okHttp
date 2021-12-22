@@ -1,10 +1,11 @@
 package data.workManager
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
+import domain.NewsRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import domain.NewsRepository
 
 class UploadWorker(appContext: Context, workerParams: WorkerParameters):
     CoroutineWorker(appContext, workerParams), KoinComponent {

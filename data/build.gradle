@@ -64,8 +64,9 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
     // Work Manager
-    implementation("androidx.work:work-runtime-ktx:$work_version")
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
+    // Koin version
     // Koin for Dependency Injection
     implementation "io.insert-koin:koin-core:$koin_version"
     // Koin main features for Android (Scope,ViewModel ...)

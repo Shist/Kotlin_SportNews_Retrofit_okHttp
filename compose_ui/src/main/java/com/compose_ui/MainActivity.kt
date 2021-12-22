@@ -1,4 +1,4 @@
-package com.compose_app
+package com.compose_ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,8 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import coil.annotation.ExperimentalCoilApi
-import com.compose_ui.NewsItemsList
-import com.compose_app.theme.NewsItemsAppTheme
+import com.compose_ui.theme.NewsItemsAppTheme
 
 @ExperimentalCoilApi
 class MainActivity : ComponentActivity() {

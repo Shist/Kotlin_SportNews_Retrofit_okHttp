@@ -1,11 +1,10 @@
-package com.compose_app
+package com.compose_ui
 
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import coil.annotation.ExperimentalCoilApi
-import com.compose_app.theme.NewsItemsAppTheme
-import com.compose_ui.NewsItemsList
+import com.compose_ui.theme.NewsItemsAppTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

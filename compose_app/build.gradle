@@ -50,7 +50,8 @@ android {
 dependencies {
     implementation project(':compose_ui')
     implementation project(':data')
-    implementation project(':domain')
+    implementation project(':view_model')
+    implementation project(':work_manager')
 
     // Compose
     implementation 'androidx.core:core-ktx:1.7.0'

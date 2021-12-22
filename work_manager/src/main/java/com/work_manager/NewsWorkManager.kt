@@ -1,24 +1,14 @@
-package com.app
+package com.work_manager
 
-import android.app.Application
+import android.content.Context
 import androidx.work.*
-import com.view_model.koinModule.viewModelModule
-import data.koinModule.dataModule
 import data.workManager.UploadWorker
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class WorkManagerApplication : Application() {
+class NewsWorkManager {
 
-    override fun onCreate() {
-        super.onCreate()
-
-        startKoin {
-            androidContext(this@WorkManagerApplication)
-            modules(dataModule, viewModelModule)
-        }
+    fun startWorkManager(appContext: Context) {
 
         val currentDate = Calendar.getInstance()
 
@@ -34,11 +24,11 @@ class WorkManagerApplication : Application() {
         val timeDiff = dueDate.timeInMillis - currentDate.timeInMillis
 
         val saveRequest =
-            PeriodicWorkRequestBuilder<UploadWorker>(24, TimeUnit.HOURS)
+            PeriodicWorkRequestBuilder<UploadWorker>( 24, TimeUnit.HOURS)
                 .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS)
                 .build()
 
-        WorkManager.getInstance(applicationContext).enqueue(saveRequest)
+        WorkManager.getInstance(appContext).enqueue(saveRequest)
     }
 
 }
