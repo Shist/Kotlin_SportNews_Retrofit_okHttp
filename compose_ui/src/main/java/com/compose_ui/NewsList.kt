@@ -9,13 +9,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.compose_ui.theme.Purple200
@@ -50,10 +51,12 @@ fun NewsItem(navController: NavController, item: NewsItem) {
                 navController.navigate("${Screen.NewsItemDetails.name}/$itemId")
             },
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.05f)) {
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center) {
             Image(
                 painter = rememberImagePainter(item.context),
-                contentDescription = "My content description",
+                contentDescription = "News image",
                 modifier = Modifier
                     .height(itemImageHeight)
                     .weight(weight = 0.5f)
@@ -61,12 +64,22 @@ fun NewsItem(navController: NavController, item: NewsItem) {
             )
             Column(modifier = Modifier
                 .weight(0.5f)
-                .padding(all = 4.dp)) {
+                .padding(all = 4.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = item.shortHeadline!!
+                    text = item.shortHeadline!!,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(all = 4.dp),
+                    fontSize = 14.sp
                 )
                 Text(
                     text = item.altText!!,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(all = 4.dp),
+                    fontSize = 12.sp,
                     color = Purple200
                 )
             }
