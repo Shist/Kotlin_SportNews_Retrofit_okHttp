@@ -9,7 +9,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
@@ -49,6 +52,10 @@ class NewsList : KoinComponent {
 
     @Composable
     fun NewsItem(item: NewsItem) {
+        val configuration = LocalConfiguration.current
+        val itemWidth = configuration.screenWidthDp.dp
+        val itemImageWidth = itemWidth / 2
+        val itemImageHeight = itemImageWidth * 9 / 16
         Surface(
             modifier = Modifier
                 .padding(all = 2.dp)
@@ -56,18 +63,18 @@ class NewsList : KoinComponent {
 
                 },
             color = MaterialTheme.colors.onSurface.copy(alpha = 0.05f)) {
-            Row {
+            Row(modifier = Modifier.fillMaxWidth()) {
                 Image(
                     painter = rememberImagePainter(item.context),
                     contentDescription = "My content description",
                     modifier = Modifier
-                        .height(128.dp)
-                        .weight(0.5f)
-                        .padding(all = 2.dp)
+                        .height(itemImageHeight)
+                        .weight(weight = 0.5f)
+                        .padding(all = 4.dp),
                 )
                 Column(modifier = Modifier
                     .weight(0.5f)
-                    .padding(all = 2.dp)) {
+                    .padding(all = 4.dp)) {
                     Text(
                         text = item.shortHeadline!!
                     )
