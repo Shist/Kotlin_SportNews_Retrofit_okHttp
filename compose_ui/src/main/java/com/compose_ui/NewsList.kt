@@ -72,14 +72,12 @@ fun NewsItem(navController: NavController, item: NewsItem) {
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(all = 4.dp),
-                    fontSize = 14.sp
                 )
                 Text(
                     text = item.altText!!,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(all = 4.dp),
-                    fontSize = 12.sp,
                     color = Purple200
                 )
             }
