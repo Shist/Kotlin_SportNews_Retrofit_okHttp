@@ -3,9 +3,24 @@ package com.compose_ui
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import com.compose_ui.theme.NewsItemsAppTheme
 import java.time.LocalDate
+
+val someNewsItem = domain.NewsItem("/contents/1803102",
+    "UWCL",
+    LocalDate.of(2021, 12, 22),
+    "https://images.beinsports.com/lbC99KH5kQB05f29Mn7IpDMKiVM=/800x450/4080544-2021-12-15T195957Z_1016770655_UP1EHCF1JJVC0_RTRMADP_3_SOCCER-CHAMPIONS-FCB-KOG-REPORT.JPG",
+    "Women's Champions League draw")
+
+
+
+val someNewsItemDetails = domain.NewsItemDetails("/contents/1803102",
+    "Some item details description...",
+    LocalDate.of(2021, 12, 22),
+    "https://images.beinsports.com/lbC99KH5kQB05f29Mn7IpDMKiVM=/800x450/4080544-2021-12-15T195957Z_1016770655_UP1EHCF1JJVC0_RTRMADP_3_SOCCER-CHAMPIONS-FCB-KOG-REPORT.JPG",
+    "Women's Champions League draw")
 
 @ExperimentalCoilApi
 @Composable
@@ -16,8 +31,9 @@ import java.time.LocalDate
     name = "Dark NewsItemsListPreview"
 )
 fun NewsItemsListPreview() {
+    val navHostController = rememberNavController()
     NewsItemsAppTheme {
-        NewsList().NewsItemsList()
+        NewsItemsList(navHostController, listOf(someNewsItem, someNewsItem, someNewsItem))
     }
 }
 
@@ -30,13 +46,9 @@ fun NewsItemsListPreview() {
     name = "Dark NewsItemPreview"
 )
 fun NewsItemPreview() {
-    val item = domain.NewsItem("/contents/1803102",
-        "UWCL",
-        LocalDate.of(2021, 12, 22),
-        "https://images.beinsports.com/lbC99KH5kQB05f29Mn7IpDMKiVM=/800x450/4080544-2021-12-15T195957Z_1016770655_UP1EHCF1JJVC0_RTRMADP_3_SOCCER-CHAMPIONS-FCB-KOG-REPORT.JPG",
-        "Women's Champions League draw")
+    val navHostController = rememberNavController()
     NewsItemsAppTheme {
-        NewsList().NewsItem(item)
+        NewsItem(navHostController, someNewsItem)
     }
 }
 
@@ -49,12 +61,7 @@ fun NewsItemPreview() {
     name = "Dark NewsItemDetailsPreview"
 )
 fun NewsItemDetailsPreview() {
-    val itemDetails = domain.NewsItemDetails("/contents/1803102",
-        "Some item details description...",
-        LocalDate.of(2021, 12, 22),
-        "https://images.beinsports.com/lbC99KH5kQB05f29Mn7IpDMKiVM=/800x450/4080544-2021-12-15T195957Z_1016770655_UP1EHCF1JJVC0_RTRMADP_3_SOCCER-CHAMPIONS-FCB-KOG-REPORT.JPG",
-        "Women's Champions League draw")
     NewsItemsAppTheme {
-        NewsItemDetails(item = itemDetails)
+        NewsItemDetails(someNewsItemDetails)
     }
 }

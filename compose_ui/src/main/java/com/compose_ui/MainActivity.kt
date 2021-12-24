@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NewsItemsAppTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    NewsList().NewsItemsList()
+                    Navigator().StartNavigation()
                 }
             }
         }
