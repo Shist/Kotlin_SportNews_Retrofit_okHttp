@@ -8,19 +8,22 @@ import coil.annotation.ExperimentalCoilApi
 import com.compose_ui.theme.NewsItemsAppTheme
 import java.time.LocalDate
 
-val someNewsItem = domain.NewsItem("/contents/1803102",
+val someNewsItem = domain.NewsItem(
+    "/contents/1803102",
     "UWCL",
     LocalDate.of(2021, 12, 22),
     "https://images.beinsports.com/lbC99KH5kQB05f29Mn7IpDMKiVM=/800x450/4080544-2021-12-15T195957Z_1016770655_UP1EHCF1JJVC0_RTRMADP_3_SOCCER-CHAMPIONS-FCB-KOG-REPORT.JPG",
-    "Women's Champions League draw")
+    "Women's Champions League draw"
+)
 
 
-
-val someNewsItemDetails = domain.NewsItemDetails("/contents/1803102",
+val someNewsItemDetails = domain.NewsItemDetails(
+    "/contents/1803102",
     "Some item details description...",
     LocalDate.of(2021, 12, 22),
     "https://images.beinsports.com/lbC99KH5kQB05f29Mn7IpDMKiVM=/800x450/4080544-2021-12-15T195957Z_1016770655_UP1EHCF1JJVC0_RTRMADP_3_SOCCER-CHAMPIONS-FCB-KOG-REPORT.JPG",
-    "Women's Champions League draw")
+    "Women's Champions League draw"
+)
 
 @ExperimentalCoilApi
 @Composable

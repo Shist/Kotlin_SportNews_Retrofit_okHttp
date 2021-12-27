@@ -50,10 +50,13 @@ fun NewsItem(navController: NavController, item: NewsItem) {
                 val itemId = item.itemId.substringAfterLast('/')
                 navController.navigate("${Screen.NewsItemDetails.name}/$itemId")
             },
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.05f)) {
-        Row(modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center) {
+        color = MaterialTheme.colors.onSurface.copy(alpha = 0.05f)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
             Image(
                 painter = rememberImagePainter(item.context),
                 contentDescription = "News image",
@@ -62,11 +65,13 @@ fun NewsItem(navController: NavController, item: NewsItem) {
                     .weight(weight = 0.5f)
                     .padding(all = 4.dp),
             )
-            Column(modifier = Modifier
-                .weight(0.5f)
-                .padding(all = 4.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(all = 4.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Text(
                     text = item.shortHeadline!!,
                     textAlign = TextAlign.Center,

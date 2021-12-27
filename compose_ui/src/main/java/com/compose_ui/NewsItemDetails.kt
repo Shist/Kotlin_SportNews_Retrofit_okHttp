@@ -32,7 +32,8 @@ fun NewsItemDetails(item: NewsItemDetails) {
                 modifier = Modifier
                     .padding(all = 4.dp),
                 fontWeight = FontWeight.Bold,
-                fontSize = 24.sp)
+                fontSize = 24.sp
+            )
         }
         item {
             Image(
@@ -48,7 +49,8 @@ fun NewsItemDetails(item: NewsItemDetails) {
                 text = Html.fromHtml(item.body, Html.FROM_HTML_MODE_LEGACY).toString(),
                 modifier = Modifier
                     .padding(all = 4.dp),
-                fontSize = 16.sp)
+                fontSize = 16.sp
+            )
         }
     }
 }
