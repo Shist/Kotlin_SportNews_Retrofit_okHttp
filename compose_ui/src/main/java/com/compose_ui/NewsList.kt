@@ -30,7 +30,7 @@ fun NewsItemsList(navController: NavController, newsItemsList: List<NewsItem>) {
             //TODO Make some image or text that data is empty
         } else {
             items(newsItemsList) { i ->
-                NewsItem(navController, i)
+                StandardNewsItem(navController, i)
             }
         }
     }
@@ -38,7 +38,7 @@ fun NewsItemsList(navController: NavController, newsItemsList: List<NewsItem>) {
 
 @ExperimentalCoilApi
 @Composable
-fun NewsItem(navController: NavController, item: NewsItem) {
+fun StandardNewsItem(navController: NavController, item: NewsItem) {
     val configuration = LocalConfiguration.current
     val itemWidth = configuration.screenWidthDp.dp
     val itemImageWidth = itemWidth / 2
