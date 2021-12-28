@@ -11,9 +11,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -25,9 +26,33 @@ import domain.NewsItem
 @ExperimentalCoilApi
 @Composable
 fun NewsItemsList(navController: NavController, newsItemsList: List<NewsItem>) {
-    LazyColumn {
+    LazyColumn (
+        modifier = Modifier
+            .padding(all = 4.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         if (newsItemsList.isEmpty()) {
-            //TODO Make some image or text that data is empty
+            item {
+                Text(
+                    text = "No any data have been loaded!\n Please, check your network connection...",
+                    textAlign = TextAlign.Center,
+                    fontSize = 24.sp,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(all = 4.dp)
+                )
+            }
+            item {
+                Image(
+                    painter = painterResource(id = R.drawable.no_data_yet),
+                    contentDescription = "No data yet",
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(all = 4.dp)
+                )
+            }
         } else {
             items(newsItemsList) { i ->
                 StandardNewsItem(navController, i)

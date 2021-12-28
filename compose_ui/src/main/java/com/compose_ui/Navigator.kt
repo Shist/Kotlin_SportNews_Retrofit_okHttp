@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.lang.Exception
 import java.time.LocalDate
 
 @ExperimentalCoilApi
@@ -45,7 +46,11 @@ class Navigator : KoinComponent {
         ) {
             composable(route = Screen.NewsItemsList.name) {
                 coroutineScope.launch {
-                    newsRepository.loadNews()
+                    try {
+                        newsRepository.loadNews()
+                    } catch (e: Throwable) {
+                        // TODO: make different states and messages depending on problem (No Internet, Empty Database, Other...)
+                    }
                 }
                 NewsItemsList(navController, newsItemsList)
             }
