@@ -72,6 +72,36 @@ fun StandardNewsItemPreview() {
 
 @ExperimentalCoilApi
 @Composable
+@Preview(name = "Light EvenAngularNewsItemPreview")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "Dark EvenAngularNewsItemPreview"
+)
+fun EvenAngularNewsItemPreview() {
+    val navHostController = rememberNavController()
+    NewsItemsAppTheme {
+        AngularNewsItem(navHostController, someNewsItem, 8)
+    }
+}
+
+@ExperimentalCoilApi
+@Composable
+@Preview(name = "Light OddAngularNewsItemPreview")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "Dark OddAngularNewsItemPreview"
+)
+fun OddAngularNewsItemPreview() {
+    val navHostController = rememberNavController()
+    NewsItemsAppTheme {
+        AngularNewsItem(navHostController, someNewsItem, 7)
+    }
+}
+
+@ExperimentalCoilApi
+@Composable
 @Preview(name = "Light NewsItemDetailsPreview")
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES,
