@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.lang.Exception
 import java.time.LocalDate
 
 @ExperimentalCoilApi

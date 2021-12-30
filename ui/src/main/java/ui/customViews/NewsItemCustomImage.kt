@@ -46,7 +46,7 @@ class NewsItemCustomImage(context: Context?, attrs: AttributeSet?) :
         path.close()
         canvas.clipPath(path)
 
-        super .onDraw (canvas)
+        super.onDraw(canvas)
     }
 
 }
