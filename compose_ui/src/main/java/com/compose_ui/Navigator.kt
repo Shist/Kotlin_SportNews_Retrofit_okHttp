@@ -1,5 +1,6 @@
 package com.compose_ui
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,6 +17,7 @@ import org.koin.core.component.inject
 import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 class Navigator : KoinComponent {
 

@@ -27,6 +27,7 @@ enum class MenuPage {
     SQUARE
 }
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
 fun MakeScaffoldWithMenu(navController: NavController, newsItemsList: List<NewsItem>) {

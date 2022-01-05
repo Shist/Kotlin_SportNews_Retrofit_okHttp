@@ -120,6 +120,7 @@ fun NewsItemDetailsPreview() {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
 @Preview(name = "LightScaffoldWithMenuPreview")
