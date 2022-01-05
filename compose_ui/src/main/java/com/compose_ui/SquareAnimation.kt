@@ -3,8 +3,7 @@ package com.compose_ui
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.splineBasedDecay
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.horizontalDrag
-import androidx.compose.foundation.gestures.verticalDrag
+import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -59,23 +58,14 @@ private fun Modifier.swipeToMove(): Modifier = composed {
                 val velocityTracker = VelocityTracker()
                 // Wait for drag events.
                 awaitPointerEventScope {
-                    horizontalDrag(pointerId) { change ->
+
+                    drag(pointerId) { change ->
                         // TODO 6-3: Apply the drag change to the Animatable offset.
                         // Add these 4 lines
                         val horizontalDragOffset = offsetX.value + change.positionChange().x
-                        launch {
-                            offsetX.snapTo(horizontalDragOffset)
-                        }
-                        // Record the velocity of the drag.
-                        velocityTracker.addPosition(change.uptimeMillis, change.position)
-                        // Consume the gesture event, not passed to external
-                        change.consumePositionChange()
-                    }
-                    verticalDrag(pointerId) { change ->
-                        // TODO 6-3: Apply the drag change to the Animatable offset.
-                        // Add these 4 lines
                         val verticalDragOffset = offsetY.value + change.positionChange().y
                         launch {
+                            offsetX.snapTo(horizontalDragOffset)
                             offsetY.snapTo(verticalDragOffset)
                         }
                         // Record the velocity of the drag.
@@ -83,14 +73,13 @@ private fun Modifier.swipeToMove(): Modifier = composed {
                         // Consume the gesture event, not passed to external
                         change.consumePositionChange()
                     }
+
                 }
                 // Dragging finished. Calculate the velocity of the fling.
             }
         }
     }
 
-        // Apply the horizontal offset to the element.
-        .offset { IntOffset(offsetX.value.roundToInt(), 0) }
-        // Apply the vertical offset to the element.
-        .offset { IntOffset(offsetY.value.roundToInt(), 0) }
+        // Apply the offset to the element.
+        .offset { IntOffset(offsetX.value.roundToInt(), offsetY.value.roundToInt()) }
 }
