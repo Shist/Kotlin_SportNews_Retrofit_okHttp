@@ -1,6 +1,7 @@
 package com.compose_ui
 
 import android.content.res.Configuration
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +30,7 @@ val someNewsItemDetails = domain.NewsItemDetails(
     "Women's Champions League draw"
 )
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
 @Preview(name = "Light NewsItemsListPreview")
@@ -56,6 +58,7 @@ fun EmptyNewsItemsListPreview() {
     EmptyNewsItemsList()
 }
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
 @Preview(name = "Light StandardNewsItemPreview")
@@ -71,6 +74,7 @@ fun StandardNewsItemPreview() {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
 @Preview(name = "Light EvenAngularNewsItemPreview")
@@ -86,6 +90,7 @@ fun EvenAngularNewsItemPreview() {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
 @Preview(name = "Light OddAngularNewsItemPreview")

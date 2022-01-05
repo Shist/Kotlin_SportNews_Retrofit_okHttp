@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -56,6 +57,7 @@ fun EmptyNewsItemsList() {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
 fun NewsItemsList(navController: NavController, newsItemsList: List<NewsItem>) {
@@ -79,6 +81,7 @@ fun NewsItemsList(navController: NavController, newsItemsList: List<NewsItem>) {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
 fun StandardNewsItem(navController: NavController, item: NewsItem) {
@@ -86,13 +89,11 @@ fun StandardNewsItem(navController: NavController, item: NewsItem) {
     val itemWidth = configuration.screenWidthDp.dp
     val itemImageWidth = itemWidth / 2
     val itemImageHeight = itemImageWidth * 9 / 16
-    Surface(
+    Surface(onClick = {
+        val itemId = item.itemId.substringAfterLast('/')
+        navController.navigate("${Screen.NewsItemDetails.name}/$itemId") },
         modifier = Modifier
-            .padding(all = 2.dp)
-            .clickable {
-                val itemId = item.itemId.substringAfterLast('/')
-                navController.navigate("${Screen.NewsItemDetails.name}/$itemId")
-            },
+            .padding(all = 2.dp),
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.05f)
     ) {
         Row(
@@ -133,6 +134,7 @@ fun StandardNewsItem(navController: NavController, item: NewsItem) {
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
 fun AngularNewsItem(navController: NavController, item: NewsItem, anglesNumber: Int) {
@@ -140,13 +142,11 @@ fun AngularNewsItem(navController: NavController, item: NewsItem, anglesNumber: 
     val itemWidth = configuration.screenWidthDp.dp
     val itemImageWidth = itemWidth / 2
     val itemImageHeight = itemImageWidth * 9 / 16
-    Surface(
+    Surface(onClick = {
+        val itemId = item.itemId.substringAfterLast('/')
+        navController.navigate("${Screen.NewsItemDetails.name}/$itemId") },
         modifier = Modifier
-            .padding(all = 2.dp)
-            .clickable {
-                val itemId = item.itemId.substringAfterLast('/')
-                navController.navigate("${Screen.NewsItemDetails.name}/$itemId")
-            },
+            .padding(all = 2.dp),
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.05f)
     ) {
         Row(
