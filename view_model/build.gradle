@@ -42,7 +42,4 @@ dependencies {
     implementation "io.insert-koin:koin-core:$koin_version"
     // Koin main features for Android (Scope,ViewModel ...)
     implementation "io.insert-koin:koin-android:$koin_version"
-
-    // UnitTest
-    testImplementation "junit:junit:$unit_test_version"
 }

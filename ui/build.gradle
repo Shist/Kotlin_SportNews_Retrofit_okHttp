@@ -38,9 +38,6 @@ dependencies {
     implementation project(':domain')
     implementation project(':view_model')
 
-    // UnitTest
-    testImplementation "junit:junit:$unit_test_version"
-
     // For layout
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinator_layout_version"

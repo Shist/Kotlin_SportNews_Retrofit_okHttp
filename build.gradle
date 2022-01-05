@@ -11,8 +11,6 @@ buildscript {
         compose_version = "1.0.5"
         // Compose Activity
         compose_activity_version = "1.4.0"
-        // UnitTest
-        unit_test_version = "4.13.2"
         // Work Manager
         work_version = "2.6.0"
         // Koin version

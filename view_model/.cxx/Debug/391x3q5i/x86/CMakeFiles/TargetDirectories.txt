@@ -1,3 +1,0 @@
-C:/Users/agat0/AndroidStudioProjects/Kotlin_SportNews_Retrofit_okHttp/view_model/.cxx/Debug/391x3q5i/x86/CMakeFiles/view_model.dir
-C:/Users/agat0/AndroidStudioProjects/Kotlin_SportNews_Retrofit_okHttp/view_model/.cxx/Debug/391x3q5i/x86/CMakeFiles/edit_cache.dir
-C:/Users/agat0/AndroidStudioProjects/Kotlin_SportNews_Retrofit_okHttp/view_model/.cxx/Debug/391x3q5i/x86/CMakeFiles/rebuild_cache.dir

@@ -31,9 +31,6 @@ android {
 }
 
 dependencies {
-    // UnitTest
-    testImplementation "junit:junit:$unit_test_version"
-
     // Kotlin Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutineVersion"
 }

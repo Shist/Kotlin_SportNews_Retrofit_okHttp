@@ -34,9 +34,6 @@ android {
 dependencies {
     implementation project(':domain')
 
-    // UnitTest
-    testImplementation "junit:junit:$unit_test_version"
-
     // Work Manager
     implementation "androidx.work:work-runtime-ktx:$work_version"
 
