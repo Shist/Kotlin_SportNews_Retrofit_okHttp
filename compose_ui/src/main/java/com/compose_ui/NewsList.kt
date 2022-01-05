@@ -88,7 +88,7 @@ fun StandardNewsItem(navController: NavController, item: NewsItem) {
     val itemImageWidth = itemWidth / 2
     val itemImageHeight = itemImageWidth * 9 / 16
     Surface(onClick = {
-        val itemId = item.itemId.substringAfterLast('/')
+        val itemId = item.itemId
         navController.navigate("${Screen.NewsItemDetails.name}/$itemId") },
         modifier = Modifier
             .padding(all = 2.dp),

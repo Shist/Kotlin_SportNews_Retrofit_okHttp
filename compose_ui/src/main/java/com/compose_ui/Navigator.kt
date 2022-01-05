@@ -56,13 +56,13 @@ class Navigator : KoinComponent {
                     }
                 )
             ) { entry ->
-                val itemId = "/contents/" + entry.arguments?.getString("itemId")
+                val itemId = entry.arguments?.getString("itemId")
                 val newsPageViewModel: NewsPageViewModel by inject {
                     parametersOf(itemId)
                 }
                 coroutineScope.launch {
                     try {
-                        newsPageViewModel.loadData(itemId)
+                        newsPageViewModel.loadData(itemId!!)
                     } catch (e: Throwable) {
                         // TODO: make different states and messages depending on problem (No Internet, Empty Database, Other...)
                     }
