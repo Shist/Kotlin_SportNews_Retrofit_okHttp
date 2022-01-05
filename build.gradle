@@ -14,7 +14,7 @@ buildscript {
         // Work Manager
         work_version = "2.6.0"
         // Koin version
-        koin_version = "3.1.2"
+        koin_version = "3.1.4"
         // RecycleView
         recycle_view_version = "1.2.1"
         // Gson

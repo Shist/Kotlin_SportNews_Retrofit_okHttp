@@ -32,7 +32,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.21'
+        kotlinCompilerVersion '1.5.31'
     }
     packagingOptions {
         resources {
@@ -66,4 +66,5 @@ dependencies {
     implementation "io.insert-koin:koin-core:$koin_version"
     // Koin main features for Android (Scope,ViewModel ...)
     implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
 }
