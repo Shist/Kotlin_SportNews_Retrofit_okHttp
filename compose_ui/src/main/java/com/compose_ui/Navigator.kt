@@ -51,7 +51,7 @@ class Navigator : KoinComponent {
                         // TODO: make different states and messages depending on problem (No Internet, Empty Database, Other...)
                     }
                 }
-                NewsItemsList(navController, newsItemsList)
+                MakeScaffoldWithMenu(navController, newsItemsList)
             }
             composable(
                 route = "${Screen.NewsItemDetails.name}/{itemId}",

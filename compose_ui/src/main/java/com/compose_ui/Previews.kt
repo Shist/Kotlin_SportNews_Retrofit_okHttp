@@ -1,7 +1,11 @@
 package com.compose_ui
 
 import android.content.res.Configuration
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
@@ -111,5 +115,36 @@ fun OddAngularNewsItemPreview() {
 fun NewsItemDetailsPreview() {
     NewsItemsAppTheme {
         NewsItemDetails(someNewsItemDetails)
+    }
+}
+
+@ExperimentalCoilApi
+@Composable
+@Preview(name = "LightScaffoldWithMenuPreview")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "DarkScaffoldWithMenuPreview"
+)
+fun MakeScaffoldWithMenuPreview() {
+    val navHostController = rememberNavController()
+    NewsItemsAppTheme {
+        MakeScaffoldWithMenu(navHostController, listOf(someNewsItem, someNewsItem, someNewsItem))
+    }
+}
+
+@Composable
+@Preview(name = "LightMenuContentPreview")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "DarkMenuContentPreview"
+)
+fun MenuContentPreview() {
+    NewsItemsAppTheme {
+        val scaffoldState = rememberScaffoldState()
+        val scope = rememberCoroutineScope()
+        val menuPage = rememberSaveable { mutableStateOf(MenuPage.NEWS_LIST) }
+        MenuContent(scaffoldState, scope, menuPage)
     }
 }
