@@ -104,13 +104,13 @@ fun StandardNewsItem(navController: NavController, item: NewsItem) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = item.shortHeadline!!,
+                    text = item.shortHeadline.orEmpty(),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(all = 4.dp),
                 )
                 Text(
-                    text = item.altText!!,
+                    text = item.altText.orEmpty(),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(all = 4.dp),
@@ -151,13 +151,13 @@ fun AngularNewsItem(navController: NavController, item: NewsItem, anglesNumber: 
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = item.shortHeadline!!,
+                        text = item.shortHeadline.orEmpty(),
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(all = 4.dp),
                     )
                     Text(
-                        text = item.altText!!,
+                        text = item.altText.orEmpty(),
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(all = 4.dp),
@@ -197,13 +197,13 @@ fun AngularNewsItem(navController: NavController, item: NewsItem, anglesNumber: 
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = item.shortHeadline!!,
+                        text = item.shortHeadline.orEmpty(),
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(all = 4.dp),
                     )
                     Text(
-                        text = item.altText!!,
+                        text = item.altText.orEmpty(),
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(all = 4.dp),

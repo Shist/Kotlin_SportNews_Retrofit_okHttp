@@ -27,7 +27,7 @@ fun NewsItemDetails(item: NewsItemDetails) {
     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
         item {
             Text(
-                text = item.shortHeadline!!,
+                text = item.shortHeadline.orEmpty(),
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(all = 4.dp),
