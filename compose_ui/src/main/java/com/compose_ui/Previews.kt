@@ -46,17 +46,14 @@ fun NewsItemsListPreview() {
 
 @ExperimentalCoilApi
 @Composable
-@Preview(name = "Light Empty NewsItemsListPreview")
+@Preview(name = "Light EmptyNewsItemsListPreview")
 @Preview(
     uiMode = Configuration.UI_MODE_NIGHT_YES,
     showBackground = true,
-    name = "Dark Empty NewsItemsListPreview"
+    name = "Dark EmptyNewsItemsListPreview"
 )
 fun EmptyNewsItemsListPreview() {
-    val navHostController = rememberNavController()
-    NewsItemsAppTheme {
-        NewsItemsList(navHostController, emptyList())
-    }
+    EmptyNewsItemsList()
 }
 
 @ExperimentalCoilApi

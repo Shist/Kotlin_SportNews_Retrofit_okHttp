@@ -25,37 +25,49 @@ import coil.compose.rememberImagePainter
 import com.compose_ui.theme.Purple200
 import domain.NewsItem
 
-@ExperimentalCoilApi
 @Composable
-fun NewsItemsList(navController: NavController, newsItemsList: List<NewsItem>) {
+fun EmptyNewsItemsList() {
     LazyColumn (
         modifier = Modifier
             .padding(all = 4.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (newsItemsList.isEmpty()) {
-            item {
-                Text(
-                    text = "No any data have been loaded!\n Please, check your network connection...",
-                    textAlign = TextAlign.Center,
-                    fontSize = 24.sp,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(all = 4.dp)
-                )
-            }
-            item {
-                Image(
-                    painter = painterResource(id = R.drawable.no_data_yet),
-                    contentDescription = "No data yet",
-                    contentScale = ContentScale.FillWidth,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(all = 4.dp)
-                )
-            }
-        } else {
+        item {
+            Text(
+                text = "No any data have been loaded!\n Please, check your network connection...",
+                textAlign = TextAlign.Center,
+                fontSize = 24.sp,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(all = 4.dp)
+            )
+        }
+        item {
+            Image(
+                painter = painterResource(id = R.drawable.no_data_yet),
+                contentDescription = "No data yet",
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(all = 4.dp)
+            )
+        }
+    }
+}
+
+@ExperimentalCoilApi
+@Composable
+fun NewsItemsList(navController: NavController, newsItemsList: List<NewsItem>) {
+    if (newsItemsList.isEmpty()) {
+        EmptyNewsItemsList()
+    } else {
+        LazyColumn (
+            modifier = Modifier
+                .padding(all = 4.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             itemsIndexed(newsItemsList) { index, item ->
                 if (index % 2 == 0) {
                     AngularNewsItem(navController, item, 8)
