@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId 'com.app'
         minSdkVersion 26
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -28,12 +28,10 @@ android {
 }
 
 dependencies {
-    implementation project(':domain')
-    implementation project(':data')
     implementation project(':ui')
-
-    // UnitTest
-    testImplementation "junit:junit:$unit_test_version"
+    implementation project(':data')
+    implementation project(':view_model')
+    implementation project(':work_manager')
 
     // Work Manager
     implementation "androidx.work:work-runtime-ktx:$work_version"
@@ -42,4 +40,7 @@ dependencies {
     implementation "io.insert-koin:koin-core:$koin_version"
     // Koin main features for Android (Scope,ViewModel ...)
     implementation "io.insert-koin:koin-android:$koin_version"
+
+    // For MainActivity
+    implementation 'androidx.appcompat:appcompat:1.4.0'
 }

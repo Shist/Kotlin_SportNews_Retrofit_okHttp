@@ -5,13 +5,11 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         minSdk 26
-        targetSdk 30
-        versionCode 1
-        versionName "1.0"
+        targetSdk 31
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -40,9 +38,6 @@ android {
 dependencies {
     implementation project(':domain')
 
-    // UnitTest
-    testImplementation "junit:junit:$unit_test_version"
-
     // RecycleView
     implementation "androidx.recyclerview:recyclerview:$recycle_view_version"
 
@@ -66,8 +61,9 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
     // Work Manager
-    implementation("androidx.work:work-runtime-ktx:$work_version")
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
+    // Koin version
     // Koin for Dependency Injection
     implementation "io.insert-koin:koin-core:$koin_version"
     // Koin main features for Android (Scope,ViewModel ...)

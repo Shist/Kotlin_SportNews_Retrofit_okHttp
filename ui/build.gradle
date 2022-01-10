@@ -4,13 +4,11 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         minSdk 26
-        targetSdk 30
-        versionCode 1
-        versionName "1.0"
+        targetSdk 31
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -38,9 +36,7 @@ android {
 
 dependencies {
     implementation project(':domain')
-
-    // UnitTest
-    testImplementation "junit:junit:$unit_test_version"
+    implementation project(':view_model')
 
     // For layout
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
@@ -48,9 +44,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_livedata_ktx_version"
     implementation "androidx.cardview:cardview:$cardview_version"
     implementation "com.google.android.material:material:$material_version"
-
-    // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_viewmodel_ktx_version"
 
     // Fragments
     implementation "androidx.fragment:fragment-ktx:$fragments_ktx_version"

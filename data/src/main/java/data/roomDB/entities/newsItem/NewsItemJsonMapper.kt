@@ -25,7 +25,7 @@ class NewsItemJsonMapper {
             }
         }
 
-        return NewsItemDB(itemJson.id!!,
+        return NewsItemDB(itemJson.id!!.substringAfterLast('/'),
             featuredMediaAltText,
             LocalDate.parse(itemJson.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
             featuredMediaContext,

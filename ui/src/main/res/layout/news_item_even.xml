@@ -19,7 +19,7 @@
             tools:contentDescription="@string/img"
             android:scaleType="centerCrop"
             android:contentDescription="@string/listImgDesc"
-            app:attrAnglesNumber='6' />
+            app:attrAnglesNumber='7' />
 
         <TextView
             android:id="@+id/altText"

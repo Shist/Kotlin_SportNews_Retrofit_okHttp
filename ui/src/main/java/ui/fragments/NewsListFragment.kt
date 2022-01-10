@@ -11,22 +11,21 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import ui.viewModel.LoadState
-import ui.MainActivity
+import com.view_model.loadState.LoadState
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
-import ui.adapter.SportAdapter
-import ui.viewModel.NewsListViewModel
 import kotlinx.coroutines.flow.collect
+import ui.adapter.SportAdapter
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import ui.MainActivity
 import ui.R
 import ui.databinding.NewsItemsListBinding
 
 class NewsListFragment : Fragment(), KoinComponent {
 
-    private val viewModel: NewsListViewModel by inject()
+    private val viewModel: com.view_model.NewsListViewModel by inject()
 
     private var _binding: NewsItemsListBinding? = null
     private val binding get() = _binding!!
