@@ -23,7 +23,7 @@ fun MakeAnimationSquare() {
     var mRotation by remember { mutableStateOf(0f)}
     var offset by remember { mutableStateOf(Offset.Zero) }
     var size by remember { mutableStateOf(Size.Zero) }
-    Box(modifier = Modifier.fillMaxSize()
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()
             .onSizeChanged {
                 size = it.toSize()
                 offset = Offset(x = size.width / 2, // TODO We need to get density and put square exactly to the center
@@ -42,7 +42,9 @@ fun MakeAnimationSquare() {
                     detectTransformGestures(
                         panZoomLock = false,
                         onGesture = { _, pan, zoom, rotation ->
-                            scale *= zoom
+                            if (scale * zoom * squareDp.toPx() < size.width &&
+                                scale * zoom * squareDp.toPx() < size.height)
+                                scale *= zoom
                             mRotation += rotation
                             val sinRotateAngle = sin(Math.toRadians(mRotation.toDouble()).toFloat())
                             val cosRotateAngle = cos(Math.toRadians(mRotation.toDouble()).toFloat())
