@@ -11,11 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
-import kotlin.math.cos
-import kotlin.math.roundToInt
 
 @Composable
 fun MakeAnimationSquare() {
@@ -24,24 +21,30 @@ fun MakeAnimationSquare() {
     var offset by remember { mutableStateOf(Offset.Zero) }
     Box(
         Modifier
-            .graphicsLayer(
-                scaleX = scale,
-                scaleY = scale,
-                rotationZ = m_rotation,
-                translationX = offset.x,
-                translationY = offset.y
-            )
-            .pointerInput(Unit) {
-                detectTransformGestures(
-                    panZoomLock = false,
-                    onGesture = { center,pan,zoom,rotation->
-                        scale *= zoom
-                        m_rotation += rotation
-                        offset += pan
-                    }
-                )
-            }
-            .background(Color.Green)
-            .size(100.dp)
+            .fillMaxSize()
     )
+    {
+        Box(
+            Modifier
+                .graphicsLayer(
+                    scaleX = scale,
+                    scaleY = scale,
+                    rotationZ = m_rotation,
+                    translationX = offset.x,
+                    translationY = offset.y
+                )
+                .pointerInput(Unit) {
+                    detectTransformGestures(
+                        panZoomLock = false,
+                        onGesture = { _, pan, zoom, rotation->
+                            scale *= zoom
+                            m_rotation += rotation
+                            offset += pan
+                        }
+                    )
+                }
+                .background(Color.Green)
+                .size(100.dp)
+        )
+    }
 }
