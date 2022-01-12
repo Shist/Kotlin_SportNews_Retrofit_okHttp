@@ -1,5 +1,6 @@
 package com.compose_ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.*
 import androidx.compose.foundation.layout.*
@@ -13,6 +14,8 @@ import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import kotlin.math.cos
+import kotlin.math.sin
 
 @Composable
 fun MakeAnimationSquare() {
@@ -43,12 +46,19 @@ fun MakeAnimationSquare() {
                         onGesture = { _, pan, zoom, rotation ->
                             scale *= zoom
                             mRotation += rotation
-                            offset += pan
-                            val newValue = Offset(
+                            Log.d("ROTATE_VALUE", Math.toRadians(mRotation.toDouble()).toFloat().toString())
+                            val sinRotateAngle = sin(Math.toRadians(mRotation.toDouble()).toFloat())
+                            val cosRotateAngle = cos(Math.toRadians(mRotation.toDouble()).toFloat())
+                            val rotateRecalculatingValue = Offset(
+                                x = pan.x * cosRotateAngle - pan.y * sinRotateAngle,
+                                y = pan.y * cosRotateAngle + pan.x * sinRotateAngle,
+                            )
+                            offset += rotateRecalculatingValue
+                            val putInBoundsValue = Offset(
                                 x = offset.x.coerceIn(0f, size.width - squareDp.toPx()),
                                 y = offset.y.coerceIn(0f, size.height - squareDp.toPx())
                             )
-                            offset = newValue
+                            offset = putInBoundsValue
                         }
                     )
                 }
