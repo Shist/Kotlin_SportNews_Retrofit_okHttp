@@ -1,4 +1,4 @@
-package com.composeui
+package com.compose_ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.*
@@ -8,38 +8,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import kotlin.math.cos
 import kotlin.math.roundToInt
 
 @Composable
 fun MakeAnimationSquare() {
-    val offsetX = remember { mutableStateOf(0f) }
-    val offsetY = remember { mutableStateOf(0f) }
-    var size by remember { mutableStateOf(Size.Zero) }
+    var scale by remember { mutableStateOf(1f)}
+    var m_rotation by remember { mutableStateOf(0f)}
+    var offset by remember { mutableStateOf(Offset.Zero) }
     Box(
-        Modifier.fillMaxSize()
-            .onSizeChanged { size = it.toSize() }
-    ) {
-        Box(
-            Modifier.offset { IntOffset(offsetX.value.roundToInt(), offsetY.value.roundToInt()) }
-                .size(50.dp)
-                .background(Color.Blue)
-                .pointerInput(Unit) {
-                    detectDragGestures { _, dragAmount ->
-                        val original = Offset(offsetX.value, offsetY.value)
-                        val summed = original + dragAmount
-                        val newValue = Offset(
-                            x = summed.x.coerceIn(0f, size.width - 50.dp.toPx()),
-                            y = summed.y.coerceIn(0f, size.height - 50.dp.toPx())
-                        )
-                        offsetX.value = newValue.x
-                        offsetY.value = newValue.y
+        Modifier
+            .graphicsLayer(
+                scaleX = scale,
+                scaleY = scale,
+                rotationZ = m_rotation,
+                translationX = offset.x,
+                translationY = offset.y
+            )
+            .pointerInput(Unit) {
+                detectTransformGestures(
+                    panZoomLock = false,
+                    onGesture = { center,pan,zoom,rotation->
+                        scale *= zoom
+                        m_rotation += rotation
+                        offset += pan
                     }
-                }
-        )
-    }
+                )
+            }
+            .background(Color.Green)
+            .size(100.dp)
+    )
 }
