@@ -52,8 +52,12 @@ fun MakeAnimationSquare() {
                             )
                             offset += rotateRecalculatingValue
                             val putInBoundsValue = Offset(
-                                x = offset.x.coerceIn(0f, size.width - squareDp.toPx()),
-                                y = offset.y.coerceIn(0f, size.height - squareDp.toPx())
+                                x = offset.x.coerceIn(
+                                    (scale - 1) * squareDp.toPx() / 2,
+                                    size.width - squareDp.toPx() * ((scale + 1) / 2)),
+                                y = offset.y.coerceIn(
+                                    (scale - 1) * squareDp.toPx() / 2,
+                                    size.height - squareDp.toPx() * ((scale + 1) / 2))
                             )
                             offset = putInBoundsValue
                         }
