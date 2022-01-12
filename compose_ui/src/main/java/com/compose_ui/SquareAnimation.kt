@@ -1,5 +1,6 @@
 package com.compose_ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.*
 import androidx.compose.foundation.layout.*
@@ -23,7 +24,7 @@ fun MakeAnimationSquare() {
     var mRotation by remember { mutableStateOf(0f)}
     var offset by remember { mutableStateOf(Offset.Zero) }
     var size by remember { mutableStateOf(Size.Zero) }
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()
+    Box(modifier = Modifier.fillMaxSize()
             .onSizeChanged {
                 size = it.toSize()
                 offset = Offset(x = size.width / 2, // TODO We need to get density and put square exactly to the center
@@ -55,13 +56,16 @@ fun MakeAnimationSquare() {
                                 y = scale * (pan.y * cosRotateAngle + pan.x * sinRotateAngle),
                             )
                             offset += rotateRecalculatingValue
+                            // TODO Выразить смещение границ в зависимости от угла поворота
+                            val rotatingBoundsOffset = sinRotateAngle * squareDp.toPx() / 2
+                            Log.d("ROTATE_BOUNDS_VALUE", rotatingBoundsOffset.toString())
                             val putInBoundsValue = Offset(
                                 x = offset.x.coerceIn(
-                                    (scale - 1) * squareDp.toPx() / 2,
-                                    size.width - squareDp.toPx() * ((scale + 1) / 2)),
+                                    (scale - 1) * squareDp.toPx() / 2 - rotatingBoundsOffset,
+                                    size.width - squareDp.toPx() * ((scale + 1) / 2)) + rotatingBoundsOffset,
                                 y = offset.y.coerceIn(
-                                    (scale - 1) * squareDp.toPx() / 2,
-                                    size.height - squareDp.toPx() * ((scale + 1) / 2))
+                                    (scale - 1) * squareDp.toPx() / 2 - rotatingBoundsOffset,
+                                    size.height - squareDp.toPx() * ((scale + 1) / 2)) + rotatingBoundsOffset
                             )
                             offset = putInBoundsValue
                         }
