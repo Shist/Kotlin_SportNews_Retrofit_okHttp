@@ -16,12 +16,16 @@ import androidx.compose.ui.unit.toSize
 
 @Composable
 fun MakeAnimationSquare() {
+    val squareDp = 100.dp
     var scale by remember { mutableStateOf(1f)}
-    var m_rotation by remember { mutableStateOf(0f)}
+    var mRotation by remember { mutableStateOf(0f)}
     var offset by remember { mutableStateOf(Offset.Zero) }
+    var size by remember { mutableStateOf(Size.Zero) }
     Box(
-        Modifier
-            .fillMaxSize()
+        Modifier.fillMaxSize()
+            .onSizeChanged {
+                size = it.toSize()
+            }
     )
     {
         Box(
@@ -29,22 +33,27 @@ fun MakeAnimationSquare() {
                 .graphicsLayer(
                     scaleX = scale,
                     scaleY = scale,
-                    rotationZ = m_rotation,
+                    rotationZ = mRotation,
                     translationX = offset.x,
                     translationY = offset.y
                 )
                 .pointerInput(Unit) {
                     detectTransformGestures(
                         panZoomLock = false,
-                        onGesture = { _, pan, zoom, rotation->
+                        onGesture = { _, pan, zoom, rotation ->
                             scale *= zoom
-                            m_rotation += rotation
+                            mRotation += rotation
                             offset += pan
+                            val newValue = Offset(
+                                x = offset.x.coerceIn(0f, size.width - squareDp.toPx()),
+                                y = offset.y.coerceIn(0f, size.height - squareDp.toPx())
+                            )
+                            offset = newValue
                         }
                     )
                 }
                 .background(Color.Green)
-                .size(100.dp)
+                .size(squareDp)
         )
     }
 }
