@@ -45,6 +45,8 @@ fun MakeAnimationSquare() {
                             if (scale * zoom * squareDp.toPx() < size.width &&
                                 scale * zoom * squareDp.toPx() < size.height)
                                 scale *= zoom
+                            if (scale < 0.5f)
+                                scale = 0.5f
                             mRotation += rotation
                             val sinRotateAngle = sin(Math.toRadians(mRotation.toDouble()).toFloat())
                             val cosRotateAngle = cos(Math.toRadians(mRotation.toDouble()).toFloat())
