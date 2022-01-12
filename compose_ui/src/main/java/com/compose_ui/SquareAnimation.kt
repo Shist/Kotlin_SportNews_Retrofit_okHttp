@@ -1,6 +1,5 @@
 package com.compose_ui
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.*
 import androidx.compose.foundation.layout.*
@@ -24,15 +23,14 @@ fun MakeAnimationSquare() {
     var mRotation by remember { mutableStateOf(0f)}
     var offset by remember { mutableStateOf(Offset.Zero) }
     var size by remember { mutableStateOf(Size.Zero) }
-    Box(
-        Modifier.fillMaxSize()
+    Box(modifier = Modifier.fillMaxSize()
             .onSizeChanged {
                 size = it.toSize()
+                offset = Offset(x = size.width / 2, // TODO We need to get density and put square exactly to the center
+                    y = size.height / 2) // TODO We need to get density and put square exactly to the center
             }
-    )
-    {
-        Box(
-            Modifier
+    ) {
+        Box(modifier = Modifier
                 .graphicsLayer(
                     scaleX = scale,
                     scaleY = scale,
@@ -46,12 +44,11 @@ fun MakeAnimationSquare() {
                         onGesture = { _, pan, zoom, rotation ->
                             scale *= zoom
                             mRotation += rotation
-                            Log.d("ROTATE_VALUE", Math.toRadians(mRotation.toDouble()).toFloat().toString())
                             val sinRotateAngle = sin(Math.toRadians(mRotation.toDouble()).toFloat())
                             val cosRotateAngle = cos(Math.toRadians(mRotation.toDouble()).toFloat())
                             val rotateRecalculatingValue = Offset(
-                                x = pan.x * cosRotateAngle - pan.y * sinRotateAngle,
-                                y = pan.y * cosRotateAngle + pan.x * sinRotateAngle,
+                                x = scale * (pan.x * cosRotateAngle - pan.y * sinRotateAngle),
+                                y = scale * (pan.y * cosRotateAngle + pan.x * sinRotateAngle),
                             )
                             offset += rotateRecalculatingValue
                             val putInBoundsValue = Offset(
