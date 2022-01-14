@@ -14,8 +14,10 @@ import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 @Composable
 fun MakeAnimationSquare() {
@@ -27,8 +29,8 @@ fun MakeAnimationSquare() {
     Box(modifier = Modifier.fillMaxSize()
             .onSizeChanged {
                 size = it.toSize()
-                offset = Offset(x = size.width / 2, // TODO We need to get density and put square exactly to the center
-                    y = size.height / 2) // TODO We need to get density and put square exactly to the center
+                offset = Offset(x = size.width / 2, // TODO We need to put square exactly to the center
+                    y = size.height / 2) // TODO We need to put square exactly to the center
             }
     ) {
         Box(modifier = Modifier
@@ -43,9 +45,28 @@ fun MakeAnimationSquare() {
                     detectTransformGestures(
                         panZoomLock = false,
                         onGesture = { _, pan, zoom, rotation ->
-                            if (scale * zoom * squareDp.toPx() < size.width &&
-                                scale * zoom * squareDp.toPx() < size.height)
+                            val rotatingBoundsOffset = scale * (squareDp.toPx() / 2) *
+                                    (sqrt(2.0) * cos(Math.toRadians(45.0 - abs(mRotation % 90).toDouble())) - 1).toFloat()
+                            Log.d("BOUNDS_CALCULATIONS", "\n===============================================\n")
+                            Log.d("BOUNDS_CALCULATIONS", "\n\n(((scale * zoom - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset) = ")
+                            Log.d("BOUNDS_CALCULATIONS", (((scale * zoom - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset).toString())
+                            Log.d("BOUNDS_CALCULATIONS", "\n??? < ???\n")
+                            Log.d("BOUNDS_CALCULATIONS", "(size.width - squareDp.toPx() * ((scale * zoom + 1) / 2) - rotatingBoundsOffset) = ")
+                            Log.d("BOUNDS_CALCULATIONS", (size.width - squareDp.toPx() * ((scale * zoom + 1) / 2) - rotatingBoundsOffset).toString())
+                            Log.d("BOUNDS_CALCULATIONS", "\n && \n")
+                            Log.d("BOUNDS_CALCULATIONS", "(((scale * zoom - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset) = ")
+                            Log.d("BOUNDS_CALCULATIONS", (((scale * zoom - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset).toString())
+                            Log.d("BOUNDS_CALCULATIONS", "\n??? < ???\n")
+                            Log.d("BOUNDS_CALCULATIONS", "(size.height - squareDp.toPx() * ((scale * zoom + 1) / 2) - rotatingBoundsOffset) = ")
+                            Log.d("BOUNDS_CALCULATIONS", (size.height - squareDp.toPx() * ((scale * zoom + 1) / 2) - rotatingBoundsOffset).toString())
+                            Log.d("BOUNDS_CALCULATIONS", "\n===============================================\n")
+                            if ((((scale * zoom - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset) <
+                                (size.width - squareDp.toPx() * ((scale * zoom + 1) / 2) - rotatingBoundsOffset) &&
+                                (((scale * zoom - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset) <
+                                (size.height - squareDp.toPx() * ((scale * zoom + 1) / 2) - rotatingBoundsOffset)) {
+                                Log.d("BOUNDS_CALCULATIONS", "\nHUY\n")
                                 scale *= zoom
+                            }
                             if (scale < 0.5f)
                                 scale = 0.5f
                             mRotation += rotation
@@ -56,16 +77,13 @@ fun MakeAnimationSquare() {
                                 y = scale * (pan.y * cosRotateAngle + pan.x * sinRotateAngle),
                             )
                             offset += rotateRecalculatingValue
-                            // TODO Выразить смещение границ в зависимости от угла поворота
-                            val rotatingBoundsOffset = sinRotateAngle * squareDp.toPx() / 2
-                            Log.d("ROTATE_BOUNDS_VALUE", rotatingBoundsOffset.toString())
                             val putInBoundsValue = Offset(
                                 x = offset.x.coerceIn(
-                                    (scale - 1) * squareDp.toPx() / 2 - rotatingBoundsOffset,
-                                    size.width - squareDp.toPx() * ((scale + 1) / 2)) + rotatingBoundsOffset,
+                                    ((scale - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset,
+                                    size.width - squareDp.toPx() * ((scale + 1) / 2) - rotatingBoundsOffset),
                                 y = offset.y.coerceIn(
-                                    (scale - 1) * squareDp.toPx() / 2 - rotatingBoundsOffset,
-                                    size.height - squareDp.toPx() * ((scale + 1) / 2)) + rotatingBoundsOffset
+                                    ((scale - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset,
+                                    size.height - squareDp.toPx() * ((scale + 1) / 2) - rotatingBoundsOffset),
                             )
                             offset = putInBoundsValue
                         }
