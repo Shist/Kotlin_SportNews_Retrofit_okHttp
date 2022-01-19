@@ -105,64 +105,29 @@ fun MakeAnimationSquare() {
 
 private fun Modifier.impulse(
 ): Modifier = composed {
-    // TODO 6-1: Create an Animatable instance for the offset of the swiped element.
     val offsetX = remember { Animatable(0f) } // Add this line
     val offsetY = remember { Animatable(0f) } // Add this line
     pointerInput(Unit) {
-        // Used to calculate a settling position of a fling animation.
         val decay = splineBasedDecay<Float>(this)
-        // Wrap in a coroutine scope to use suspend functions for touch events and animation.
         coroutineScope {
-            while (true) {
-                // Wait for a touch down event.
-                val pointerId = awaitPointerEventScope { awaitFirstDown().id }
-                // TODO 6-2: Touch detected; the animation should be stopped.
-                offsetX.stop() // Add this line
-                offsetY.stop()
-                // Prepare for drag events and record velocity of a fling.
-                val velocityTracker = VelocityTracker()
-                // Wait for drag events.
-                awaitPointerEventScope {
-                    drag(pointerId) { change ->
-                        // TODO 6-3: Apply the drag change to the Animatable offset.
-                        // Add these 4 lines
-                        val horizontalDragOffset = offsetX.value + change.positionChange().x
-                        val verticalDragOffset = offsetY.value + change.positionChange().y
-                        launch {
-                            offsetX.snapTo(horizontalDragOffset)
-                            offsetY.snapTo(verticalDragOffset)
-                        }
-                        // Record the velocity of the drag.
-                        velocityTracker.addPosition(change.uptimeMillis, change.position)
-                        // Consume the gesture event, not passed to external
-                        change.consumePositionChange()
-                    }
-                }
-                // Dragging finished. Calculate the velocity of the fling.
-                val velocityX = velocityTracker.calculateVelocity().x
-                val velocityY = velocityTracker.calculateVelocity().y
-                // TODO 6-4: Calculate the eventual position where the fling should settle
-                //           based on the current offset value and velocity
-                // Add this line
-                val targetOffsetX = decay.calculateTargetValue(offsetX.value, velocityX)
-                val targetOffsetY = decay.calculateTargetValue(offsetY.value, velocityY)
-                // TODO 6-5: Set the upper and lower bounds so that the animation stops when it
-                //           reaches the edge.
-                offsetX.updateBounds(
-                    lowerBound = -size.width.toFloat(),
-                    upperBound = size.width.toFloat()
-                )
-                offsetY.updateBounds(
-                    lowerBound = -size.height.toFloat(),
-                    upperBound = size.height.toFloat()
-                )
-                launch {
-                    offsetX.animateTo(targetValue = targetOffsetX, initialVelocity = velocityX)
-                    offsetX.animateTo(targetValue = targetOffsetY, initialVelocity = velocityY)
-                }
+            val velocityTracker = VelocityTracker()
+            val velocityX = velocityTracker.calculateVelocity().x
+            val velocityY = velocityTracker.calculateVelocity().y
+            val targetOffsetX = decay.calculateTargetValue(offsetX.value, velocityX)
+            val targetOffsetY = decay.calculateTargetValue(offsetY.value, velocityY)
+            offsetX.updateBounds(
+                lowerBound = -size.width.toFloat(),
+                upperBound = size.width.toFloat()
+            )
+            offsetY.updateBounds(
+                lowerBound = -size.height.toFloat(),
+                upperBound = size.height.toFloat()
+            )
+            launch {
+                offsetX.animateTo(targetValue = targetOffsetX, initialVelocity = velocityX)
+                offsetX.animateTo(targetValue = targetOffsetY, initialVelocity = velocityY)
             }
         }
     }
-        // Apply the offset to the element.
         .offset { IntOffset(offsetX.value.roundToInt(), offsetY.value.roundToInt()) }
 }
