@@ -66,26 +66,26 @@ fun MakeAnimationSquare() {
                                 (size.height - squareDp.toPx() * ((scale * zoom + 1) / 2) - rotatingBoundsOffset)) {
                                 Log.d("BOUNDS_CALCULATIONS", "\nHUY\n")
                                 scale *= zoom
+                                if (scale < 0.5f)
+                                    scale = 0.5f
+                                mRotation += rotation
+                                val sinRotateAngle = sin(Math.toRadians(mRotation.toDouble()).toFloat())
+                                val cosRotateAngle = cos(Math.toRadians(mRotation.toDouble()).toFloat())
+                                val rotateRecalculatingValue = Offset(
+                                    x = scale * (pan.x * cosRotateAngle - pan.y * sinRotateAngle),
+                                    y = scale * (pan.y * cosRotateAngle + pan.x * sinRotateAngle),
+                                )
+                                offset += rotateRecalculatingValue
+                                val putInBoundsValue = Offset(
+                                    x = offset.x.coerceIn(
+                                        ((scale - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset,
+                                        size.width - squareDp.toPx() * ((scale + 1) / 2) - rotatingBoundsOffset),
+                                    y = offset.y.coerceIn(
+                                        ((scale - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset,
+                                        size.height - squareDp.toPx() * ((scale + 1) / 2) - rotatingBoundsOffset),
+                                )
+                                offset = putInBoundsValue
                             }
-                            if (scale < 0.5f)
-                                scale = 0.5f
-                            mRotation += rotation
-                            val sinRotateAngle = sin(Math.toRadians(mRotation.toDouble()).toFloat())
-                            val cosRotateAngle = cos(Math.toRadians(mRotation.toDouble()).toFloat())
-                            val rotateRecalculatingValue = Offset(
-                                x = scale * (pan.x * cosRotateAngle - pan.y * sinRotateAngle),
-                                y = scale * (pan.y * cosRotateAngle + pan.x * sinRotateAngle),
-                            )
-                            offset += rotateRecalculatingValue
-                            val putInBoundsValue = Offset(
-                                x = offset.x.coerceIn(
-                                    ((scale - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset,
-                                    size.width - squareDp.toPx() * ((scale + 1) / 2) - rotatingBoundsOffset),
-                                y = offset.y.coerceIn(
-                                    ((scale - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset,
-                                    size.height - squareDp.toPx() * ((scale + 1) / 2) - rotatingBoundsOffset),
-                            )
-                            offset = putInBoundsValue
                         }
                     )
                 }
