@@ -105,8 +105,8 @@ fun MakeAnimationSquare() {
 
 private fun Modifier.impulse(
 ): Modifier = composed {
-    val offsetX = remember { Animatable(0f) } // Add this line
-    val offsetY = remember { Animatable(0f) } // Add this line
+    val offsetX = remember { Animatable(0f) }
+    val offsetY = remember { Animatable(0f) }
     pointerInput(Unit) {
         val decay = splineBasedDecay<Float>(this)
         coroutineScope {
