@@ -34,12 +34,10 @@ fun MakeAnimationSquare() {
         .fillMaxSize()
         .onSizeChanged {
             size = it.toSize()
-            position = Animatable(Offset(
-                x = size.width / 2, // TODO We need to put square exactly to the center
-                y = size.height / 2
-            ), Offset.VectorConverter) // TODO We need to put square exactly to the center
         }
     ) {
+        Log.d("XUI", "x = " + position.value.x.toString() +
+                " ; y = " + position.value.y.toString() + "\n")
         Box(modifier = Modifier
             .graphicsLayer(
                 scaleX = scale,
@@ -53,7 +51,6 @@ fun MakeAnimationSquare() {
                 detectTransformGestures(
                     panZoomLock = false,
                     onGesture = { _, pan, zoom, rotation ->
-                        velocityTracker.resetTracking()
                         val rotatingBoundsOffset = scale * (squareDp.toPx() / 2) *
                                 (sqrt(2.0) * cos(Math.toRadians(45.0 - abs(mRotation % 90).toDouble())) - 1).toFloat()
                         if ((((scale * zoom - 1) / 2) * squareDp.toPx() + rotatingBoundsOffset) <
@@ -82,8 +79,6 @@ fun MakeAnimationSquare() {
                                 y = scale * (pan.y * cosRotateAngle + pan.x * sinRotateAngle),
                             )
                             var putInBoundsValue : Offset
-                            Log.d("XUI", "x = " + position.value.x.toString() +
-                                    " ; y = " + position.value.y.toString() + "\n")
                             scope.launch {
                                 position.snapTo(position.value + rotateRecalculatingValue)
                                 putInBoundsValue = Offset(
