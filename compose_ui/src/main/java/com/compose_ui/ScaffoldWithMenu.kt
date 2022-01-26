@@ -67,7 +67,8 @@ fun MakeScaffoldWithMenu(navController: NavController, newsItemsList: List<NewsI
         },
         drawerContent = {
             MenuContent(scaffoldState, scope, menuPage)
-        }
+        },
+        drawerGesturesEnabled = false
     ) {
         when (menuPage.value) {
             MenuPage.NEWS_LIST -> {
