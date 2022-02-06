@@ -22,4 +22,5 @@
     <string name="loadingItem">Loading news item</string>
     <string name="loadingSuccess">News list has been loaded successfully</string>
     <string name="loadingItemSuccess">News item has been loaded successfully</string>
+    <string name="noItemSelectedText">Choose some news item to read about latest news!</string>
 </resources>

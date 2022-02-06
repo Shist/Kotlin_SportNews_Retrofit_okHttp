@@ -58,6 +58,7 @@ class NewsListFragment : Fragment(), KoinComponent {
         val adapter = SportAdapter {
             val myActivity = requireActivity() as MainActivity
             myActivity.onItemClick(it.itemId)
+            activity?.intent?.putExtra("currItemId", it.itemId)
         }
         recyclerView.adapter = adapter
 

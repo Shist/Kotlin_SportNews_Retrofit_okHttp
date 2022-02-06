@@ -22,6 +22,7 @@ import org.koin.core.component.inject
 import org.koin.core.parameter.parametersOf
 import ui.R
 import ui.databinding.NewsPageBinding
+import java.lang.IllegalArgumentException
 
 class NewsPageFragment : Fragment(), KoinComponent {
 
@@ -130,27 +131,37 @@ class NewsPageFragment : Fragment(), KoinComponent {
     }
 
     private fun createSnackbar(message: String, color: Int) {
-        val snackbar = Snackbar.make(
-            binding.swipeContainer,
-            message,
-            LENGTH_SHORT
-        )
-        snackbar.setTextColor(color)
-        snackbar.show()
+        try {
+            val snackbar = Snackbar.make(
+                binding.swipeContainer,
+                message,
+                LENGTH_SHORT
+            )
+            snackbar.setTextColor(color)
+            snackbar.show()
+        } catch (e: Throwable) {
+            // Если snackbar не создался из-за отсутствия фрагмента, то ничего не делаем
+            //throw IllegalArgumentException(e.message)
+        }
     }
 
     private fun createSnackbarWithReload(messageError: String) {
-        val snackbar = Snackbar.make(
-            binding.swipeContainer,
-            messageError,
-            LENGTH_LONG
-        )
-        snackbar.setTextColor(requireContext().getColor(R.color.colorMistakeText))
-        snackbar.setActionTextColor(requireContext().getColor(R.color.colorMistakeReload))
-        snackbar.setAction(R.string.reload) {
-            viewModel.loadData(keyItemID)
+        try {
+            val snackbar = Snackbar.make(
+                binding.swipeContainer,
+                messageError,
+                LENGTH_LONG
+            )
+            snackbar.setTextColor(requireContext().getColor(R.color.colorMistakeText))
+            snackbar.setActionTextColor(requireContext().getColor(R.color.colorMistakeReload))
+            snackbar.setAction(R.string.reload) {
+                viewModel.loadData(keyItemID)
+            }
+            snackbar.show()
+        } catch (e: Throwable) {
+            // Если snackbar не создался из-за отсутствия фрагмента, то ничего не делаем
+            //throw IllegalArgumentException(e.message)
         }
-        snackbar.show()
     }
 
 }
