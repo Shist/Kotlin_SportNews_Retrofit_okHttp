@@ -6,7 +6,7 @@ buildscript {
         // Kotlin
         kotlin_version = "1.5.31"
         // Build Gradle
-        build_gradle_version = "7.0.4"
+        build_gradle_version = '7.1.1'
         // Compose
         compose_version = "1.0.5"
         // Compose Activity
