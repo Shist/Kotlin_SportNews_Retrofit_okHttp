@@ -132,7 +132,22 @@ fun NewsItemDetailsPreview() {
 fun MakeScaffoldWithMenuPreview() {
     val navHostController = rememberNavController()
     NewsItemsAppTheme {
-        MakeScaffoldWithMenu(navHostController, listOf(someNewsItem, someNewsItem, someNewsItem))
+        MakeScaffoldWithMenu(false)
+    }
+}
+
+@ExperimentalMaterialApi
+@ExperimentalCoilApi
+@Composable
+@Preview(name = "LightScaffoldWithMenuPreviewLandscape")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "DarkScaffoldWithMenuPreviewLandscape"
+)
+fun MakeScaffoldWithMenuPreviewLandscape() {
+    NewsItemsAppTheme {
+        MakeScaffoldWithMenu(true)
     }
 }
 

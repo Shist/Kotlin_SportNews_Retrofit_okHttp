@@ -4,4 +4,5 @@
     <string name="menu_name">Application Menu</string>
     <string name="menu_item_news_list">Latest News</string>
     <string name="menu_item_square">Square Animation</string>
+    <string name="noItemSelectedText">Choose some news item to read about latest news!</string>
 </resources>

@@ -1,38 +1,49 @@
 package com.compose_ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
 import com.view_model.NewsListViewModel
-import domain.NewsItem
+import com.view_model.NewsPageViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
+import java.time.LocalDate
 
 enum class MenuPage {
     NEWS_LIST,
     SQUARE
 }
 
+val nullItemDetails = domain.NewsItemDetails("",
+    "",
+    LocalDate.now(),
+    "",
+    "")
+
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
-fun MakeScaffoldWithMenu(navController: NavController, newsItemsList: List<NewsItem>) {
+fun MakeScaffoldWithMenu(isLandscape: Boolean) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val menuPage = rememberSaveable { mutableStateOf(MenuPage.NEWS_LIST) }
@@ -70,12 +81,87 @@ fun MakeScaffoldWithMenu(navController: NavController, newsItemsList: List<NewsI
         },
         drawerGesturesEnabled = false
     ) {
-        when (menuPage.value) {
-            MenuPage.NEWS_LIST -> {
-                NewsItemsList(navController, newsItemsList)
+        val navController = rememberNavController()
+        val newsItemId = rememberSaveable { mutableStateOf("no_item_selected") }
+        val newsListViewModel = getViewModel<NewsListViewModel>()
+        newsListViewModel.loadData()
+        val newsItemsList by newsListViewModel.newsListFlow
+            .collectAsState(initial = emptyList())
+        NavHost(
+            navController = navController,
+            startDestination = Screen.NewsItemsList.name
+        ) {
+            composable(route = Screen.NewsItemsList.name) {
+                when (menuPage.value) {
+                    MenuPage.NEWS_LIST -> {
+                        if (isLandscape) {
+                            Row {
+                                Box(modifier = Modifier.weight(0.5f)) {
+                                    NewsItemsList(navController, newsItemsList)
+                                }
+                                Box(modifier = Modifier.weight(0.5f),
+                                    contentAlignment = Alignment.Center) {
+                                    Text(
+                                        text = stringResource(id = R.string.noItemSelectedText),
+                                        textAlign = TextAlign.Center,
+                                        fontSize = 48.sp,
+                                        modifier = Modifier
+                                            .padding(all = 4.dp),
+                                    )
+                                }
+                            }
+                        } else {
+                            if (newsItemId.value == "no_item_selected") {
+                                NewsItemsList(navController, newsItemsList)
+                            } else {
+                                val newsPageViewModel = getViewModel<NewsPageViewModel> {
+                                    parametersOf(newsItemId.value)
+                                }
+                                newsPageViewModel.loadData(newsItemId.value)
+                                NewsItemDetails(item = newsPageViewModel.newsPageFlow
+                                    .collectAsState(initial = nullItemDetails).value)
+                            }
+                        }
+                    }
+                    MenuPage.SQUARE -> {
+                        MakeAnimationSquare()
+                    }
+                }
             }
-            MenuPage.SQUARE -> {
-                MakeAnimationSquare()
+            composable(
+                route = "${Screen.NewsItemDetails.name}/{itemId}",
+                arguments = listOf(
+                    navArgument("itemId") {
+                        type = NavType.StringType
+                    }
+                )
+            ) { entry ->
+                BackHandler {
+                    newsItemId.value = "no_item_selected"
+                }
+                newsItemId.value = entry.arguments?.getString("itemId").toString()
+                if (isLandscape) {
+                    Row {
+                        Box(modifier = Modifier.weight(0.5f)) {
+                            NewsItemsList(navController, newsItemsList)
+                        }
+                        Box(modifier = Modifier.weight(0.5f)) {
+                            val newsPageViewModel = getViewModel<NewsPageViewModel> {
+                                parametersOf(newsItemId.value)
+                            }
+                            newsPageViewModel.loadData(newsItemId.value)
+                            NewsItemDetails(item = newsPageViewModel.newsPageFlow
+                                .collectAsState(initial = nullItemDetails).value)
+                        }
+                    }
+                } else {
+                    val newsPageViewModel = getViewModel<NewsPageViewModel> {
+                        parametersOf(newsItemId.value)
+                    }
+                    newsPageViewModel.loadData(newsItemId.value)
+                    NewsItemDetails(item = newsPageViewModel.newsPageFlow
+                        .collectAsState(initial = nullItemDetails).value)
+                }
             }
         }
     }

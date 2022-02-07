@@ -1,5 +1,6 @@
 package com.compose_ui
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,10 +17,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val orientation = resources.configuration.orientation
+
         setContent {
             NewsItemsAppTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    StartNavigation()
+                    if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        MakeScaffoldWithMenu(isLandscape = false)
+                    } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        MakeScaffoldWithMenu(isLandscape = true)
+                    }
                 }
             }
         }
