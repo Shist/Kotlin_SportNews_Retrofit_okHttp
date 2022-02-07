@@ -1,6 +1,5 @@
 package com.compose_ui
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -111,16 +110,7 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                                 }
                             }
                         } else {
-                            if (newsItemId.value == "no_item_selected") {
-                                NewsItemsList(navController, newsItemsList)
-                            } else {
-                                val newsPageViewModel = getViewModel<NewsPageViewModel> {
-                                    parametersOf(newsItemId.value)
-                                }
-                                newsPageViewModel.loadData(newsItemId.value)
-                                NewsItemDetails(item = newsPageViewModel.newsPageFlow
-                                    .collectAsState(initial = nullItemDetails).value)
-                            }
+                            NewsItemsList(navController, newsItemsList)
                         }
                     }
                     MenuPage.SQUARE -> {
@@ -136,9 +126,6 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                     }
                 )
             ) { entry ->
-                BackHandler {
-                    newsItemId.value = "no_item_selected"
-                }
                 newsItemId.value = entry.arguments?.getString("itemId").toString()
                 if (isLandscape) {
                     Row {
