@@ -11,6 +11,9 @@ import ui.fragments.NoItemSelectedFragment
 
 class MainActivity : AppCompatActivity() {
 
+    // 1) Сделать это через ViewModel (пробросить ItemID) и во вьюхах и в compose (вместо intent)
+    // 2) Убрать NavController для landscape-а в compose версии (оставив его для portrait-ной)
+
     private lateinit var binding: ActivityMainBinding
 
     private var orientation: Int = 0
