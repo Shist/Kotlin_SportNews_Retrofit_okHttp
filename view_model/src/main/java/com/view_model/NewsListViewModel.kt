@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.view_model.loadState.LoadState
 import domain.NewsItem
@@ -23,11 +22,6 @@ class NewsListViewModel (application: Application)
     val newsListFlow: Flow<List<NewsItem>> = newsRepository.getItems()
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
-
-    // ID текущего (выбранного) item (изначально "no_item_selected")
-    val currItemId: MutableLiveData<String> by lazy {
-        MutableLiveData<String>("no_item_selected")
-    }
 
     private fun isConnectedToInternet() : Boolean {
         val context = getApplication<Application>().applicationContext

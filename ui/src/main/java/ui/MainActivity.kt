@@ -4,8 +4,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.view_model.NewsListViewModel
-import org.koin.android.ext.android.inject
 import ui.databinding.ActivityMainBinding
 import ui.fragments.NewsListFragment
 import ui.fragments.NewsPageFragment
@@ -17,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     // 2) Убрать NavController для landscape-а в compose версии (оставив его для portrait-ной)
 
     private lateinit var binding: ActivityMainBinding
-    private val newsListViewModel: NewsListViewModel by inject()
+    private var currItemId = "no_item_selected"
     private var orientation: Int = 0
 
     private fun inflateFragment(f: Fragment, holder: Int, needAddBackStackOrNot: Boolean) {
@@ -33,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("currItemId", currItemId)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,7 +45,9 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val currItemId = newsListViewModel.currItemId.value!!
+        if (savedInstanceState != null) {
+            currItemId = savedInstanceState.getString("currItemId", "no_item_selected")
+        }
 
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             if (currItemId == "no_item_selected") {
@@ -67,11 +72,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        newsListViewModel.currItemId.value = "no_item_selected"
+        currItemId = "no_item_selected"
     }
 
     fun onItemClick(itemID: String) {
-        newsListViewModel.currItemId.value = itemID
+        currItemId = itemID
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             inflateFragment(NewsPageFragment.newInstance(itemID),
                 R.id.fragment_container,true)
