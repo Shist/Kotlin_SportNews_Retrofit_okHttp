@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.view_model.loadState.LoadState
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
+import com.view_model.NewsListViewModel
 import kotlinx.coroutines.flow.collect
 import ui.adapter.SportAdapter
 import kotlinx.coroutines.launch
@@ -25,7 +26,7 @@ import ui.databinding.NewsItemsListBinding
 
 class NewsListFragment : Fragment(), KoinComponent {
 
-    private val viewModel: com.view_model.NewsListViewModel by inject()
+    private val viewModel: NewsListViewModel by inject()
 
     private var _binding: NewsItemsListBinding? = null
     private val binding get() = _binding!!
@@ -58,7 +59,6 @@ class NewsListFragment : Fragment(), KoinComponent {
         val adapter = SportAdapter {
             val myActivity = requireActivity() as MainActivity
             myActivity.onItemClick(it.itemId)
-            activity?.intent?.putExtra("currItemId", it.itemId)
         }
         recyclerView.adapter = adapter
 

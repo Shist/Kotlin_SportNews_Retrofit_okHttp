@@ -3,7 +3,9 @@ package ui
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.ListFragment
+import androidx.fragment.app.Fragment
+import com.view_model.NewsListViewModel
+import org.koin.android.ext.android.inject
 import ui.databinding.ActivityMainBinding
 import ui.fragments.NewsListFragment
 import ui.fragments.NewsPageFragment
@@ -15,8 +17,21 @@ class MainActivity : AppCompatActivity() {
     // 2) Убрать NavController для landscape-а в compose версии (оставив его для portrait-ной)
 
     private lateinit var binding: ActivityMainBinding
-
+    private val newsListViewModel: NewsListViewModel by inject()
     private var orientation: Int = 0
+
+    private fun inflateFragment(f: Fragment, holder: Int, needAddBackStackOrNot: Boolean) {
+        if (needAddBackStackOrNot) {
+            supportFragmentManager.beginTransaction()
+                .replace(holder, f)
+                .addToBackStack("goBack")
+                .commit()
+        } else {
+            supportFragmentManager.beginTransaction()
+                .replace(holder, f)
+                .commit()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,55 +42,42 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val currItemId = intent.getStringExtra("currItemId")
+        val currItemId = newsListViewModel.currItemId.value!!
 
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            if (currItemId == null || currItemId == "no_item_selected") {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, NewsListFragment())
-                    .commit()
+            if (currItemId == "no_item_selected") {
+                inflateFragment(NewsListFragment(),
+                    R.id.fragment_container,false)
             } else {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container,
-                        NewsPageFragment.newInstance(currItemId))
-                    .addToBackStack("goBack")
-                    .commit()
+                inflateFragment(NewsPageFragment.newInstance(currItemId),
+                    R.id.fragment_container,true)
             }
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, NewsListFragment())
-                .commit()
-            if (currItemId == null || currItemId == "no_item_selected") {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container_2, NoItemSelectedFragment())
-                    .commit()
+            inflateFragment(NewsListFragment(),
+                R.id.fragment_container,false)
+            if (currItemId == "no_item_selected") {
+                inflateFragment(NoItemSelectedFragment(),
+                    R.id.fragment_container_2,false)
             } else {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container_2,
-                        NewsPageFragment.newInstance(currItemId))
-                    .commit()
+                inflateFragment(NewsPageFragment.newInstance(currItemId),
+                    R.id.fragment_container_2,false)
             }
         }
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        intent.putExtra("currItemId", "no_item_selected")
+        newsListViewModel.currItemId.value = "no_item_selected"
     }
 
     fun onItemClick(itemID: String) {
+        newsListViewModel.currItemId.value = itemID
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, NewsPageFragment.newInstance(itemID))
-                .addToBackStack("goBack")
-                .commit()
+            inflateFragment(NewsPageFragment.newInstance(itemID),
+                R.id.fragment_container,true)
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container_2, NewsPageFragment.newInstance(itemID))
-                .addToBackStack("goBack")
-                .commit()
+            inflateFragment(NewsPageFragment.newInstance(itemID),
+                R.id.fragment_container_2,false)
         }
     }
 

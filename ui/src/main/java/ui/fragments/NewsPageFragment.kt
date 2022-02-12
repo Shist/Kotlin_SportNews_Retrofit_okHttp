@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import com.view_model.NewsPageViewModel
 import domain.NewsItemDetails
 import com.view_model.loadState.LoadState
 import kotlinx.coroutines.flow.collect
@@ -22,7 +23,6 @@ import org.koin.core.component.inject
 import org.koin.core.parameter.parametersOf
 import ui.R
 import ui.databinding.NewsPageBinding
-import java.lang.IllegalArgumentException
 
 class NewsPageFragment : Fragment(), KoinComponent {
 
@@ -35,7 +35,7 @@ class NewsPageFragment : Fragment(), KoinComponent {
         }
     }
 
-    private val viewModel: com.view_model.NewsPageViewModel by inject {
+    private val viewModel: NewsPageViewModel by inject {
         parametersOf(arguments?.getString(keyItemID))
     }
 
