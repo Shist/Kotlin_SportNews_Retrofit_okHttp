@@ -143,27 +143,35 @@ class NewsListFragment : Fragment(), KoinComponent {
     }
 
     private fun createSnackbar(message: String, color: Int) {
-        val snackbar = Snackbar.make(
-            binding.swipeContainer,
-            message,
-            LENGTH_SHORT
-        )
-        snackbar.setTextColor(color)
-        snackbar.show()
+        try {
+            val snackbar = Snackbar.make(
+                binding.swipeContainer,
+                message,
+                LENGTH_SHORT
+            )
+            snackbar.setTextColor(color)
+            snackbar.show()
+        } catch (e: Throwable) {
+            // Make some message that snackbar can't be created...
+        }
     }
 
     private fun createSnackbarWithReload(snackbarTimeLength: Int, messageError: String) {
-        val snackbar = Snackbar.make(
-            binding.swipeContainer,
-            messageError,
-            snackbarTimeLength
-        )
-        snackbar.setTextColor(requireContext().getColor(R.color.colorMistakeText))
-        snackbar.setActionTextColor(requireContext().getColor(R.color.colorMistakeReload))
-        snackbar.setAction(R.string.reload) {
-            viewModel.loadData()
+        try {
+            val snackbar = Snackbar.make(
+                binding.swipeContainer,
+                messageError,
+                snackbarTimeLength
+            )
+            snackbar.setTextColor(requireContext().getColor(R.color.colorMistakeText))
+            snackbar.setActionTextColor(requireContext().getColor(R.color.colorMistakeReload))
+            snackbar.setAction(R.string.reload) {
+                viewModel.loadData()
+            }
+            snackbar.show()
+        } catch (e: Throwable) {
+            // Make some message that snackbar can't be created...
         }
-        snackbar.show()
     }
 
 }

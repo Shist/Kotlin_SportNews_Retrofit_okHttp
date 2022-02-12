@@ -49,23 +49,33 @@ class MainActivity : AppCompatActivity() {
             currItemId = savedInstanceState.getString("currItemId", "no_item_selected")
         }
 
+        // Если ориентация портретная, то...
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            if (currItemId == "no_item_selected") {
-                inflateFragment(NewsListFragment(),
-                    R.id.fragment_container,false)
-            } else {
-                inflateFragment(NewsPageFragment.newInstance(currItemId),
-                    R.id.fragment_container,true)
-            }
-        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // В любом случае раздуваем фрагмент со списком новостей
             inflateFragment(NewsListFragment(),
-                R.id.fragment_container,false)
-            if (currItemId == "no_item_selected") {
-                inflateFragment(NoItemSelectedFragment(),
-                    R.id.fragment_container_2,false)
-            } else {
+                R.id.fragment_container_portrait,false)
+            // Если же есть открытая новость, то раздуваем ещё и её сверху (добавляя в стек)
+            if (currItemId != "no_item_selected") {
                 inflateFragment(NewsPageFragment.newInstance(currItemId),
-                    R.id.fragment_container_2,false)
+                    R.id.fragment_container_portrait,true)
+            }
+            // Если же ориентация альбомая, то...
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Чистим стек в ноль, если в него был добавлен какой-то открытый айтем
+            if (supportFragmentManager.backStackEntryCount != 0) {
+                supportFragmentManager.popBackStack()
+            }
+            // В любом случае раздуваем фрагмент со списком новостей слева
+            inflateFragment(NewsListFragment(),
+                R.id.fragment_container_landscape_1,false)
+            if (currItemId == "no_item_selected") {
+                // Если ничего открыто не было, то раздуваем справа пустышку
+                inflateFragment(NoItemSelectedFragment(),
+                    R.id.fragment_container_landscape_2,false)
+            } else {
+                // Если же что-то было открыто, то раздуваем это справа
+                inflateFragment(NewsPageFragment.newInstance(currItemId),
+                    R.id.fragment_container_landscape_2,false)
             }
         }
     }
@@ -79,10 +89,10 @@ class MainActivity : AppCompatActivity() {
         currItemId = itemID
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             inflateFragment(NewsPageFragment.newInstance(itemID),
-                R.id.fragment_container,true)
+                R.id.fragment_container_portrait,true)
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             inflateFragment(NewsPageFragment.newInstance(itemID),
-                R.id.fragment_container_2,false)
+                R.id.fragment_container_landscape_2,false)
         }
     }
 
