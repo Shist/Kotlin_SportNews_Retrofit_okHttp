@@ -58,7 +58,7 @@ fun EmptyNewsItemsList() {
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
-fun NewsItemsList(navController: NavController, newsItemsList: List<NewsItem>) {
+fun NewsItemsList(newsItemsList: List<NewsItem>, currItemId: MutableState<String>) {
     if (newsItemsList.isEmpty()) {
         EmptyNewsItemsList()
     } else {
@@ -70,9 +70,9 @@ fun NewsItemsList(navController: NavController, newsItemsList: List<NewsItem>) {
         ) {
             itemsIndexed(newsItemsList) { index, item ->
                 if (index % 2 == 0) {
-                    AngularNewsItem(navController, item, 8)
+                    AngularNewsItem(item, 8, currItemId)
                 } else {
-                    AngularNewsItem(navController, item, 7)
+                    AngularNewsItem(item, 7, currItemId)
                 }
             }
         }
@@ -82,7 +82,176 @@ fun NewsItemsList(navController: NavController, newsItemsList: List<NewsItem>) {
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
-fun StandardNewsItem(navController: NavController, item: NewsItem) {
+fun StandardNewsItem(item: NewsItem, currItemId: MutableState<String>) {
+    val configuration = LocalConfiguration.current
+    val itemWidth = configuration.screenWidthDp.dp
+    val itemImageWidth = itemWidth / 2
+    val itemImageHeight = itemImageWidth * 9 / 16
+    Surface(onClick = {
+        currItemId.value = item.itemId },
+        modifier = Modifier
+            .padding(all = 2.dp),
+        color = MaterialTheme.colors.onSurface.copy(alpha = 0.05f)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = rememberImagePainter(item.context),
+                contentDescription = "News image",
+                modifier = Modifier
+                    .height(itemImageHeight)
+                    .weight(weight = 0.5f)
+                    .padding(all = 4.dp),
+            )
+            Column(
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(all = 4.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = item.shortHeadline.orEmpty(),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(all = 4.dp),
+                )
+                Text(
+                    text = item.altText.orEmpty(),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(all = 4.dp),
+                    color = Purple200
+                )
+            }
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@ExperimentalCoilApi
+@Composable
+fun AngularNewsItem(item: NewsItem, anglesNumber: Int, currItemId: MutableState<String>) {
+    val configuration = LocalConfiguration.current
+    val itemWidth = configuration.screenWidthDp.dp
+    val itemImageWidth = itemWidth / 2
+    val itemImageHeight = itemImageWidth * 9 / 16
+    Surface(onClick = {
+        currItemId.value = item.itemId },
+        modifier = Modifier
+            .padding(all = 2.dp),
+        color = MaterialTheme.colors.onSurface.copy(alpha = 0.05f)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            if (anglesNumber % 2 == 0) {
+                Column(
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .padding(all = 4.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = item.shortHeadline.orEmpty(),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(all = 4.dp),
+                    )
+                    Text(
+                        text = item.altText.orEmpty(),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(all = 4.dp),
+                        color = Purple200
+                    )
+                }
+                Image(
+                    painter = rememberImagePainter(item.context),
+                    contentDescription = "News image",
+                    modifier = Modifier
+                        .height(itemImageHeight)
+                        .weight(weight = 0.5f)
+                        .padding(all = 4.dp)
+                        .graphicsLayer {
+                            shape = CustomImageShape(anglesNumber)
+                            clip = true
+                        },
+                )
+            } else {
+                Image(
+                    painter = rememberImagePainter(item.context),
+                    contentDescription = "News image",
+                    modifier = Modifier
+                        .height(itemImageHeight)
+                        .weight(weight = 0.5f)
+                        .padding(all = 4.dp)
+                        .graphicsLayer {
+                            shape = CustomImageShape(anglesNumber)
+                            clip = true
+                        },
+                )
+                Column(
+                    modifier = Modifier
+                        .weight(0.5f)
+                        .padding(all = 4.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = item.shortHeadline.orEmpty(),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(all = 4.dp),
+                    )
+                    Text(
+                        text = item.altText.orEmpty(),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(all = 4.dp),
+                        color = Purple200
+                    )
+                }
+            }
+        }
+    }
+}
+
+
+@ExperimentalMaterialApi
+@ExperimentalCoilApi
+@Composable
+fun NewsItemsListWithNavigator(navController: NavController, newsItemsList: List<NewsItem>) {
+    if (newsItemsList.isEmpty()) {
+        EmptyNewsItemsList()
+    } else {
+        LazyColumn (
+            modifier = Modifier
+                .padding(all = 4.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            itemsIndexed(newsItemsList) { index, item ->
+                if (index % 2 == 0) {
+                    AngularNewsItemWithNavigator(navController, item, 8)
+                } else {
+                    AngularNewsItemWithNavigator(navController, item, 7)
+                }
+            }
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@ExperimentalCoilApi
+@Composable
+fun StandardNewsItemWithNavigator(navController: NavController, item: NewsItem) {
     val configuration = LocalConfiguration.current
     val itemWidth = configuration.screenWidthDp.dp
     val itemImageWidth = itemWidth / 2
@@ -135,7 +304,7 @@ fun StandardNewsItem(navController: NavController, item: NewsItem) {
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
-fun AngularNewsItem(navController: NavController, item: NewsItem, anglesNumber: Int) {
+fun AngularNewsItemWithNavigator(navController: NavController, item: NewsItem, anglesNumber: Int) {
     val configuration = LocalConfiguration.current
     val itemWidth = configuration.screenWidthDp.dp
     val itemImageWidth = itemWidth / 2

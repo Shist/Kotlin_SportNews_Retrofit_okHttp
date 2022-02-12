@@ -42,7 +42,7 @@ val someNewsItemDetails = domain.NewsItemDetails(
 fun NewsItemsListPreview() {
     val navHostController = rememberNavController()
     NewsItemsAppTheme {
-        NewsItemsList(navHostController, listOf(someNewsItem, someNewsItem, someNewsItem))
+        NewsItemsListWithNavigator(navHostController, listOf(someNewsItem, someNewsItem, someNewsItem))
     }
 }
 
@@ -70,7 +70,7 @@ fun EmptyNewsItemsListPreview() {
 fun StandardNewsItemPreview() {
     val navHostController = rememberNavController()
     NewsItemsAppTheme {
-        StandardNewsItem(navHostController, someNewsItem)
+        StandardNewsItemWithNavigator(navHostController, someNewsItem)
     }
 }
 
@@ -86,7 +86,7 @@ fun StandardNewsItemPreview() {
 fun EvenAngularNewsItemPreview() {
     val navHostController = rememberNavController()
     NewsItemsAppTheme {
-        AngularNewsItem(navHostController, someNewsItem, 8)
+        AngularNewsItemWithNavigator(navHostController, someNewsItem, 8)
     }
 }
 
@@ -102,7 +102,7 @@ fun EvenAngularNewsItemPreview() {
 fun OddAngularNewsItemPreview() {
     val navHostController = rememberNavController()
     NewsItemsAppTheme {
-        AngularNewsItem(navHostController, someNewsItem, 7)
+        AngularNewsItemWithNavigator(navHostController, someNewsItem, 7)
     }
 }
 
@@ -130,7 +130,6 @@ fun NewsItemDetailsPreview() {
     name = "DarkScaffoldWithMenuPreview"
 )
 fun MakeScaffoldWithMenuPreview() {
-    val navHostController = rememberNavController()
     NewsItemsAppTheme {
         MakeScaffoldWithMenu(false)
     }

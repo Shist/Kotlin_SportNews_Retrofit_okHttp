@@ -23,6 +23,7 @@ import coil.annotation.ExperimentalCoilApi
 import com.view_model.NewsListViewModel
 import com.view_model.NewsPageViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -80,75 +81,91 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
         },
         drawerGesturesEnabled = false
     ) {
-        val navController = rememberNavController()
         val newsItemId = rememberSaveable { mutableStateOf("no_item_selected") }
         val newsListViewModel = getViewModel<NewsListViewModel>()
         newsListViewModel.loadData()
         val newsItemsList by newsListViewModel.newsListFlow
             .collectAsState(initial = emptyList())
-        NavHost(
-            navController = navController,
-            startDestination = Screen.NewsItemsList.name
-        ) {
-            composable(route = Screen.NewsItemsList.name) {
-                when (menuPage.value) {
-                    MenuPage.NEWS_LIST -> {
-                        if (isLandscape) {
-                            Row {
-                                Box(modifier = Modifier.weight(0.5f)) {
-                                    NewsItemsList(navController, newsItemsList)
-                                }
-                                Box(modifier = Modifier.weight(0.5f),
-                                    contentAlignment = Alignment.Center) {
-                                    Text(
-                                        text = stringResource(id = R.string.noItemSelectedText),
-                                        textAlign = TextAlign.Center,
-                                        fontSize = 48.sp,
-                                        modifier = Modifier
-                                            .padding(all = 4.dp),
-                                    )
-                                }
-                            }
-                        } else {
-                            NewsItemsList(navController, newsItemsList)
-                        }
-                    }
-                    MenuPage.SQUARE -> {
-                        MakeAnimationSquare()
-                    }
-                }
-            }
-            composable(
-                route = "${Screen.NewsItemDetails.name}/{itemId}",
-                arguments = listOf(
-                    navArgument("itemId") {
-                        type = NavType.StringType
-                    }
-                )
-            ) { entry ->
-                newsItemId.value = entry.arguments?.getString("itemId").toString()
+        when (menuPage.value) {
+            MenuPage.NEWS_LIST -> {
                 if (isLandscape) {
                     Row {
                         Box(modifier = Modifier.weight(0.5f)) {
-                            NewsItemsList(navController, newsItemsList)
+                            NewsItemsList(newsItemsList, newsItemId)
                         }
-                        Box(modifier = Modifier.weight(0.5f)) {
-                            val newsPageViewModel = getViewModel<NewsPageViewModel> {
-                                parametersOf(newsItemId.value)
+                        Box(modifier = Modifier.weight(0.5f),
+                            contentAlignment = Alignment.Center) {
+                            if (newsItemId.value == "no_item_selected") {
+                                Text(
+                                    text = stringResource(id = R.string.noItemSelectedText),
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 48.sp,
+                                    modifier = Modifier
+                                        .padding(all = 4.dp),
+                                )
+                            } else {
+                                val newsPageViewModel = getViewModel<NewsPageViewModel> {
+                                    parametersOf(newsItemId.value)
+                                }
+                                newsPageViewModel.loadData(newsItemId.value)
+                                val needItem = newsPageViewModel.newsPageFlow.collectAsState(initial = nullItemDetails).value
+                                NewsItemDetails(item = needItem)
                             }
-                            newsPageViewModel.loadData(newsItemId.value)
-                            NewsItemDetails(item = newsPageViewModel.newsPageFlow
-                                .collectAsState(initial = nullItemDetails).value)
                         }
                     }
-                } else {
-                    val newsPageViewModel = getViewModel<NewsPageViewModel> {
-                        parametersOf(newsItemId.value)
+                } else { // Если портретная ориентация, то...
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.NewsItemsList.name
+                    ) {
+                        composable(route = Screen.NewsItemsList.name) {
+                            when (menuPage.value) {
+                                MenuPage.NEWS_LIST -> {
+                                    NewsItemsListWithNavigator(navController, newsItemsList)
+                                }
+                                MenuPage.SQUARE -> {
+                                    MakeAnimationSquare()
+                                }
+                            }
+                        }
+                        composable(
+                            route = "${Screen.NewsItemDetails.name}/{itemId}",
+                            arguments = listOf(
+                                navArgument("itemId") {
+                                    type = NavType.StringType
+                                }
+                            )
+                        ) { entry ->
+                            newsItemId.value = entry.arguments?.getString("itemId")!!
+                            if (isLandscape) {
+                                Row {
+                                    Box(modifier = Modifier.weight(0.5f)) {
+                                        NewsItemsListWithNavigator(navController, newsItemsList)
+                                    }
+                                    Box(modifier = Modifier.weight(0.5f)) {
+                                        val newsPageViewModel = getViewModel<NewsPageViewModel> {
+                                            parametersOf(newsItemId.value)
+                                        }
+                                        newsPageViewModel.loadData(newsItemId.value)
+                                        NewsItemDetails(item = newsPageViewModel.newsPageFlow
+                                            .collectAsState(initial = nullItemDetails).value)
+                                    }
+                                }
+                            } else {
+                                val newsPageViewModel = getViewModel<NewsPageViewModel> {
+                                    parametersOf(newsItemId.value)
+                                }
+                                newsPageViewModel.loadData(newsItemId.value)
+                                NewsItemDetails(item = newsPageViewModel.newsPageFlow
+                                    .collectAsState(initial = nullItemDetails).value)
+                            }
+                        }
                     }
-                    newsPageViewModel.loadData(newsItemId.value)
-                    NewsItemDetails(item = newsPageViewModel.newsPageFlow
-                        .collectAsState(initial = nullItemDetails).value)
                 }
+            }
+            MenuPage.SQUARE -> {
+                MakeAnimationSquare()
             }
         }
     }
