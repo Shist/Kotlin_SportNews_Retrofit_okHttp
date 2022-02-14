@@ -9,6 +9,7 @@ import ui.fragments.NewsListFragment
 import ui.fragments.NewsPageFragment
 import ui.fragments.NoItemSelectedFragment
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -46,8 +47,10 @@ class MainActivity : AppCompatActivity() {
             currItemId = savedInstanceState.getString("currItemId", "no_item_selected")
         }
 
+        val deviceIsTablet = resources.getBoolean(R.bool.isTablet)
+
         // Если ориентация портретная, то...
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (!deviceIsTablet && orientation == Configuration.ORIENTATION_PORTRAIT) {
             // В любом случае раздуваем фрагмент со списком новостей
             inflateFragment(NewsListFragment(),
                 R.id.fragment_container_portrait,false)
@@ -57,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.fragment_container_portrait,true)
             }
             // Если же ориентация альбомая, то...
-        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        } else if (deviceIsTablet || orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // Чистим стек в ноль, если в него был добавлен какой-то открытый айтем
             if (supportFragmentManager.backStackEntryCount != 0) {
                 supportFragmentManager.popBackStack()
@@ -84,10 +87,11 @@ class MainActivity : AppCompatActivity() {
 
     fun onItemClick(itemID: String) {
         currItemId = itemID
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+        val deviceIsTablet = resources.getBoolean(R.bool.isTablet)
+        if (!deviceIsTablet && orientation == Configuration.ORIENTATION_PORTRAIT) {
             inflateFragment(NewsPageFragment.newInstance(itemID),
                 R.id.fragment_container_portrait,true)
-        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        } else if (deviceIsTablet || orientation == Configuration.ORIENTATION_LANDSCAPE) {
             inflateFragment(NewsPageFragment.newInstance(itemID),
                 R.id.fragment_container_landscape_2,false)
         }
