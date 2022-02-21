@@ -10,6 +10,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -23,10 +25,8 @@ import coil.annotation.ExperimentalCoilApi
 import com.view_model.NewsListViewModel
 import com.view_model.NewsPageViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
-import org.koin.core.parameter.parametersOf
 import java.time.LocalDate
 
 enum class MenuPage {
@@ -88,7 +88,9 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
             .collectAsState(initial = emptyList())
         when (menuPage.value) {
             MenuPage.NEWS_LIST -> {
-                if (isLandscape) {
+                val deviceIsTablet = booleanResource(id = R.bool.isTablet)
+                // Если работаем с планшетом и при этом в лэндскейпной ориентации, то...
+                if (deviceIsTablet && isLandscape) {
                     Row {
                         Box(modifier = Modifier.weight(0.5f)) {
                             NewsItemsList(newsItemsList, newsItemId)
@@ -111,7 +113,7 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                             }
                         }
                     }
-                } else { // Если портретная ориентация, то...
+                } else { // Если же работаем с телефоном или с планшетом (но портретной ориентации), то...
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
@@ -136,7 +138,8 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                             )
                         ) { entry ->
                             newsItemId.value = entry.arguments?.getString("itemId")!!
-                            if (isLandscape) {
+                            // Если работаем с планшетом и при этом в лэндскейпной ориентации, то...
+                            if (deviceIsTablet && isLandscape) {
                                 Row {
                                     Box(modifier = Modifier.weight(0.5f)) {
                                         NewsItemsListWithNavigator(navController, newsItemsList)
@@ -148,7 +151,7 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                                         NewsItemDetails(item = needItem)
                                     }
                                 }
-                            } else {
+                            } else { // Если же работаем с телефоном или с планшетом (но портретной ориентации), то...
                                 val newsPageViewModel = getViewModel<NewsPageViewModel>()
                                 val needItem = newsPageViewModel.getItem(newsItemId.value)
                                     .collectAsState(initial = nullItemDetails).value

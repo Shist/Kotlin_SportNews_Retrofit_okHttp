@@ -9,8 +9,9 @@ import ui.fragments.NewsListFragment
 import ui.fragments.NewsPageFragment
 import ui.fragments.NoItemSelectedFragment
 
-
 class MainActivity : AppCompatActivity() {
+
+    private val itemIdKey = "currItemId"
 
     private lateinit var binding: ActivityMainBinding
     private var currItemId = "no_item_selected"
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("currItemId", currItemId)
+        outState.putString(itemIdKey, currItemId)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,38 +45,37 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         if (savedInstanceState != null) {
-            currItemId = savedInstanceState.getString("currItemId", "no_item_selected")
+            currItemId = savedInstanceState.getString(itemIdKey, "no_item_selected")
         }
 
         val deviceIsTablet = resources.getBoolean(R.bool.isTablet)
 
-        // Если ориентация портретная, то...
-        if (!deviceIsTablet && orientation == Configuration.ORIENTATION_PORTRAIT) {
-            // В любом случае раздуваем фрагмент со списком новостей
-            inflateFragment(NewsListFragment(),
-                R.id.fragment_container_portrait,false)
-            // Если же есть открытая новость, то раздуваем ещё и её сверху (добавляя в стек)
-            if (currItemId != "no_item_selected") {
-                inflateFragment(NewsPageFragment.newInstance(currItemId),
-                    R.id.fragment_container_portrait,true)
-            }
-            // Если же ориентация альбомая, то...
-        } else if (deviceIsTablet || orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        // Если работаем с планшетом и ориентация лэндскейпная, то...
+        if (deviceIsTablet && orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // Чистим стек в ноль, если в него был добавлен какой-то открытый айтем
             if (supportFragmentManager.backStackEntryCount != 0) {
                 supportFragmentManager.popBackStack()
             }
             // В любом случае раздуваем фрагмент со списком новостей слева
             inflateFragment(NewsListFragment(),
-                R.id.fragment_container_landscape_1,false)
+                R.id.fragment_container_main,false)
             if (currItemId == "no_item_selected") {
                 // Если ничего открыто не было, то раздуваем справа пустышку
                 inflateFragment(NoItemSelectedFragment(),
-                    R.id.fragment_container_landscape_2,false)
+                    R.id.fragment_container_additional,false)
             } else {
                 // Если же что-то было открыто, то раздуваем это справа
                 inflateFragment(NewsPageFragment.newInstance(currItemId),
-                    R.id.fragment_container_landscape_2,false)
+                    R.id.fragment_container_additional,false)
+            }
+        } else { // Если же работаем с телефоном или с портретной ориентацией планшета, то...
+            // В любом случае раздуваем фрагмент со списком новостей
+            inflateFragment(NewsListFragment(),
+                R.id.fragment_container_main,false)
+            // Если же есть открытая новость, то раздуваем ещё и её сверху (добавляя в стек)
+            if (currItemId != "no_item_selected") {
+                inflateFragment(NewsPageFragment.newInstance(currItemId),
+                    R.id.fragment_container_main,true)
             }
         }
     }
@@ -88,12 +88,12 @@ class MainActivity : AppCompatActivity() {
     fun onItemClick(itemID: String) {
         currItemId = itemID
         val deviceIsTablet = resources.getBoolean(R.bool.isTablet)
-        if (!deviceIsTablet && orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if (deviceIsTablet && orientation == Configuration.ORIENTATION_LANDSCAPE) {
             inflateFragment(NewsPageFragment.newInstance(itemID),
-                R.id.fragment_container_portrait,true)
-        } else if (deviceIsTablet || orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                R.id.fragment_container_additional,false)
+        } else {
             inflateFragment(NewsPageFragment.newInstance(itemID),
-                R.id.fragment_container_landscape_2,false)
+                R.id.fragment_container_main,true)
         }
     }
 
