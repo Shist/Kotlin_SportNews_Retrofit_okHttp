@@ -1,5 +1,6 @@
 package ui.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.view_model.loadState.LoadState
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
@@ -53,8 +55,15 @@ class NewsListFragment : Fragment(), KoinComponent {
             android.R.color.holo_red_light
         )
 
+        val orientation = resources.configuration.orientation
+        val isTablet = resources.getBoolean(R.bool.isTablet)
+
         val recyclerView = binding.recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        if (isTablet && orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.layoutManager = GridLayoutManager(context, 2)
+        } else {
+            recyclerView.layoutManager = LinearLayoutManager(context)
+        }
 
         val adapter = SportAdapter {
             val myActivity = requireActivity() as MainActivity
