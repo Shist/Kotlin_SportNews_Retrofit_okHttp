@@ -16,11 +16,11 @@ import com.squareup.picasso.Picasso
 import com.view_model.NewsPageViewModel
 import domain.NewsItemDetails
 import com.view_model.loadState.LoadState
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.core.parameter.parametersOf
 import ui.R
 import ui.databinding.NewsPageBinding
 
@@ -35,9 +35,7 @@ class NewsPageFragment : Fragment(), KoinComponent {
         }
     }
 
-    private val viewModel: NewsPageViewModel by inject {
-        parametersOf(arguments?.getString(keyItemID))
-    }
+    private val viewModel: NewsPageViewModel by inject()
 
     private var _binding: NewsPageBinding? = null
     private val binding get() = _binding!!
@@ -54,7 +52,8 @@ class NewsPageFragment : Fragment(), KoinComponent {
         super.onViewCreated(view, savedInstanceState)
 
         val itemID = arguments?.getString(keyItemID)
-        viewModel.loadData(itemID!!)
+
+        var itemFlow: Flow<NewsItemDetails> = viewModel.getItem(itemID!!)
 
         val swipeContainer = binding.swipeContainer
         swipeContainer.setColorSchemeResources(
@@ -71,12 +70,12 @@ class NewsPageFragment : Fragment(), KoinComponent {
         var item: NewsItemDetails?
 
         swipeContainer.setOnRefreshListener {
-            viewModel.loadData(itemID)
+            itemFlow = viewModel.getItem(itemID)
         }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.newsPageFlow.collect {
+                itemFlow.collect {
                     item = it
 
                     pageHeadline.text = item?.shortHeadline

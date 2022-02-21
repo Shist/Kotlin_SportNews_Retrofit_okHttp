@@ -104,11 +104,9 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                                         .padding(all = 4.dp),
                                 )
                             } else {
-                                val newsPageViewModel = getViewModel<NewsPageViewModel> {
-                                    parametersOf(newsItemId.value)
-                                }
-                                newsPageViewModel.loadData(newsItemId.value)
-                                val needItem = newsPageViewModel.newsPageFlow.collectAsState(initial = nullItemDetails).value
+                                val newsPageViewModel = getViewModel<NewsPageViewModel>()
+                                val needItem = newsPageViewModel.getItem(newsItemId.value)
+                                    .collectAsState(initial = nullItemDetails).value
                                 NewsItemDetails(item = needItem)
                             }
                         }
@@ -144,21 +142,17 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                                         NewsItemsListWithNavigator(navController, newsItemsList)
                                     }
                                     Box(modifier = Modifier.weight(0.5f)) {
-                                        val newsPageViewModel = getViewModel<NewsPageViewModel> {
-                                            parametersOf(newsItemId.value)
-                                        }
-                                        newsPageViewModel.loadData(newsItemId.value)
-                                        NewsItemDetails(item = newsPageViewModel.newsPageFlow
-                                            .collectAsState(initial = nullItemDetails).value)
+                                        val newsPageViewModel = getViewModel<NewsPageViewModel>()
+                                        val needItem = newsPageViewModel.getItem(newsItemId.value)
+                                            .collectAsState(initial = nullItemDetails).value
+                                        NewsItemDetails(item = needItem)
                                     }
                                 }
                             } else {
-                                val newsPageViewModel = getViewModel<NewsPageViewModel> {
-                                    parametersOf(newsItemId.value)
-                                }
-                                newsPageViewModel.loadData(newsItemId.value)
-                                NewsItemDetails(item = newsPageViewModel.newsPageFlow
-                                    .collectAsState(initial = nullItemDetails).value)
+                                val newsPageViewModel = getViewModel<NewsPageViewModel>()
+                                val needItem = newsPageViewModel.getItem(newsItemId.value)
+                                    .collectAsState(initial = nullItemDetails).value
+                                NewsItemDetails(item = needItem)
                             }
                         }
                     }

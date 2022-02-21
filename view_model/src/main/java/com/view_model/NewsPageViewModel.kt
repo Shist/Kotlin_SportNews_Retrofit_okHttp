@@ -16,13 +16,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.IOException
 
-class NewsPageViewModel(application: Application,
-                        itemID: String)
+class NewsPageViewModel(application: Application)
     : AndroidViewModel(application), KoinComponent {
 
     private val newsRepository: NewsRepository by inject()
-
-    val newsPageFlow: Flow<NewsItemDetails> = newsRepository.getItemDetailsByID(itemID)
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
 
@@ -56,6 +53,11 @@ class NewsPageViewModel(application: Application,
                 }
             }
         }
+    }
+
+    fun getItem(itemID: String): Flow<NewsItemDetails> {
+        loadData(itemID)
+        return newsRepository.getItemDetailsByID(itemID)
     }
 
     override fun onCleared() {

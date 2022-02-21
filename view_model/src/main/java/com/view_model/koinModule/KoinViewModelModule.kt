@@ -9,11 +9,6 @@ val viewModelModule = module {
 
     viewModel { NewsListViewModel(application = get()) }
 
-    viewModel { params ->
-        NewsPageViewModel(
-            application = get(),
-            itemID = params.get()
-        )
-    }
+    viewModel { NewsPageViewModel(application = get()) }
 
 }
