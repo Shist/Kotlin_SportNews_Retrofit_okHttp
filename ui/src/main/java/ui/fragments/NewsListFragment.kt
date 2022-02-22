@@ -55,15 +55,10 @@ class NewsListFragment : Fragment(), KoinComponent {
             android.R.color.holo_red_light
         )
 
-        val orientation = resources.configuration.orientation
-        val isTablet = resources.getBoolean(R.bool.isTablet)
+        val columnsCount = resources.getInteger(R.integer.columnsCount)
 
         val recyclerView = binding.recyclerView
-        if (isTablet && orientation == Configuration.ORIENTATION_PORTRAIT) {
-            recyclerView.layoutManager = GridLayoutManager(context, 2)
-        } else {
-            recyclerView.layoutManager = LinearLayoutManager(context)
-        }
+        recyclerView.layoutManager = GridLayoutManager(context, columnsCount)
 
         val adapter = SportAdapter {
             val myActivity = requireActivity() as MainActivity

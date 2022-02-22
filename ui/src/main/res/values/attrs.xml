@@ -3,6 +3,8 @@
 
     <bool name="isTablet">false</bool>
 
+    <integer name="columnsCount">1</integer>
+
     <declare-styleable name="NewsItemCustomImage">
         <attr name="attrAnglesNumber" format="integer" />
     </declare-styleable>

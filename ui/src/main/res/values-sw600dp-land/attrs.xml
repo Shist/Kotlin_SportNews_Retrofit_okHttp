@@ -3,6 +3,6 @@
 
     <bool name="isTablet">true</bool>
 
-    <integer name="columnsCount">2</integer>
+    <integer name="columnsCount">1</integer>
 
 </resources>
