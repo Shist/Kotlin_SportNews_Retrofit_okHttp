@@ -1,7 +1,9 @@
 package com.compose_ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -15,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -56,6 +59,7 @@ fun EmptyNewsItemsList() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
@@ -63,12 +67,10 @@ fun NewsItemsList(newsItemsList: List<NewsItem>, currItemId: MutableState<String
     if (newsItemsList.isEmpty()) {
         EmptyNewsItemsList()
     } else {
-        LazyColumn (
+        val columnsCount = integerResource(id = R.integer.columnsCount)
+        LazyVerticalGrid(cells = GridCells.Fixed(columnsCount),
             modifier = Modifier
-                .padding(all = 4.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+                .padding(all = 4.dp)) {
             itemsIndexed(newsItemsList) { index, item ->
                 if (index % 2 == 0) {
                     AngularNewsItem(item, 8, currItemId)
@@ -225,6 +227,7 @@ fun AngularNewsItem(item: NewsItem, anglesNumber: Int, currItemId: MutableState<
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
@@ -232,12 +235,10 @@ fun NewsItemsListWithNavigator(navController: NavController, newsItemsList: List
     if (newsItemsList.isEmpty()) {
         EmptyNewsItemsList()
     } else {
-        LazyColumn (
+        val columnsCount = integerResource(id = R.integer.columnsCount)
+        LazyVerticalGrid(cells = GridCells.Fixed(columnsCount),
             modifier = Modifier
-                .padding(all = 4.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+                .padding(all = 4.dp)) {
             itemsIndexed(newsItemsList) { index, item ->
                 if (index % 2 == 0) {
                     AngularNewsItemWithNavigator(navController, item, 8)
