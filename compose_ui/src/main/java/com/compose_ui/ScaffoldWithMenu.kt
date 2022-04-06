@@ -23,7 +23,9 @@ import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
 import com.view_model.NewsListViewModel
 import com.view_model.NewsPageViewModel
+import domain.NewsItem
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import java.time.LocalDate
@@ -105,10 +107,7 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                                         .padding(all = 4.dp),
                                 )
                             } else {
-                                val newsPageViewModel = getViewModel<NewsPageViewModel>()
-                                val needItem = newsPageViewModel.getItem(newsItemId.value)
-                                    .collectAsState(initial = nullItemDetails).value
-                                NewsItemDetails(item = needItem)
+                                NewsItemDetails(currItem = newsItemId.value)
                             }
                         }
                     }
@@ -144,17 +143,11 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                                         NewsItemsListWithNavigator(navController, newsItemsList)
                                     }
                                     Box(modifier = Modifier.weight(0.5f)) {
-                                        val newsPageViewModel = getViewModel<NewsPageViewModel>()
-                                        val needItem = newsPageViewModel.getItem(newsItemId.value)
-                                            .collectAsState(initial = nullItemDetails).value
-                                        NewsItemDetails(item = needItem)
+                                        NewsItemDetails(currItem = newsItemId.value)
                                     }
                                 }
                             } else { // Если же работаем с телефоном или с планшетом (но портретной ориентации), то...
-                                val newsPageViewModel = getViewModel<NewsPageViewModel>()
-                                val needItem = newsPageViewModel.getItem(newsItemId.value)
-                                    .collectAsState(initial = nullItemDetails).value
-                                NewsItemDetails(item = needItem)
+                                NewsItemDetails(currItem = newsItemId.value)
                             }
                         }
                     }

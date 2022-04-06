@@ -41,6 +41,14 @@ android {
     }
 }
 
+kotlin.sourceSets.all {
+    languageSettings.optIn("kotlin.RequiresOptIn")
+}
+
+repositories {
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+}
+
 dependencies {
     implementation project(':domain')
     implementation project(':view_model')
@@ -67,4 +75,7 @@ dependencies {
     // Koin main features for Android (Scope,ViewModel ...)
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+
+    // Accompanist
+    implementation "com.google.accompanist:accompanist-pager:$accompanist_pager_version"
 }

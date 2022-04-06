@@ -2,6 +2,7 @@ package data.repository
 
 import data.roomDB.entities.newsItem.NewsItemDB
 import domain.NewsItem
+import domain.NewsItemDetails
 
 class NewsItemDBMapper {
 

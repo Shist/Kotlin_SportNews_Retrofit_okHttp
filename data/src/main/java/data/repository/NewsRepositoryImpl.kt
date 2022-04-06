@@ -94,6 +94,11 @@ class NewsRepositoryImpl(private val newsItemDatabase: NewsItemDatabase,
             list.map { newsItemDBMapper.fromDBToNotImpl(it) } }
     }
 
+    override fun getItemsDetails(): Flow<List<NewsItemDetails>> {
+        return newsItemDatabase.itemsDetailsDao().getAllItemsDetails().map { list ->
+            list.map { newsItemDetailsDBMapper.fromDBToNotImpl(it) } }
+    }
+
     override fun getItemDetailsByID(itemDetailsId: String): Flow<NewsItemDetails> {
         return newsItemDatabase.itemsDetailsDao().getItemDetailsById(itemDetailsId).map {
             newsItemDetailsDBMapper.fromDBToNotImpl(it) }

@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.view_model.loadState.LoadState
+import domain.NewsItem
 import domain.NewsItemDetails
 import domain.NewsRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +21,8 @@ class NewsPageViewModel(application: Application)
     : AndroidViewModel(application), KoinComponent {
 
     private val newsRepository: NewsRepository by inject()
+
+    val newsDetailsListFlow: Flow<List<NewsItemDetails>> = newsRepository.getItemsDetails()
 
     val state: MutableStateFlow<LoadState> = MutableStateFlow(LoadState.IDLE)
 

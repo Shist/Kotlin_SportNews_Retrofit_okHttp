@@ -11,6 +11,8 @@ interface NewsRepository {
 
     fun getItems(): Flow<List<NewsItem>>
 
+    fun getItemsDetails(): Flow<List<NewsItemDetails>>
+
     fun getItemDetailsByID(itemDetailsId: String): Flow<NewsItemDetails>
 
 }
