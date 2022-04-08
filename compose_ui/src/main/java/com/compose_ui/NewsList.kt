@@ -3,15 +3,16 @@ package com.compose_ui
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -68,7 +69,7 @@ fun NewsItemsList(newsItemsList: List<NewsItem>, currItemId: MutableState<String
         EmptyNewsItemsList()
     } else {
         val columnsCount = integerResource(id = R.integer.columnsCount)
-        LazyVerticalGrid(cells = GridCells.Fixed(columnsCount),
+        LazyVerticalGrid(columns = GridCells.Fixed(columnsCount),
             modifier = Modifier
                 .padding(all = 4.dp)) {
             itemsIndexed(newsItemsList) { index, item ->
@@ -236,7 +237,7 @@ fun NewsItemsListWithNavigator(navController: NavController, newsItemsList: List
         EmptyNewsItemsList()
     } else {
         val columnsCount = integerResource(id = R.integer.columnsCount)
-        LazyVerticalGrid(cells = GridCells.Fixed(columnsCount),
+        LazyVerticalGrid(columns = GridCells.Fixed(columnsCount),
             modifier = Modifier
                 .padding(all = 4.dp)) {
             itemsIndexed(newsItemsList) { index, item ->
