@@ -37,9 +37,8 @@ fun NewsItemDetails(currItem: String) {
         .collectAsState(initial = emptyList())
     val needItem = newsPageViewModel.getItem(currItem)
         .collectAsState(initial = nullItemDetails).value
-    val pagerState = rememberPagerState(pageCount = newsItemsDetailsList.size,
-        initialPage = newsItemsDetailsList.indexOf(needItem))
-    HorizontalPager(state = pagerState) {
+    val pagerState = rememberPagerState(initialPage = newsItemsDetailsList.indexOf(needItem))
+    HorizontalPager(state = pagerState, count = newsItemsDetailsList.size) {
         LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
             item {
                 Text(

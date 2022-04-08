@@ -12,7 +12,7 @@ buildscript {
         // Compose Activity
         compose_activity_version = "1.6.0-alpha01"
         // Accompanist
-        accompanist_pager_version = "0.9.2-SNAPSHOT"
+        accompanist_pager_version = "0.24.6-alpha"
         // Work Manager
         work_version = "2.6.0"
         // Koin version
