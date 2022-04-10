@@ -154,7 +154,7 @@ class NewsPageFragment : Fragment(), KoinComponent {
             snackbar.setTextColor(requireContext().getColor(R.color.colorMistakeText))
             snackbar.setActionTextColor(requireContext().getColor(R.color.colorMistakeReload))
             snackbar.setAction(R.string.reload) {
-                viewModel.loadData(keyItemID)
+                viewModel.loadItemData(keyItemID)
             }
             snackbar.show()
         } catch (e: Throwable) {

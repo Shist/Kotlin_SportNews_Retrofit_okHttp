@@ -28,6 +28,7 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.compose_ui.theme.Purple200
 import domain.NewsItem
+import domain.NewsItemDetails
 
 @Composable
 fun EmptyNewsItemsList() {

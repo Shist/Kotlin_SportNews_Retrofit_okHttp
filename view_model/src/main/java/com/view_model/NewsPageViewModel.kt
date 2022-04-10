@@ -7,9 +7,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.view_model.loadState.LoadState
-import domain.NewsItem
 import domain.NewsItemDetails
 import domain.NewsRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -33,7 +33,32 @@ class NewsPageViewModel(application: Application)
         return  networkInfo!=null && networkInfo.isConnected
     }
 
-    fun loadData(itemID: String) {
+    fun loadData() {
+        viewModelScope.launch(Dispatchers.Main) {
+            state.value = LoadState.LOADING
+            try {
+                newsRepository.loadNews()
+                state.value = LoadState.SUCCESS
+            } catch (e: Throwable) {
+                if (!isConnectedToInternet() && e is IOException) {
+                    state.value = LoadState.INTERNET_ERROR
+                }
+                else if (e is NullPointerException) {
+                    when (e.message) {
+                        "Error: List<NewsItem> from json is empty!" ->
+                            state.value = LoadState.EMPTY_ITEMS_LIST_ERROR
+                        "Error: List<NewsItemDetails> from json is empty!" ->
+                            state.value = LoadState.EMPTY_ITEMS_DETAILS_LIST_ERROR
+                    }
+                }
+                else {
+                    state.value = LoadState.UNKNOWN_ERROR
+                }
+            }
+        }
+    }
+
+    fun loadItemData(itemID: String) {
         viewModelScope.launch {
             state.value = LoadState.LOADING
             try {
@@ -59,7 +84,7 @@ class NewsPageViewModel(application: Application)
     }
 
     fun getItem(itemID: String): Flow<NewsItemDetails> {
-        loadData(itemID)
+        loadItemData(itemID)
         return newsRepository.getItemDetailsByID(itemID)
     }
 

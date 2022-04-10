@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -21,28 +19,23 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.view_model.NewsPageViewModel
-import org.koin.androidx.compose.getViewModel
+import domain.NewsItemDetails
 
 @OptIn(ExperimentalPagerApi::class)
 @ExperimentalCoilApi
 @Composable
-fun NewsItemDetails(currItem: String) {
+fun NewsItemDetails(newsItemsDetailsList: List<NewsItemDetails>, currItemId: String) {
     val configuration = LocalConfiguration.current
     val imageWidth = configuration.screenWidthDp.dp
     val imageHeight = imageWidth * 9 / 16
-    val newsPageViewModel = getViewModel<NewsPageViewModel>()
-    newsPageViewModel.loadData(currItem)
-    val newsItemsDetailsList by newsPageViewModel.newsDetailsListFlow
-        .collectAsState(initial = emptyList())
-    val needItem = newsPageViewModel.getItem(currItem)
-        .collectAsState(initial = nullItemDetails).value
-    val pagerState = rememberPagerState(initialPage = newsItemsDetailsList.indexOf(needItem))
-    HorizontalPager(state = pagerState, count = newsItemsDetailsList.size) {
+    val needItemIndex = newsItemsDetailsList.indexOfFirst { it.itemId == currItemId }
+    val pagerState = rememberPagerState(initialPage = needItemIndex)
+    HorizontalPager(state = pagerState, count = newsItemsDetailsList.size) { currItemIndex ->
+        val currItem = newsItemsDetailsList[currItemIndex]
         LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
             item {
                 Text(
-                    text = needItem.shortHeadline.orEmpty(),
+                    text = currItem.shortHeadline.orEmpty(),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(all = 4.dp),
@@ -52,7 +45,7 @@ fun NewsItemDetails(currItem: String) {
             }
             item {
                 Image(
-                    painter = rememberImagePainter(needItem.context),
+                    painter = rememberImagePainter(currItem.context),
                     contentDescription = "News image",
                     modifier = Modifier
                         .size(width = imageWidth, height = imageHeight)
@@ -61,7 +54,7 @@ fun NewsItemDetails(currItem: String) {
             }
             item {
                 Text(
-                    text = Html.fromHtml(needItem.body, Html.FROM_HTML_MODE_LEGACY).toString(),
+                    text = Html.fromHtml(currItem.body, Html.FROM_HTML_MODE_LEGACY).toString(),
                     modifier = Modifier
                         .padding(all = 4.dp),
                     fontSize = 16.sp

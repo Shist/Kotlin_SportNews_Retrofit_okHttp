@@ -116,7 +116,8 @@ fun OddAngularNewsItemPreview() {
 )
 fun NewsItemDetailsPreview() {
     NewsItemsAppTheme {
-        NewsItemDetails(currItem = someNewsItemDetails.itemId)
+        NewsItemDetails(newsItemsDetailsList = listOf(someNewsItemDetails, someNewsItemDetails,
+            someNewsItemDetails), currItemId = someNewsItemDetails.itemId)
     }
 }
 
