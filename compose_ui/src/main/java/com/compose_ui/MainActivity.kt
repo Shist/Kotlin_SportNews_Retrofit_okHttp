@@ -14,6 +14,11 @@ import com.compose_ui.theme.NewsItemsAppTheme
 @ExperimentalCoilApi
 class MainActivity : ComponentActivity() {
 
+    // TODO
+    // Сделать кнопку внутри деталей, по которой откроется некая android view внутри compose, в которой откроется новость (в отдельном экране).
+    // После нажатия кнпоки произойдёт перекомпоновка (колонка (заголовок, картинка, текст) исчезнет, вместо неё появится окно с новостью).
+    // Это нужно будет расскоментировать uri внутри нашего Json и использовать его, чтобы перейти по ссылке.
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
