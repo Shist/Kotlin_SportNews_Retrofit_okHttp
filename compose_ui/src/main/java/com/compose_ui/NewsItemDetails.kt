@@ -1,19 +1,26 @@
 package com.compose_ui
 
+import android.content.Context
 import android.text.Html
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -24,41 +31,81 @@ import domain.NewsItemDetails
 @OptIn(ExperimentalPagerApi::class)
 @ExperimentalCoilApi
 @Composable
-fun NewsItemDetails(newsItemsDetailsList: List<NewsItemDetails>, currItemId: String) {
+fun NewsItemDetails(newsItemsDetailsList: List<NewsItemDetails>, currItemId: String, context: Context) {
     val configuration = LocalConfiguration.current
     val imageWidth = configuration.screenWidthDp.dp
     val imageHeight = imageWidth * 9 / 16
     val needItemIndex = newsItemsDetailsList.indexOfFirst { it.itemId == currItemId }
     val pagerState = rememberPagerState(initialPage = needItemIndex)
-    HorizontalPager(state = pagerState, count = newsItemsDetailsList.size) { currItemIndex ->
-        val currItem = newsItemsDetailsList[currItemIndex]
-        LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
-            item {
-                Text(
-                    text = currItem.shortHeadline.orEmpty(),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .padding(all = 4.dp),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
-                )
+    var webPageIsOn = rememberSaveable { false }
+    if (webPageIsOn) {
+        AndroidView(factory = {
+            WebView(context).apply {
+                webViewClient = WebViewClient()
+                // TODO
+                // Вот сюда мы пробросим uri айтемов, когда сервер починят и мы получим от него данные
+                // Я пока что не знаю, как поведёт себя compose, если прямо на колонке из (заголовк, картинка, текст) мы
+                // попробуем сделать этот WebView. Скорее всего их придется сделать взаимозаменяемыми на основе состояния
+                // переменной webPageIsOn. Тогда надо ещё подумать, как вернуться из WebView обратно к прежнему виду...
+                val currItem = newsItemsDetailsList[needItemIndex]
+                try {
+                    loadUrl(currItem.uri!!)
+                } catch (e: Throwable) {
+                    throw NullPointerException("Uri link of item is null!!!\n" + e.message)
+                }
             }
-            item {
-                Image(
-                    painter = rememberImagePainter(currItem.context),
-                    contentDescription = "News image",
-                    modifier = Modifier
-                        .size(width = imageWidth, height = imageHeight)
-                        .padding(all = 4.dp)
-                )
-            }
-            item {
-                Text(
-                    text = Html.fromHtml(currItem.body, Html.FROM_HTML_MODE_LEGACY).toString(),
-                    modifier = Modifier
-                        .padding(all = 4.dp),
-                    fontSize = 16.sp
-                )
+        })
+    } else {
+        HorizontalPager(state = pagerState, count = newsItemsDetailsList.size) { currItemIndex ->
+            val currItem = newsItemsDetailsList[currItemIndex]
+            LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+                item {
+                    Button(
+                        modifier = Modifier
+                            .padding(all = 4.dp),
+                        enabled = true,
+                        content = {
+                            Text(
+                                text = "See this news in web page",
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .padding(all = 4.dp),
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 24.sp
+                            )
+                        },
+                        onClick = {
+                            webPageIsOn = true
+                        }
+                    )
+                }
+                item {
+                    Text(
+                        text = currItem.shortHeadline.orEmpty(),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(all = 4.dp),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
+                }
+                item {
+                    Image(
+                        painter = rememberImagePainter(currItem.context),
+                        contentDescription = "News image",
+                        modifier = Modifier
+                            .size(width = imageWidth, height = imageHeight)
+                            .padding(all = 4.dp)
+                    )
+                }
+                item {
+                    Text(
+                        text = Html.fromHtml(currItem.body, Html.FROM_HTML_MODE_LEGACY).toString(),
+                        modifier = Modifier
+                            .padding(all = 4.dp),
+                        fontSize = 16.sp
+                    )
+                }
             }
         }
     }

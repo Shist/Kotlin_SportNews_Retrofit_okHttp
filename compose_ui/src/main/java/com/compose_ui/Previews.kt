@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
@@ -18,7 +19,8 @@ val someNewsItem = domain.NewsItem(
     "UWCL",
     LocalDate.of(2021, 12, 22),
     "https://images.beinsports.com/lbC99KH5kQB05f29Mn7IpDMKiVM=/800x450/4080544-2021-12-15T195957Z_1016770655_UP1EHCF1JJVC0_RTRMADP_3_SOCCER-CHAMPIONS-FCB-KOG-REPORT.JPG",
-    "Women's Champions League draw"
+    "Women's Champions League draw",
+    ""
 )
 
 
@@ -27,7 +29,8 @@ val someNewsItemDetails = domain.NewsItemDetails(
     "Some item details description...",
     LocalDate.of(2021, 12, 22),
     "https://images.beinsports.com/lbC99KH5kQB05f29Mn7IpDMKiVM=/800x450/4080544-2021-12-15T195957Z_1016770655_UP1EHCF1JJVC0_RTRMADP_3_SOCCER-CHAMPIONS-FCB-KOG-REPORT.JPG",
-    "Women's Champions League draw"
+    "Women's Champions League draw",
+    ""
 )
 
 @ExperimentalMaterialApi
@@ -117,7 +120,7 @@ fun OddAngularNewsItemPreview() {
 fun NewsItemDetailsPreview() {
     NewsItemsAppTheme {
         NewsItemDetails(newsItemsDetailsList = listOf(someNewsItemDetails, someNewsItemDetails,
-            someNewsItemDetails), currItemId = someNewsItemDetails.itemId)
+            someNewsItemDetails), currItemId = someNewsItemDetails.itemId, LocalContext.current)
     }
 }
 

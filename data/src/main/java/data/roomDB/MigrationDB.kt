@@ -75,4 +75,48 @@ object MigrationDB {
             db.execSQL("DROP TABLE itemsWithDetailsTemp;")
         }
     }
+    val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("CREATE TABLE IF NOT EXISTS itemsTemp (" +
+                    "itemId TEXT PRIMARY KEY NOT NULL, " +
+                    "altText TEXT, " +
+                    "createdAt INTEGER, " +
+                    "context TEXT, " +
+                    "shortHeadline TEXT, " +
+                    "uri TEXT);")
+            db.execSQL("INSERT INTO " +
+                    "itemsTemp(itemId, altText, createdAt, context, shortHeadline) " +
+                    "SELECT itemId, altText, createdAt, context, shortHeadLine FROM items;")
+            db.execSQL("DROP TABLE IF EXISTS items;")
+            db.execSQL("CREATE TABLE IF NOT EXISTS items (" +
+                    "itemId TEXT PRIMARY KEY NOT NULL, " +
+                    "altText TEXT, " +
+                    "createdAt INTEGER, " +
+                    "context TEXT, " +
+                    "shortHeadline TEXT, " +
+                    "uri TEXT);")
+            db.execSQL("INSERT INTO items SELECT * FROM itemsTemp;")
+            db.execSQL("DROP TABLE itemsTemp;")
+            db.execSQL("CREATE TABLE IF NOT EXISTS itemsWithDetailsTemp (" +
+                    "itemId TEXT PRIMARY KEY NOT NULL, " +
+                    "body TEXT, " +
+                    "createdAt INTEGER, " +
+                    "context TEXT, " +
+                    "shortHeadline TEXT, " +
+                    "uri TEXT);")
+            db.execSQL("INSERT INTO " +
+                    "itemsWithDetailsTemp(itemId, body, createdAt, context, shortHeadline) " +
+                    "SELECT itemId, body, createdAt, context, shortHeadLine FROM itemsWithDetails;")
+            db.execSQL("DROP TABLE IF EXISTS itemsWithDetails;")
+            db.execSQL("CREATE TABLE IF NOT EXISTS itemsWithDetails (" +
+                    "itemId TEXT PRIMARY KEY NOT NULL, " +
+                    "body TEXT, " +
+                    "createdAt INTEGER, " +
+                    "context TEXT, " +
+                    "shortHeadline TEXT, " +
+                    "uri TEXT);")
+            db.execSQL("INSERT INTO itemsWithDetails SELECT * FROM itemsWithDetailsTemp;")
+            db.execSQL("DROP TABLE itemsWithDetailsTemp;")
+        }
+    }
 }

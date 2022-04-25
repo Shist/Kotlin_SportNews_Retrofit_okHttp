@@ -10,7 +10,8 @@ class NewsItemDetailsDBMapper {
             body = item.body,
             createdAt = item.createdAt,
             context = item.context,
-            shortHeadline = item.shortHeadline)
+            shortHeadline = item.shortHeadline,
+            uri = item.uri)
     }
 
     fun fromDBToImpl(item: NewsItemDetails) : NewsItemDetailsDB {
@@ -19,7 +20,8 @@ class NewsItemDetailsDBMapper {
             body = item.body,
             createdAt = item.createdAt,
             context = item.context,
-            shortHeadline = item.shortHeadline
+            shortHeadline = item.shortHeadline,
+            uri = item.uri
         )
     }
 

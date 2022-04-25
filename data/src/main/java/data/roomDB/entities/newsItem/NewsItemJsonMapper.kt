@@ -10,13 +10,17 @@ class NewsItemJsonMapper {
     {
         val featuredMediaAltText: String?
         val featuredMediaContext: String?
+        val featuredMediaUri: String?
 
         if (itemJson.featuredMediaJson == null) {
             featuredMediaAltText = null
             featuredMediaContext = null
+            featuredMediaUri = null
         }
         else {
             featuredMediaAltText = itemJson.featuredMediaJson.featuredMediaAltText
+
+            featuredMediaUri = itemJson.featuredMediaJson.featuredMediaUri
             
             featuredMediaContext = if (itemJson.featuredMediaJson.featuredMediaContextJson == null) {
                 null
@@ -29,7 +33,8 @@ class NewsItemJsonMapper {
             featuredMediaAltText,
             LocalDate.parse(itemJson.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
             featuredMediaContext,
-            itemJson.shortHeadline)
+            itemJson.shortHeadline,
+            featuredMediaUri)
     }
 
 }

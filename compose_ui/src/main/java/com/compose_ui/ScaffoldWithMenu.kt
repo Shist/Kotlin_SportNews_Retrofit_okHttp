@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -36,6 +37,7 @@ enum class MenuPage {
 val nullItemDetails = domain.NewsItemDetails("",
     "",
     LocalDate.now(),
+    "",
     "",
     "")
 
@@ -109,7 +111,8 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                                         .padding(all = 4.dp),
                                 )
                             } else {
-                                NewsItemDetails(newsItemsDetailsList = newsItemsDetailsList, currItemId = newsItemId.value)
+                                NewsItemDetails(newsItemsDetailsList = newsItemsDetailsList,
+                                    currItemId = newsItemId.value, LocalContext.current)
                             }
                         }
                     }
@@ -145,11 +148,13 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                                         NewsItemsListWithNavigator(navController, newsItemsList)
                                     }
                                     Box(modifier = Modifier.weight(0.5f)) {
-                                        NewsItemDetails(newsItemsDetailsList = newsItemsDetailsList, currItemId = newsItemId.value)
+                                        NewsItemDetails(newsItemsDetailsList = newsItemsDetailsList,
+                                            currItemId = newsItemId.value, LocalContext.current)
                                     }
                                 }
                             } else { // Если же работаем с телефоном или с планшетом (но портретной ориентации), то...
-                                NewsItemDetails(newsItemsDetailsList = newsItemsDetailsList, currItemId = newsItemId.value)
+                                NewsItemDetails(newsItemsDetailsList = newsItemsDetailsList,
+                                    currItemId = newsItemId.value, LocalContext.current)
                             }
                         }
                     }

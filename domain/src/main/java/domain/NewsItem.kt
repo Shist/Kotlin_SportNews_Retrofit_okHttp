@@ -12,6 +12,8 @@ data class NewsItem(
 
     val context: String?,
 
-    var shortHeadline: String?
+    var shortHeadline: String?,
+
+    var uri: String?
 
 )

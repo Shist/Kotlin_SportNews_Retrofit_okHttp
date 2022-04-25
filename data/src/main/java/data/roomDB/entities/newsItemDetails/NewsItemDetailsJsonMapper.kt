@@ -18,11 +18,18 @@ class NewsItemDetailsJsonMapper {
             }
         }
 
+        val featuredMediaUri: String? = if (itemJson.featuredMediaJson == null) {
+            null
+        } else {
+            itemJson.featuredMediaJson.featuredMediaUri
+        }
+
         return NewsItemDetailsDB(itemJson.id!!.substringAfterLast('/'),
             itemJson.body,
             LocalDate.parse(itemJson.createdAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME),
             featuredMediaContext,
-            itemJson.shortHeadline)
+            itemJson.shortHeadline,
+            featuredMediaUri)
     }
 
 }

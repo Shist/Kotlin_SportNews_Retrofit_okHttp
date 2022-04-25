@@ -9,7 +9,7 @@ import data.roomDB.entities.newsItem.NewsItemDAO
 import data.roomDB.entities.newsItemDetails.NewsItemDetailsDAO
 import data.roomDB.entities.newsItemDetails.NewsItemDetailsDB
 
-@Database(entities = [NewsItemDB::class, NewsItemDetailsDB::class], version = 3)
+@Database(entities = [NewsItemDB::class, NewsItemDetailsDB::class], version = 4)
 @TypeConverters(Converters::class)
 abstract class NewsItemDatabase : RoomDatabase() {
     abstract fun itemsDao(): NewsItemDAO

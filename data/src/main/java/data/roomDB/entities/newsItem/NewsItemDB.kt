@@ -21,6 +21,9 @@ data class NewsItemDB(
     val context: String?,
 
     @ColumnInfo(name = "shortHeadline")
-    val shortHeadline: String?
+    val shortHeadline: String?,
+
+    @ColumnInfo(name = "uri")
+    val uri: String?
 
 )

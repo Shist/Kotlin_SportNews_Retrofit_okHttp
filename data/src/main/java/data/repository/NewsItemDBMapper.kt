@@ -11,7 +11,8 @@ class NewsItemDBMapper {
             altText = item.altText,
             createdAt = item.createdAt,
             context = item.context,
-            shortHeadline = item.shortHeadline)
+            shortHeadline = item.shortHeadline,
+            uri = item.uri)
     }
 
     fun fromNotImplToDB(item: NewsItem) : NewsItemDB {
@@ -20,7 +21,8 @@ class NewsItemDBMapper {
             altText = item.altText,
             createdAt = item.createdAt,
             context = item.context,
-            shortHeadline = item.shortHeadline
+            shortHeadline = item.shortHeadline,
+            uri = item.uri
         )
     }
 

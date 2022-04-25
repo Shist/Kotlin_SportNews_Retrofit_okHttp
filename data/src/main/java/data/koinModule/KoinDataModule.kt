@@ -35,6 +35,7 @@ val dataModule = module {
             )
                 .addMigrations(MigrationDB.MIGRATION_1_2)
                 .addMigrations(MigrationDB.MIGRATION_2_3)
+                .addMigrations(MigrationDB.MIGRATION_3_4)
                 .build()
 
         buildDatabase(androidContext())

@@ -11,7 +11,7 @@ data class NewsItemFeaturedMediaJson(
     //@SerializedName("@type") val featuredMediaType: String?,
     //@SerializedName("type") val featuredMediaTypeNum: String?,
     //@SerializedName("provider") val featuredMediaProvider: String?,
-    //@SerializedName("uri") val featuredMediaUri: String?,
+    @SerializedName("uri") val featuredMediaUri: String?,
     @SerializedName("altText") val featuredMediaAltText: String?,
     //@SerializedName("caption") val featuredMediaCaption: String?,
     //@SerializedName("credit") val featuredMediaCredit: String?,
@@ -25,6 +25,7 @@ data class NewsItemFeaturedMediaJson(
     //@SerializedName("dailymotionTag") val featuredMediaDailymotionTags: List<String?>?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readParcelable(NewsItemFeaturedMediaContextJson::class.java.classLoader)!!
     )
