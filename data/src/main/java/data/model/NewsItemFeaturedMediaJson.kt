@@ -34,6 +34,7 @@ data class NewsItemFeaturedMediaJson(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(featuredMediaAltText)
+        parcel.writeString(featuredMediaUri)
         parcel.writeParcelable(featuredMediaContextJson, 0)
     }
 

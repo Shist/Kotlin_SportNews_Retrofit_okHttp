@@ -48,6 +48,8 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val menuPage = rememberSaveable { mutableStateOf(MenuPage.NEWS_LIST) }
+    val newsDetailsIsOn = rememberSaveable { mutableStateOf(false) }
+    val webPageIsOn = rememberSaveable { mutableStateOf(false) }
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -72,7 +74,13 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                     Text(text = stringResource(id = R.string.app_name))
                 },
                 actions = {
-                    // Here we can add some extra button for Toolbar in future
+                    IconButton(onClick = {
+                        if (newsDetailsIsOn.value) {
+                            webPageIsOn.value = !webPageIsOn.value
+                        }
+                    } ) {
+                        Icon(Icons.Default.Info, contentDescription = "See this as web page")
+                    }
                 },
                 backgroundColor = MaterialTheme.colors.primarySurface
             )
@@ -93,6 +101,7 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
             .collectAsState(initial = emptyList())
         when (menuPage.value) {
             MenuPage.NEWS_LIST -> {
+                newsDetailsIsOn.value = false
                 val deviceIsTablet = booleanResource(id = R.bool.isTablet)
                 // Если работаем с планшетом и при этом в лэндскейпной ориентации, то...
                 if (deviceIsTablet && isLandscape) {
@@ -111,8 +120,9 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                                         .padding(all = 4.dp),
                                 )
                             } else {
+                                newsDetailsIsOn.value = true
                                 NewsItemDetails(newsItemsDetailsList = newsItemsDetailsList,
-                                    currItemId = newsItemId.value, LocalContext.current)
+                                    currItemId = newsItemId.value, webPageIsOn, LocalContext.current)
                             }
                         }
                     }
@@ -148,13 +158,15 @@ fun MakeScaffoldWithMenu(isLandscape: Boolean) {
                                         NewsItemsListWithNavigator(navController, newsItemsList)
                                     }
                                     Box(modifier = Modifier.weight(0.5f)) {
+                                        newsDetailsIsOn.value = true
                                         NewsItemDetails(newsItemsDetailsList = newsItemsDetailsList,
-                                            currItemId = newsItemId.value, LocalContext.current)
+                                            currItemId = newsItemId.value, webPageIsOn, LocalContext.current)
                                     }
                                 }
                             } else { // Если же работаем с телефоном или с планшетом (но портретной ориентации), то...
+                                newsDetailsIsOn.value = true
                                 NewsItemDetails(newsItemsDetailsList = newsItemsDetailsList,
-                                    currItemId = newsItemId.value, LocalContext.current)
+                                    currItemId = newsItemId.value, webPageIsOn, LocalContext.current)
                             }
                         }
                     }
