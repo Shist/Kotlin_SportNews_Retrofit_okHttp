@@ -19,6 +19,8 @@ class MainActivity : ComponentActivity() {
     // После нажатия кнпоки произойдёт перекомпоновка (колонка (заголовок, картинка, текст) исчезнет, вместо неё появится окно с новостью).
     // Это нужно будет расскоментировать uri внутри нашего Json и использовать его, чтобы перейти по ссылке.
 
+    // Custom Tab
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

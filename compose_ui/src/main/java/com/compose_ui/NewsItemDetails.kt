@@ -42,8 +42,7 @@ fun NewsItemDetails(newsItemsDetailsList: List<NewsItemDetails>, currItemId: Str
             WebView(context).apply {
                 webViewClient = WebViewClient()
                 try {
-                    // TODO что-то не так с ссылкой, нужно по-другому задавать
-                    loadUrl("https://api.beinsports.com/" + currItem.uri!!)
+                    loadUrl("https://beinsports.com" + currItem.uri!!)
                 } catch (e: Throwable) {
                     throw NullPointerException("Error! Uri of current item is null!!!\n" + e.message)
                 }

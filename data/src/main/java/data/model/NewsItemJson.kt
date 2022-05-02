@@ -21,12 +21,14 @@ data class NewsItemJson(
     //@SerializedName("featured") val featured: Boolean?,
     @SerializedName("featuredMedia") val featuredMediaJson: NewsItemFeaturedMediaJson?,
     //@SerializedName("headline")  val headline: String?,
-    @SerializedName("shortHeadline") var shortHeadline: String?
+    @SerializedName("shortHeadline") var shortHeadline: String?,
+    @SerializedName("uri") var uri: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readParcelable(NewsItemFeaturedMediaJson::class.java.classLoader)!!,
+        parcel.readString()!!,
         parcel.readString()!!
     )
 
@@ -37,6 +39,7 @@ data class NewsItemJson(
         parcel.writeString(createdAt)
         parcel.writeParcelable(featuredMediaJson, 0)
         parcel.writeString(shortHeadline)
+        parcel.writeString(uri)
     }
 
     companion object CREATOR : Parcelable.Creator<NewsItemJson> {

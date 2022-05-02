@@ -20,7 +20,7 @@ class NewsItemJsonMapper {
         else {
             featuredMediaAltText = itemJson.featuredMediaJson.featuredMediaAltText
 
-            featuredMediaUri = itemJson.featuredMediaJson.featuredMediaUri
+            featuredMediaUri = itemJson.uri
             
             featuredMediaContext = if (itemJson.featuredMediaJson.featuredMediaContextJson == null) {
                 null

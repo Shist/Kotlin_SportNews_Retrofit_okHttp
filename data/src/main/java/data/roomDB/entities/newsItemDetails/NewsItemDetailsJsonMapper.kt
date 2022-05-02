@@ -21,7 +21,7 @@ class NewsItemDetailsJsonMapper {
         val featuredMediaUri: String? = if (itemJson.featuredMediaJson == null) {
             null
         } else {
-            itemJson.featuredMediaJson.featuredMediaUri
+            itemJson.uri
         }
 
         return NewsItemDetailsDB(itemJson.id!!.substringAfterLast('/'),

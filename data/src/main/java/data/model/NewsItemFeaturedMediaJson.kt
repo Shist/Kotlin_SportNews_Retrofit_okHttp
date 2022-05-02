@@ -11,7 +11,7 @@ data class NewsItemFeaturedMediaJson(
     //@SerializedName("@type") val featuredMediaType: String?,
     //@SerializedName("type") val featuredMediaTypeNum: String?,
     //@SerializedName("provider") val featuredMediaProvider: String?,
-    @SerializedName("uri") val featuredMediaUri: String?,
+    //@SerializedName("uri") val featuredMediaUri: String?,
     @SerializedName("altText") val featuredMediaAltText: String?,
     //@SerializedName("caption") val featuredMediaCaption: String?,
     //@SerializedName("credit") val featuredMediaCredit: String?,
@@ -26,7 +26,6 @@ data class NewsItemFeaturedMediaJson(
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
-        parcel.readString()!!,
         parcel.readParcelable(NewsItemFeaturedMediaContextJson::class.java.classLoader)!!
     )
 
@@ -34,7 +33,6 @@ data class NewsItemFeaturedMediaJson(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(featuredMediaAltText)
-        parcel.writeString(featuredMediaUri)
         parcel.writeParcelable(featuredMediaContextJson, 0)
     }
 
