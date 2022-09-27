@@ -1,4 +1,4 @@
-package com.app
+package com.shist
 
 import android.app.Application
 import com.view_model.koinModule.viewModelModule
