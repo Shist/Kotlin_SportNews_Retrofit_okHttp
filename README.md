@@ -5,13 +5,21 @@
 ### Image demo
 ![Here could be image, but your Internet is too slow...](https://github.com/Shist/Kotlin_SportNews_Retrofit_okHttp/blob/master/Demo_resources/views_demo_image.png)
 ### Video demo
-![Here could be video, but your Internet is too slow...]https://user-images.githubusercontent.com/40572268/192469945-24ae9d25-1cf8-4a9d-b50b-55fce5d21939.mp4
+
+
+https://user-images.githubusercontent.com/40572268/192469945-24ae9d25-1cf8-4a9d-b50b-55fce5d21939.mp4
+
+
 ---
 ## Version on Jetpack Compose
 ### Image demo
 ![Here could be image, but your Internet is too slow...](https://github.com/Shist/Kotlin_SportNews_Retrofit_okHttp/blob/master/Demo_resources/compose_demo_image.png)
 ### Video demo
-![Here could be video, but your Internet is too slow...]https://user-images.githubusercontent.com/40572268/192467031-64e90db2-618e-49d3-82bb-46fb60ecbd19.mp4
+
+
+https://user-images.githubusercontent.com/40572268/192467031-64e90db2-618e-49d3-82bb-46fb60ecbd19.mp4
+
+
 ---
 ## Technologies used in the project
 - Kotlin
