@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Netco Sport News</string>
+    <string name="app_name">Sport news (compose)</string>
     <string name="menu_name">Application Menu</string>
     <string name="menu_item_news_list">Latest News</string>
     <string name="menu_item_square">Square Animation</string>
