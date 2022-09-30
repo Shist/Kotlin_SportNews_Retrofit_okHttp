@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_news"
+        android:title="@string/app_name"
+        android:icon="@drawable/ic_baseline_list_24" />
+    <item
+        android:id="@+id/nav_contacts"
+        android:title="@string/news_publisher_contacts"
+        android:icon="@drawable/ic_baseline_person_search_24" />
+
+</menu>

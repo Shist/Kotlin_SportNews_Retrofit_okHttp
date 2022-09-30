@@ -8,4 +8,7 @@
     <color name="colorSuccess">#00FF00</color>
     <color name="colorMistakeText">#FF0000</color>
     <color name="colorMistakeReload">#FF4500</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="underLine">#BDB8B8</color>
 </resources>

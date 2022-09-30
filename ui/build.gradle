@@ -38,6 +38,12 @@ dependencies {
     implementation project(':domain')
     implementation project(':view_model')
 
+    // Navigation
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+
+    // Circle images
+    implementation "de.hdodenhof:circleimageview:$circle_image_version"
+
     // For layout
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinator_layout_version"
