@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.view_model.loadState.LoadState
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collect
 import ui.adapter.SportAdapter
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent

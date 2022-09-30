@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import ui.databinding.ActivityMainBinding
 import ui.fragments.NewsListFragment
 import ui.fragments.NewsPageFragment
+import ui.fragments.PublisherContactsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,10 +35,18 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.nav_news -> {
-
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, NewsListFragment())
+                        .addToBackStack("goBack")
+                        .commit()
                 }
                 R.id.nav_contacts -> {
-
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, PublisherContactsFragment())
+                        .addToBackStack("goBack")
+                        .commit()
                 }
             }
             true
@@ -45,7 +54,8 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null)
         {
-            supportFragmentManager.beginTransaction()
+            supportFragmentManager
+                .beginTransaction()
                 .replace(R.id.fragment_container, NewsListFragment())
                 .commit()
         }

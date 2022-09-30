@@ -27,4 +27,5 @@
     <string name="news_publisher_contacts">News publisher\'s contacts</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="label_publisher_contact">Contact information for the news publisher</string>
 </resources>
